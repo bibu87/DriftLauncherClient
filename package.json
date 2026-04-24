@@ -1,0 +1,18 @@
+{
+  "name": "drift-launcher",
+  "version": "0.0.1",
+  "private": true,
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "launcher:dev": "pnpm --filter launcher dev",
+    "launcher:build": "pnpm --filter launcher build",
+    "typecheck": "pnpm -r run typecheck"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["electron", "protobufjs"]
+  }
+}

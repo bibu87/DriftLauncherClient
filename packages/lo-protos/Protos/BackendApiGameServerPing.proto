@@ -1,0 +1,36 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiCommon.proto";
+package MistProto;
+
+message BackendApiGameServerPingRequest
+{
+	string connection_string = 1;
+	BackendApiGameServerState state = 2;
+
+	reserved 3 to 14;
+}
+
+message BackendApiGameServerPingResponse
+{
+	message LoadTile
+	{
+		int64 realm_id = 3;
+		int64 tile_id = 1;
+		string map_path = 2;
+	}
+
+	message Shutdown
+	{
+		bool requires_cleanup = 1;
+	}
+
+	oneof instruction
+	{
+		LoadTile load_tile = 43;
+		Shutdown shutdown = 44;
+	}
+
+	reserved 1 to 42;
+}

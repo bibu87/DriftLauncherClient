@@ -1,0 +1,17 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiTileData.proto";
+import "BackendApiRealmCommon.proto";
+package MistProto;
+
+message BackendApiTileLoadRequest
+{
+}
+
+message BackendApiTileLoadResponse
+{
+	BackendApiRealmInformation realm_info = 7;
+	BackendApiTileData data = 1;
+	int64 snapshot_version = 2;
+}

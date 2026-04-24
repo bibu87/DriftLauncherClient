@@ -1,0 +1,52 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message Walker
+{
+	reserved 1;
+	float health = 2;
+	uint32 wreckage_state = 3;
+	reserved 4;
+	string custom_name = 5;
+	float sandiness_level = 6;
+	int64 sandiness_tile_id = 7;
+	int32 sandiness_direction = 8;
+	int32 stage = 9;
+	reserved 10;
+	float repair_health = 11;
+	reserved 12;
+	reserved 13;
+}
+
+message WalkerPart
+{
+	float health = 1;
+}
+
+message WalkerWing
+{
+	bool retracted = 1;
+}
+
+message WalkerLeg
+{
+	int32 state = 1;
+	float distance_travelled = 2;
+}
+
+message WalkerTurret
+{
+	uint32 turret_state = 1;
+}
+
+message WalkerPump
+{
+	uint32 pump_state = 1;
+}
+
+message WalkerRig
+{
+	string rig_name = 1;
+}

@@ -1,0 +1,30 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message ArtificialTradeOrderManager 
+{
+	string trade_station_guid = 1;
+
+	repeated ArtificialTradeOrder trade_orders = 2;
+}
+
+message ArtificialTradeOrder 
+{
+	uint64 id = 1;
+	uint64 trade_order_id = 2;
+	int64 start_price = 3;
+	int64 start_time = 4;
+	int64 duration = 5;
+	uint64 step_interval = 6;
+	float step_progress = 7;
+
+	float amount_multiplier = 8;
+	float time_multiplier = 9;
+	float start_price_multiplier = 10;
+	float end_price_multiplier = 11;
+
+	uint64 start_quantity = 12;
+	uint64 remaining_quantity = 13;
+}

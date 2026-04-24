@@ -1,0 +1,34 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+import "Time.proto";
+package MistProto;
+
+
+message Item
+{
+	string template_class = 1;
+	int32 wear = 2;
+	int32 quality = 3;
+	int32 skin = 4;
+	repeated int32 dyes = 5;
+	repeated string perks = 6;
+}
+
+message ItemWithQuantity
+{
+	Item item = 1;
+	int32 quantity = 2;
+}
+
+message ItemActor
+{
+	int32 count = 1;
+	Item item = 2;
+}
+
+message DropBag
+{
+	float lock_end_time = 1;
+	TimeOffset time_offset = 2;
+}

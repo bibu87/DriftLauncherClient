@@ -1,0 +1,64 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message Color
+{
+	float r = 1;
+	float g = 2;
+	float b = 3;
+	float a = 4;
+}
+
+message Vector
+{
+	float x = 1;
+	float y = 2;
+	float z = 3;
+}
+
+message Vector2D
+{
+	float x = 1;
+	float y = 2;
+}
+
+message IntVector2D
+{
+	int32 x = 1;
+	int32 y = 2;
+}
+
+message Rotator
+{
+	float pitch = 1;
+	float yaw = 2;
+	float roll = 3;
+}
+
+message Quat
+{
+	float x = 1;
+	float y = 2;
+	float z = 3;
+	float w = 4;
+}
+
+message Transform
+{
+	Quat rotation = 1;
+	Vector translation = 2;
+	Vector scale = 3;
+}
+
+message BoundingBox
+{
+	Vector min = 1;
+	Vector max = 2;
+}
+
+message String
+{
+	string text = 1;
+} 

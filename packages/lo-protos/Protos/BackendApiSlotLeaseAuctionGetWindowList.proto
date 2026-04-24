@@ -1,0 +1,15 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiSlotLeaseAuctionCommon.proto";
+package MistProto;
+
+message BackendApiSlotLeaseAuctionGetWindowListRequest
+{
+	int64 realm_tile_id = 1;
+}
+
+message BackendApiSlotLeaseAuctionGetWindowListResponse
+{
+	repeated BackendApiSlotLeaseAuctionWindow windows = 1;
+}

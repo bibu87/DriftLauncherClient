@@ -1,0 +1,15 @@
+﻿syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message PoiMapData
+{
+	message PoiSpawnPositionGroupData
+	{
+		string group_name = 1;
+		repeated string spawned_actors = 2;
+	}
+
+	repeated PoiSpawnPositionGroupData spawn_position_groups = 1;
+}

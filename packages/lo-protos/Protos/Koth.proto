@@ -1,0 +1,20 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+import "Time.proto";
+package MistProto;
+
+message KothComponent
+{
+	message KothClanData
+	{
+		int64 clan_id = 1;
+		float points = 2;
+	}
+	
+	bool claimed = 1;
+	int32 claim_seconds_left = 2;
+	TimeOffset time_offset = 3;
+	int64 owner_clan_id = 4;
+	repeated KothClanData clan_data = 5;
+}

@@ -1,0 +1,16 @@
+﻿syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message RearmableTrap
+{
+	bool is_armed = 1;
+	string armed_by_player_guid = 2;
+}
+
+message DoorInteractable
+{
+	int32 door_state = 1;
+	float opening_time = 2;
+}

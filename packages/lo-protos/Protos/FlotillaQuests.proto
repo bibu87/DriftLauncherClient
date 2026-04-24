@@ -1,0 +1,104 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+import "google/protobuf/any.proto";
+package MistProto;
+
+message PlayerFlotillaQuests
+{
+	FlotillaQuest current_quest = 1;
+}
+
+message FlotillaQuest
+{
+	enum Difficulty
+	{
+		EASY = 0;
+		MEDIUM = 1;
+		HARD = 2;
+	}
+
+	message ClassData
+	{
+		int32 version = 1;
+		google.protobuf.Any data = 2;
+	}
+
+	int32 version  = 1;
+	map<string, ClassData> class_data = 2;
+	string quest_class = 3;
+	int32 flots_reward = 4;
+	int32 exp_reward = 5;
+	Difficulty quest_difficulty = 6;
+}
+
+message QuestGiver
+{
+	message QuestGiverPlayerData
+	{
+		int64 update_time = 1;
+		repeated FlotillaQuest available_quests = 2;
+	}
+
+	map<int64, QuestGiverPlayerData> saved_player_data = 1;
+}
+
+message BringItemQuest
+{
+	string item_template = 1;
+	int32 amount = 2;
+	int64 target_tile_id = 3;
+	string target_tile_name = 4;
+}
+
+message KillCreatureQuest
+{
+	string creature_type_class = 1;
+	int32 total_amount = 2;
+	int32 amount_killed = 3;
+}
+
+message ClearRupuCampsQuest
+{
+	int32 total_amount = 1;
+	int32 amount_cleared = 2;
+}
+
+message LootRuinsQuest
+{
+	repeated int32 subtasks_total_amount = 1;
+	repeated int32 subtasks_amount_cleared = 2;
+}
+
+message ScoutOasisQuest
+{
+	message Subtask
+	{
+		int64 target_tile_id = 1;
+		string target_tile_name = 2;
+		int32 scout_progress = 3;
+	}
+
+	repeated Subtask subtasks = 1;
+	int64 origin_tile_id = 2;
+	string origin_tile_name = 3;
+}
+
+message DeliverPackageQuest
+{
+	int64 target_tile_id = 1;
+	string target_tile_name = 2;
+	int32 quality = 3;
+}
+
+message ArenaDuelQuest
+{
+	int64 total_amount = 1;
+	int64 duels_won = 2;
+}
+
+message KillSpeicalRupuQuest
+{
+	bool has_killed = 1;
+	bool has_spawned = 2;
+}

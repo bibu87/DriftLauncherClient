@@ -1,0 +1,33 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiCommon.proto";
+package MistProto;
+
+message BackendApiSystemAccountData
+{
+	message BanData
+	{
+		string unique_net_id = 1;
+		int64 ban_end_date = 2;
+		string ban_message = 3;
+	}
+
+	message UnbanData
+	{
+		string unique_net_id = 1;
+	}
+
+	message TierUpdateData
+	{
+		string unique_net_id = 1;
+		BackendAccountTier tier = 2;
+	}
+	
+	int64 global_version = 1;
+	int64 customer_version = 2;
+	
+	repeated BanData banned = 3;
+	repeated UnbanData unbanned = 4;
+	repeated TierUpdateData tier_updates = 5;
+}

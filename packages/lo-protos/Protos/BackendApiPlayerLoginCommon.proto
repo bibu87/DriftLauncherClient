@@ -1,0 +1,27 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiCommon.proto";
+package MistProto;
+
+message BackendApiPlayerLoginResultData
+{
+	message AccountAuthData
+	{
+		string token = 1;
+		string name = 2;
+		bool is_new = 3;
+		bool banned = 4;
+		uint64 ban_end_date = 5;
+		string ban_message = 6;
+		string motd = 7;
+		string encryption_token = 8;
+		bytes encryption_key = 9;
+		BackendApiGamePlatform platform = 10;
+	}
+
+	oneof status
+	{
+		AccountAuthData success = 1;
+	}
+}

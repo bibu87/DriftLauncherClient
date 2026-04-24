@@ -1,0 +1,23 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+package MistProto;
+
+message BackendApiShopGetCurrencyBundleListRequest
+{
+}
+
+message BackendApiShopGetCurrencyBundleListResponse
+{
+	message CurrencyBundle
+	{
+		int64 id = 1;
+		string identifier = 2;
+		int64 total_amount = 3;
+		int64 bonus_amount = 4;
+		int64 price = 5;
+		string price_currency = 6;
+	}
+
+	repeated CurrencyBundle currency_bundles = 1;
+}

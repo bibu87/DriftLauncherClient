@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message RepairHoist
+{
+	message ConsumedResources
+	{
+		string resources_template = 1;
+		float count = 2;
+	}
+	repeated ConsumedResources consumed_resources = 1;
+}

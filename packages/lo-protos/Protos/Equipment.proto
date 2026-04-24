@@ -1,0 +1,30 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+import "Items.proto";
+package MistProto;
+
+message Equipment
+{
+	message Slot
+	{
+		uint32 index = 1;
+		Item item = 2;
+		string component_name = 3;
+	}
+
+	message Hand
+	{
+		uint32 index = 1;
+		uint32 equipped_slot = 2;
+	}
+	
+	repeated Slot slots = 1;
+	repeated Hand hands = 2;
+	uint32 component_creation_unique_id_counter = 3;
+}
+
+message EquipmentContainer
+{
+	Item item = 1;
+}

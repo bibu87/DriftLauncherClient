@@ -1,0 +1,57 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+import "google/protobuf/any.proto";
+import "BaseTypes.proto";
+import "Component.proto";
+package MistProto;
+
+message Actor
+{
+	message SimpleAttachment
+	{
+		string actor_guid = 1;
+		string component_name = 2;
+		string socket_name = 3;
+	}
+
+	message ChildActorAttachment
+	{
+		string actor_guid = 1;
+		string component_name = 2;
+	}
+	
+	message ClassData
+	{
+		int32 version = 1;
+		google.protobuf.Any data = 2;
+	}
+
+	int32 version = 1;
+	map<string, ClassData> class_data = 2;
+	string guid = 3;
+	string path = 4;
+	string class_path = 5;
+	Transform transform = 6;
+	reserved 7;
+	oneof attachment
+	{
+		SimpleAttachment simple_attachment = 8;
+		ChildActorAttachment child_actor_attachment = 9;
+	}
+	repeated Component components = 10;
+	float remaining_life_span = 11;
+}
+
+message ActorAttachment
+{
+	reserved 1;
+	int32 item_index = 2;
+	bool drop_on_destroy = 3;
+}
+
+message ActorArray
+{
+	repeated Actor actors = 1;
+}
+

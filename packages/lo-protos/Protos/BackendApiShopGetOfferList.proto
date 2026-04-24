@@ -1,0 +1,45 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+package MistProto;
+
+message BackendApiShopGetOfferListRequest
+{
+}
+
+message BackendApiShopGetOfferListResponse
+{
+	message Consumable
+	{
+		int32 quantity = 1;
+	}
+
+	message Item
+	{
+		string identifier = 1;
+
+		oneof type
+		{
+			bool durable = 2;
+			Consumable consumable = 3;
+		}
+	}
+
+	message Offer
+	{
+		int64 id = 1;
+		int64 version_id = 2;
+		string identifier = 3;
+		string category_identifier = 4;
+		int64 start_date = 5;
+		int64 end_date = 6;
+		int64 price = 7;
+		int64 original_price = 8;
+		int32 discount = 9;
+		float popularity = 10;
+		bool featured = 11;
+		repeated Item items = 12;
+	}
+
+	repeated Offer offers = 1;
+}

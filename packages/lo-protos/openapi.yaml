@@ -1,0 +1,6552 @@
+openapi: 3.0.0
+info:
+  title: Mist Backend API
+  version: 1.0.0
+paths:
+  /Api/Player/Login:
+    post:
+      tags:
+      - Player
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerLoginResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerLoginResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerLoginRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerLoginRequest'
+  /Api/Player/LoginWithSteam:
+    post:
+      tags:
+      - Player
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerLoginWithSteamResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerLoginWithSteamResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerLoginWithSteamRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerLoginWithSteamRequest'
+  /Api/Player/LoginWithXboxLive:
+    post:
+      tags:
+      - Player
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerLoginWithXboxLiveResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerLoginWithXboxLiveResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerLoginWithXboxLiveRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerLoginWithXboxLiveRequest'
+  /Api/Player/CreateCharacter:
+    post:
+      tags:
+      - Player
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerCreateCharacterResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerCreateCharacterResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerCreateCharacterRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerCreateCharacterRequest'
+  /Api/Player/DeleteCharacter:
+    post:
+      tags:
+      - Player
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerDeleteCharacterResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerDeleteCharacterResponse'
+  /Api/Player/PlayWithNewCharacter:
+    post:
+      tags:
+      - Player
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerPlayWithNewCharacterResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerPlayWithNewCharacterResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerPlayWithNewCharacterRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerPlayWithNewCharacterRequest'
+  /Api/Player/PlayWithCharacter:
+    post:
+      tags:
+      - Player
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerPlayWithCharacterResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerPlayWithCharacterResponse'
+  /Api/Player/GetCharacterList:
+    post:
+      tags:
+      - Player
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerGetCharacterListResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerGetCharacterListResponse'
+  /Api/Player/GetCharacter:
+    post:
+      tags:
+      - Player
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerGetCharacterResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerGetCharacterResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerGetCharacterRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerGetCharacterRequest'
+  /Api/Player/GetClanInvites:
+    post:
+      tags:
+      - Player
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerGetClanInvitesResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerGetClanInvitesResponse'
+  /Api/Player/Ban:
+    post:
+      tags:
+      - Player
+      responses:
+        '200':
+          description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerBanRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerBanRequest'
+  /Api/Player/PullNotifications:
+    post:
+      tags:
+      - Player
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerPullNotificationsResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiPlayerPullNotificationsResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerPullNotificationsRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiPlayerPullNotificationsRequest'
+  /Api/Trade/GetOrders:
+    post:
+      tags:
+      - Trade
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiTradeGetOrdersResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiTradeGetOrdersResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiTradeGetOrdersRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiTradeGetOrdersRequest'
+  /Api/Trade/GetTileOverviewDetailed:
+    post:
+      tags:
+      - Trade
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiTradeGetTileOverviewDetailedResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiTradeGetTileOverviewDetailedResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiTradeGetTileOverviewDetailedRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiTradeGetTileOverviewDetailedRequest'
+  /Api/Tile/Load:
+    post:
+      tags:
+      - Tile
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiTileLoadResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiTileLoadResponse'
+  /Api/Tile/Notifications:
+    post:
+      tags:
+      - Tile
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiTileNotificationsResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiTileNotificationsResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiTileNotificationsRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiTileNotificationsRequest'
+  /Api/Tile/Snapshot:
+    post:
+      tags:
+      - Tile
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiTileSnapshotResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiTileSnapshotResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiTileSnapshotRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiTileSnapshotRequest'
+  /Api/Tile/Neighbors:
+    post:
+      tags:
+      - Tile
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiTileNeighborsResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiTileNeighborsResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiTileNeighborsRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiTileNeighborsRequest'
+  /Api/ShopTest/CreditCurrency:
+    post:
+      tags:
+      - ShopTest
+      responses:
+        '200':
+          description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiShopTestCreditCurrencyRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiShopTestCreditCurrencyRequest'
+  /Api/RealmTileJoinQueue/Cancel:
+    post:
+      tags:
+      - RealmTileJoinQueue
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiRealmTileJoinQueueCancelResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiRealmTileJoinQueueCancelResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiRealmTileJoinQueueCancelRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiRealmTileJoinQueueCancelRequest'
+  /Api/RealmTileJoinQueue/Evade:
+    post:
+      tags:
+      - RealmTileJoinQueue
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiRealmTileJoinQueueEvadeResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiRealmTileJoinQueueEvadeResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiRealmTileJoinQueueEvadeRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiRealmTileJoinQueueEvadeRequest'
+  /Api/RealmTileJoinQueue/GetStatus:
+    post:
+      tags:
+      - RealmTileJoinQueue
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiRealmTileJoinQueueGetStatusResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiRealmTileJoinQueueGetStatusResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiRealmTileJoinQueueGetStatusRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiRealmTileJoinQueueGetStatusRequest'
+  /Api/Shop/AddXboxFunds:
+    post:
+      tags:
+      - Shop
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopAddXboxFundsResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopAddXboxFundsResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiShopAddXboxFundsRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiShopAddXboxFundsRequest'
+  /Api/Shop/BuyOffer:
+    post:
+      tags:
+      - Shop
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopBuyOfferResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopBuyOfferResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiShopBuyOfferRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiShopBuyOfferRequest'
+  /Api/Shop/GetBalance:
+    post:
+      tags:
+      - Shop
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopGetBalanceResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopGetBalanceResponse'
+  /Api/Shop/GetInventory:
+    post:
+      tags:
+      - Shop
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopGetInventoryResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopGetInventoryResponse'
+  /Api/Shop/GetOfferList:
+    post:
+      tags:
+      - Shop
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopGetOfferListResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopGetOfferListResponse'
+  /Api/Shop/GetCurrencyBundleList:
+    post:
+      tags:
+      - Shop
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopGetCurrencyBundleListResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopGetCurrencyBundleListResponse'
+  /Api/Shop/ReceiveUnclaimedItems:
+    post:
+      tags:
+      - Shop
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopReceiveUnclaimedItemsResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopReceiveUnclaimedItemsResponse'
+  /Api/Realm/GetMap:
+    post:
+      tags:
+      - Realm
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiRealmGetMapResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiRealmGetMapResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiRealmGetMapRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiRealmGetMapRequest'
+  /Api/System/AccountNotifications:
+    post:
+      tags:
+      - System
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiSystemAccountNotificationsResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiSystemAccountNotificationsResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiSystemAccountNotificationsRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiSystemAccountNotificationsRequest'
+  /Api/System/LoadAccounts:
+    post:
+      tags:
+      - System
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiSystemLoadAccountsResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiSystemLoadAccountsResponse'
+  /Api/OffMapLobby/Query:
+    post:
+      tags:
+      - OffMapLobby
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyQueryResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyQueryResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyQueryRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyQueryRequest'
+  /Api/OffMapLobby/Embark:
+    post:
+      tags:
+      - OffMapLobby
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyEmbarkResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyEmbarkResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyEmbarkRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyEmbarkRequest'
+  /Api/OffMapLobby/Disembark:
+    post:
+      tags:
+      - OffMapLobby
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyDisembarkResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyDisembarkResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyDisembarkRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyDisembarkRequest'
+  /Api/OffMapLobby/Recruit:
+    post:
+      tags:
+      - OffMapLobby
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyRecruitResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyRecruitResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyRecruitRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyRecruitRequest'
+  /Api/OffMapLobby/Dismiss:
+    post:
+      tags:
+      - OffMapLobby
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyDismissResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyDismissResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyDismissRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyDismissRequest'
+  /Api/OffMapLobby/SetTarget:
+    post:
+      tags:
+      - OffMapLobby
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbySetTargetResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbySetTargetResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbySetTargetRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbySetTargetRequest'
+  /Api/OffMapLobby/ClearTarget:
+    post:
+      tags:
+      - OffMapLobby
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyClearTargetResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyClearTargetResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyClearTargetRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyClearTargetRequest'
+  /Api/OffMapLobby/Travel:
+    post:
+      tags:
+      - OffMapLobby
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyTravelResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyTravelResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyTravelRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyTravelRequest'
+  /Api/OffMapLobby/Respawn:
+    post:
+      tags:
+      - OffMapLobby
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyRespawnResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyRespawnResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyRespawnRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyRespawnRequest'
+  /Api/OffMapLobby/Transfer:
+    post:
+      tags:
+      - OffMapLobby
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyTransferResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiOffMapLobbyTransferResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyTransferRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiOffMapLobbyTransferRequest'
+  /Api/VoiceChat/Login:
+    post:
+      tags:
+      - VoiceChat
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiVoiceChatLoginResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiVoiceChatLoginResponse'
+  /Api/VoiceChat/JoinTestChannel:
+    post:
+      tags:
+      - VoiceChat
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiVoiceChatJoinTestChannelResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiVoiceChatJoinTestChannelResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiVoiceChatJoinTestChannelRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiVoiceChatJoinTestChannelRequest'
+  /Api/VoiceChat/JoinTileChannel:
+    post:
+      tags:
+      - VoiceChat
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiVoiceChatJoinTileChannelResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiVoiceChatJoinTileChannelResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiVoiceChatJoinTileChannelRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiVoiceChatJoinTileChannelRequest'
+  /Api/GameServer/Register:
+    post:
+      tags:
+      - GameServer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiGameServerRegisterResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiGameServerRegisterResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiGameServerRegisterRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiGameServerRegisterRequest'
+  /Api/GameServer/Ping:
+    post:
+      tags:
+      - GameServer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiGameServerPingResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiGameServerPingResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiGameServerPingRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiGameServerPingRequest'
+  /Api/GameServer/LookupEncryptionKey:
+    post:
+      tags:
+      - GameServer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiGameServerLookupEncryptionKeyResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiGameServerLookupEncryptionKeyResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiGameServerLookupEncryptionKeyRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiGameServerLookupEncryptionKeyRequest'
+  /Api/GameServer/GetShopInventory:
+    post:
+      tags:
+      - GameServer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiGameServerGetShopInventoryResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiGameServerGetShopInventoryResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiGameServerGetShopInventoryRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiGameServerGetShopInventoryRequest'
+  /Api/Statistics/Track:
+    post:
+      tags:
+      - Statistics
+      responses:
+        '200':
+          description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiStatisticsTrackRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiStatisticsTrackRequest'
+  /Api/Statistics/TrackPlayerDeaths:
+    post:
+      tags:
+      - Statistics
+      responses:
+        '200':
+          description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiStatisticsTrackPlayerDeathsRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiStatisticsTrackPlayerDeathsRequest'
+  /Api/Statistics/TrackGameData:
+    post:
+      tags:
+      - Statistics
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiStatisticsTrackGameDataResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiStatisticsTrackGameDataResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiStatisticsTrackGameDataRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiStatisticsTrackGameDataRequest'
+  /Api/Migration/GetWalkerPreferences:
+    post:
+      tags:
+      - Migration
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiMigrationGetWalkerPreferencesResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiMigrationGetWalkerPreferencesResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiMigrationGetWalkerPreferencesRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiMigrationGetWalkerPreferencesRequest'
+  /Api/Migration/SetWalkerPreference:
+    post:
+      tags:
+      - Migration
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiMigrationSetWalkerPreferenceResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiMigrationSetWalkerPreferenceResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiMigrationSetWalkerPreferenceRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiMigrationSetWalkerPreferenceRequest'
+  /Api/Migration/DeleteWalkerPreference:
+    post:
+      tags:
+      - Migration
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiMigrationDeleteWalkerPreferenceResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiMigrationDeleteWalkerPreferenceResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiMigrationDeleteWalkerPreferenceRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiMigrationDeleteWalkerPreferenceRequest'
+  /Api/Clan/Create:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanCreateResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanCreateResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanCreateRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanCreateRequest'
+  /Api/Clan/Update:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanUpdateResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanUpdateResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanUpdateRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanUpdateRequest'
+  /Api/Clan/GetInformation:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanGetInformationResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanGetInformationResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanGetInformationRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanGetInformationRequest'
+  /Api/Clan/Invite:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanInviteRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanInviteRequest'
+  /Api/Clan/AcceptInvite:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanAcceptInviteResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanAcceptInviteResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanAcceptInviteRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanAcceptInviteRequest'
+  /Api/Clan/CancelInvite:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanCancelInviteResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanCancelInviteResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanCancelInviteRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanCancelInviteRequest'
+  /Api/Clan/RemoveMember:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanRemoveMemberResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanRemoveMemberResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanRemoveMemberRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanRemoveMemberRequest'
+  /Api/Clan/UpdateRank:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanUpdateRankResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanUpdateRankResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanUpdateRankRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanUpdateRankRequest'
+  /Api/Clan/SetMemberRank:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanSetMemberRankResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanSetMemberRankResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanSetMemberRankRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanSetMemberRankRequest'
+  /Api/Clan/DeleteRank:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanDeleteRankResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanDeleteRankResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanDeleteRankRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanDeleteRankRequest'
+  /Api/Clan/AddRank:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanAddRankResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanAddRankResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanAddRankRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanAddRankRequest'
+  /Api/Clan/GetConfig:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanGetConfigResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanGetConfigResponse'
+  /Api/Clan/DiscordIntegration:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanDiscordIntegrationResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanDiscordIntegrationResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanDiscordIntegrationRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanDiscordIntegrationRequest'
+  /Api/Clan/DiscordIntegrationWebhookUpdate:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanDiscordIntegrationWebhookUpdateResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanDiscordIntegrationWebhookUpdateResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanDiscordIntegrationWebhookUpdateRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanDiscordIntegrationWebhookUpdateRequest'
+  /Api/Clan/DiscordIntegrationUpdate:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanDiscordIntegrationUpdateResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanDiscordIntegrationUpdateResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanDiscordIntegrationUpdateRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiClanDiscordIntegrationUpdateRequest'
+  /Api/Clan/GetBankBalance:
+    post:
+      tags:
+      - Clan
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanGetBankBalanceResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiClanGetBankBalanceResponse'
+  /Api/ShopSteam/InitCurrencyBundleMtx:
+    post:
+      tags:
+      - ShopSteam
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopSteamInitCurrencyBundleMtxResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopSteamInitCurrencyBundleMtxResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiShopSteamInitCurrencyBundleMtxRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiShopSteamInitCurrencyBundleMtxRequest'
+  /Api/ShopSteam/FinalizeCurrencyBundleMtx:
+    post:
+      tags:
+      - ShopSteam
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopSteamFinalizeCurrencyBundleMtxResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiShopSteamFinalizeCurrencyBundleMtxResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiShopSteamFinalizeCurrencyBundleMtxRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiShopSteamFinalizeCurrencyBundleMtxRequest'
+  /Api/SlotLeaseAuction/GetWindowList:
+    post:
+      tags:
+      - SlotLeaseAuction
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiSlotLeaseAuctionGetWindowListResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiSlotLeaseAuctionGetWindowListResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiSlotLeaseAuctionGetWindowListRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiSlotLeaseAuctionGetWindowListRequest'
+  /Api/SlotLeaseAuction/SetWindowBid:
+    post:
+      tags:
+      - SlotLeaseAuction
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiSlotLeaseAuctionSetWindowBidResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiSlotLeaseAuctionSetWindowBidResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiSlotLeaseAuctionSetWindowBidRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiSlotLeaseAuctionSetWindowBidRequest'
+  /Api/TextFilter/GetList:
+    post:
+      tags:
+      - TextFilter
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiTextFilterGetListResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiTextFilterGetListResponse'
+  /Api/JoinRealm/GetSpawnTiles:
+    post:
+      tags:
+      - JoinRealm
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiJoinRealmGetSpawnTilesResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiJoinRealmGetSpawnTilesResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiJoinRealmGetSpawnTilesRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiJoinRealmGetSpawnTilesRequest'
+  /Api/JoinRealm/Search:
+    post:
+      tags:
+      - JoinRealm
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiJoinRealmSearchResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiJoinRealmSearchResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiJoinRealmSearchRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiJoinRealmSearchRequest'
+  /Api/JoinRealm/VerifyRealmPassword:
+    post:
+      tags:
+      - JoinRealm
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackendApiJoinRealmVerifyRealmPasswordResponse'
+            application/x-protobuf:
+              schema:
+                $ref: '#/components/schemas/BackendApiJoinRealmVerifyRealmPasswordResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackendApiJoinRealmVerifyRealmPasswordRequest'
+          application/x-protobuf:
+            schema:
+              $ref: '#/components/schemas/BackendApiJoinRealmVerifyRealmPasswordRequest'
+components:
+  schemas:
+    googleprotobufAny:
+      type: object
+      description: Arbitrary protobuf message (google.protobuf.Any)
+      properties:
+        '@type':
+          type: string
+          description: A URL/resource name that uniquely identifies the type
+      additionalProperties: true
+    Actor:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int32
+        classData:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ActorClassData'
+        guid:
+          type: string
+        path:
+          type: string
+        classPath:
+          type: string
+        transform:
+          $ref: '#/components/schemas/Transform'
+        simpleAttachment:
+          $ref: '#/components/schemas/ActorSimpleAttachment'
+        childActorAttachment:
+          $ref: '#/components/schemas/ActorChildActorAttachment'
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/Component'
+        remainingLifeSpan:
+          type: number
+          format: float
+    ActorSimpleAttachment:
+      type: object
+      properties:
+        actorGuid:
+          type: string
+        componentName:
+          type: string
+        socketName:
+          type: string
+    ActorChildActorAttachment:
+      type: object
+      properties:
+        actorGuid:
+          type: string
+        componentName:
+          type: string
+    ActorClassData:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int32
+        data:
+          $ref: '#/components/schemas/googleprotobufAny'
+    ActorAttachment:
+      type: object
+      properties:
+        itemIndex:
+          type: integer
+          format: int32
+        dropOnDestroy:
+          type: boolean
+    ActorArray:
+      type: object
+      properties:
+        actors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actor'
+    Color:
+      type: object
+      properties:
+        r:
+          type: number
+          format: float
+        g:
+          type: number
+          format: float
+        b:
+          type: number
+          format: float
+        a:
+          type: number
+          format: float
+    Vector:
+      type: object
+      properties:
+        x:
+          type: number
+          format: float
+        y:
+          type: number
+          format: float
+        z:
+          type: number
+          format: float
+    Vector2D:
+      type: object
+      properties:
+        x:
+          type: number
+          format: float
+        y:
+          type: number
+          format: float
+    IntVector2D:
+      type: object
+      properties:
+        x:
+          type: integer
+          format: int32
+        y:
+          type: integer
+          format: int32
+    Rotator:
+      type: object
+      properties:
+        pitch:
+          type: number
+          format: float
+        yaw:
+          type: number
+          format: float
+        roll:
+          type: number
+          format: float
+    Quat:
+      type: object
+      properties:
+        x:
+          type: number
+          format: float
+        y:
+          type: number
+          format: float
+        z:
+          type: number
+          format: float
+        w:
+          type: number
+          format: float
+    Transform:
+      type: object
+      properties:
+        rotation:
+          $ref: '#/components/schemas/Quat'
+        translation:
+          $ref: '#/components/schemas/Vector'
+        scale:
+          $ref: '#/components/schemas/Vector'
+    BoundingBox:
+      type: object
+      properties:
+        min:
+          $ref: '#/components/schemas/Vector'
+        max:
+          $ref: '#/components/schemas/Vector'
+    String:
+      type: object
+      properties:
+        text:
+          type: string
+    Component:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int32
+        classData:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ComponentClassData'
+        guid:
+          type: string
+        name:
+          type: string
+        classPath:
+          type: string
+        replicated:
+          type: boolean
+        createdAtRuntime:
+          type: boolean
+    ComponentClassData:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int32
+        data:
+          $ref: '#/components/schemas/googleprotobufAny'
+    ArtificialTradeOrderManager:
+      type: object
+      properties:
+        tradeStationGuid:
+          type: string
+        tradeOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtificialTradeOrder'
+    ArtificialTradeOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        tradeOrderId:
+          type: integer
+          format: int64
+        startPrice:
+          type: integer
+          format: int64
+        startTime:
+          type: integer
+          format: int64
+        duration:
+          type: integer
+          format: int64
+        stepInterval:
+          type: integer
+          format: int64
+        stepProgress:
+          type: number
+          format: float
+        amountMultiplier:
+          type: number
+          format: float
+        timeMultiplier:
+          type: number
+          format: float
+        startPriceMultiplier:
+          type: number
+          format: float
+        endPriceMultiplier:
+          type: number
+          format: float
+        startQuantity:
+          type: integer
+          format: int64
+        remainingQuantity:
+          type: integer
+          format: int64
+    Automaton:
+      type: object
+      properties:
+        itemTemplate:
+          type: string
+        quality:
+          type: integer
+          format: int32
+    BackendApiClanAcceptInviteRequest:
+      type: object
+      properties:
+        inviteId:
+          type: integer
+          format: int64
+    BackendApiClanAcceptInviteResponse:
+      type: object
+      properties:
+        inviteId:
+          type: integer
+          format: int64
+        clanId:
+          type: integer
+          format: int64
+        characterId:
+          type: integer
+          format: int64
+    BackendApiClanAddRankRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        priority:
+          type: integer
+          format: int32
+        permissions:
+          type: integer
+          format: int64
+        icon:
+          type: string
+    BackendApiClanAddRankResponse:
+      type: object
+      properties:
+        rankId:
+          type: integer
+          format: int64
+    BackendApiClanCancelInviteRequest:
+      type: object
+      properties:
+        inviteId:
+          type: integer
+          format: int64
+    BackendApiClanCancelInviteResponse:
+      type: object
+      properties:
+        inviteId:
+          type: integer
+          format: int64
+    BackendApiClanCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        colorId:
+          type: string
+        emblemId:
+          type: string
+    BackendApiClanCreateResponse:
+      type: object
+      properties:
+        clanId:
+          type: integer
+          format: int64
+        error:
+          $ref: '#/components/schemas/BackendApiClanCreateResponseErrorData'
+    BackendApiClanCreateResponseErrorData:
+      type: object
+      properties:
+        nameError:
+          $ref: '#/components/schemas/BackendApiInvalidNameMessage'
+        alreadyClanMember:
+          type: boolean
+    BackendApiInvalidNameMessage:
+      type: object
+      properties:
+        character:
+          $ref: '#/components/schemas/BackendApiInvalidNameMessageCharacterError'
+        name:
+          $ref: '#/components/schemas/BackendApiInvalidNameMessageNameReason'
+        containsInappropriate:
+          type: string
+    BackendApiInvalidNameMessageCharacterError:
+      type: object
+      properties:
+        character:
+          type: string
+        reason:
+          $ref: '#/components/schemas/BackendApiInvalidNameMessageCharacterErrorCharacterReason'
+    BackendApiInvalidNameMessageCharacterErrorCharacterReason:
+      type: string
+      enum:
+        - DISALLOWED
+        - DISALLOWED_IN_NAME_START
+        - DISALLOWED_IN_NAME_END
+        - REPETITION_DISALLOWED
+    BackendApiInvalidNameMessageNameReason:
+      type: string
+      enum:
+        - DUPLICATE
+        - TOO_SHORT
+        - TOO_LONG
+        - EMPTY
+    BackendApiClanDeleteRankRequest:
+      type: object
+      properties:
+        rankId:
+          type: integer
+          format: int64
+    BackendApiClanDeleteRankResponse:
+      type: object
+    BackendApiClanDiscordIntegrationRequest:
+      type: object
+    BackendApiClanDiscordIntegrationResponse:
+      type: object
+      properties:
+        webhookUrl:
+          type: string
+        webhookEnabled:
+          type: boolean
+    BackendApiClanDiscordIntegrationUpdateRequest:
+      type: object
+      properties:
+        logEnable:
+          type: boolean
+    BackendApiClanDiscordIntegrationUpdateResponse:
+      type: object
+    BackendApiClanDiscordIntegrationWebhookUpdateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+    BackendApiClanDiscordIntegrationWebhookUpdateResponse:
+      type: object
+      properties:
+        success:
+          $ref: '#/components/schemas/BackendApiClanDiscordIntegrationWebhookUpdateResponseSuccess'
+        error:
+          $ref: '#/components/schemas/BackendApiClanDiscordIntegrationWebhookUpdateResponseErrorState'
+    BackendApiClanDiscordIntegrationWebhookUpdateResponseSuccess:
+      type: object
+    BackendApiClanDiscordIntegrationWebhookUpdateResponseErrorState:
+      type: string
+      enum:
+        - InvalidURL_Host
+        - InvalidURL_WebhookID
+        - InvalidURL_WebHookToken
+    BackendApiClanGetBankBalanceRequest:
+      type: object
+    BackendApiClanGetBankBalanceResponse:
+      type: object
+      properties:
+        balance:
+          type: integer
+          format: int64
+    BackendApiClanGetConfigRequest:
+      type: object
+    BackendApiClanGetConfigResponse:
+      type: object
+      properties:
+        switchCooldownDuration:
+          type: integer
+          format: int64
+    BackendApiClanGetInformationRequest:
+      type: object
+      properties:
+        clanId:
+          type: integer
+          format: int64
+    BackendApiClanGetInformationResponse:
+      type: object
+      properties:
+        clanId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        colorId:
+          type: string
+        emblemId:
+          type: string
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiClanGetInformationResponseBackendApiClanMemberInformation'
+        invites:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiClanGetInformationResponseBackendApiClanInviteInformation'
+        ranks:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiClanGetInformationResponseBackendApiClanRankInformation'
+        bankBalance:
+          type: integer
+          format: int64
+        maxMembers:
+          type: integer
+          format: int32
+    BackendApiClanGetInformationResponseBackendApiClanMemberInformation:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        rankId:
+          type: integer
+          format: int64
+        accountName:
+          type: string
+        accountPlatform:
+          $ref: '#/components/schemas/BackendApiGamePlatform'
+    BackendApiClanGetInformationResponseBackendApiClanInviteInformation:
+      type: object
+      properties:
+        inviteId:
+          type: integer
+          format: int64
+        characterId:
+          type: integer
+          format: int64
+        characterName:
+          type: string
+        accountName:
+          type: string
+        accountPlatform:
+          $ref: '#/components/schemas/BackendApiGamePlatform'
+    BackendApiClanGetInformationResponseBackendApiClanRankInformation:
+      type: object
+      properties:
+        rankId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        priority:
+          type: integer
+          format: int32
+        permissions:
+          type: integer
+          format: int64
+        icon:
+          type: string
+    BackendApiGameServerState:
+      type: string
+      enum:
+        - UNKNOWN
+        - AVAILABLE
+        - LOADING_TILE
+        - HOSTING_TILE
+        - SHUTTING_DOWN
+        - LOADING_TILE_FAILED
+    BackendAccountTier:
+      type: string
+      enum:
+        - DEFAULT
+        - TRUSTED
+        - DEVELOPER
+        - MACHINE
+    BackendApiGamePlatform:
+      type: string
+      enum:
+        - NONE
+        - XBOX
+        - PC
+        - CROSS
+    BackendApiRealmAccessDeniedData:
+      type: object
+      properties:
+        banned:
+          $ref: '#/components/schemas/BackendApiRealmAccessDeniedDataBannedData'
+        invalidPassword:
+          type: boolean
+        notAllowed:
+          type: boolean
+        incompatiblePlatform:
+          type: boolean
+    BackendApiRealmAccessDeniedDataBannedData:
+      type: object
+      properties:
+        until:
+          type: integer
+          format: int64
+        message:
+          type: string
+        isGlobal:
+          type: boolean
+    BackendApiClanInviteRequest:
+      type: object
+      properties:
+        invitedCharacterId:
+          type: integer
+          format: int64
+    BackendApiClanInviteResponse:
+      type: object
+    BackendApiClanQueryBasicRequest:
+      type: object
+      properties:
+        clanIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+    BackendApiClanQueryBasicResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiClanQueryBasicResponseClanPublicInfo'
+    BackendApiClanQueryBasicResponseClanPublicInfo:
+      type: object
+      properties:
+        clanId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        colorId:
+          type: string
+        emblemId:
+          type: string
+    BackendApiClanRemoveMemberRequest:
+      type: object
+      properties:
+        removeCharacterId:
+          type: integer
+          format: int64
+    BackendApiClanRemoveMemberResponse:
+      type: object
+      properties:
+        removedCharacterId:
+          type: integer
+          format: int64
+    BackendApiClanSetMemberRankRequest:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        rankId:
+          type: integer
+          format: int64
+    BackendApiClanSetMemberRankResponse:
+      type: object
+    BackendApiClanUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+    BackendApiClanUpdateResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        error:
+          $ref: '#/components/schemas/BackendApiInvalidNameMessage'
+    BackendApiClanUpdateRankRequest:
+      type: object
+      properties:
+        rankId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        priority:
+          type: integer
+          format: int32
+        permissions:
+          type: integer
+          format: int64
+        icon:
+          type: string
+    BackendApiClanUpdateRankResponse:
+      type: object
+    BackendApiErrorResponse:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/BackendApiErrorCode'
+        errorMessage:
+          type: string
+        userMessage:
+          type: string
+    BackendApiErrorCode:
+      type: string
+      enum:
+        - GenericError
+        - GenericError_InvalidRealm
+        - GenericError_InvalidRealmTile
+        - GenericError_TileNotHosted
+        - GenericError_TileNotActive
+        - GenericError_NotFound
+        - TradeStationError
+        - TradeStationTradeInterferenceError
+        - TradeStationMerchantDoesNotExist
+        - TradeStationOrderDoesNotExist
+        - TradeStationQuantityUnavailable
+        - TradeStationRealmTileDoesNotExist
+        - RealmTileQueueUnitAlreadyQueued
+        - PlayerPlayInRealm_Error
+        - PlayerPlayInRealm_PlayerOffMap
+        - PlayerPlayInRealm_MissingTileId
+        - PlayerPlayInRealm_TileNotSpawnable
+        - PlayerPlayInRealm_CharacterIsOffMap
+        - PlayerPlayInRealm_SpawnTargetInformationMissing
+        - PlayerPlayInRealm_TileIsNotPlayable
+        - Account_Error
+        - Account_DoesNotExist
+        - Account_IsBanned
+        - Character_Error
+        - Character_InvalidName
+        - Character_NameTaken
+        - Character_NotFound
+        - QueueError
+        - QueueEvasion_CharacterIsOffMap
+        - QueueEvasion_RealmSwitchForbidden
+        - QueueEvasion_CharacterNotInQueue
+        - QueueEvasion_TargetIsOrigin
+        - QueueEvasion_CharacterTileInactive
+        - RealmError
+        - RealmError_NotFound
+        - RealmEventError
+        - RealmEventError_PrematureEventStartingNotification
+        - RealmEventError_PrematureEventStartedNotification
+        - RealmEventError_PrematureEventEndedNotification
+        - InputError
+        - InputError_TooLong
+        - InputError_TooShort
+        - InputError_TooBig
+        - InputError_TooSmall
+        - InputError_LesserThanZero
+        - InputError_IsZero
+        - InputError_IllegalInput
+    BackendApiGameServerGetShopInventoryRequest:
+      type: object
+      properties:
+        uniqueNetId:
+          type: string
+    BackendApiGameServerGetShopInventoryResponse:
+      type: object
+      properties:
+        uniqueNetId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiGameServerGetShopInventoryResponseItem'
+    BackendApiGameServerGetShopInventoryResponseConsumable:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int32
+    BackendApiGameServerGetShopInventoryResponseItem:
+      type: object
+      properties:
+        identifier:
+          type: string
+        durable:
+          type: boolean
+        consumable:
+          $ref: '#/components/schemas/BackendApiGameServerGetShopInventoryResponseConsumable'
+    BackendApiGameServerLookupEncryptionKeyRequest:
+      type: object
+      properties:
+        token:
+          type: string
+    BackendApiGameServerLookupEncryptionKeyResponse:
+      type: object
+      properties:
+        invalidToken:
+          type: boolean
+        encryptionKey:
+          type: string
+          format: byte
+    BackendApiGameServerPingRequest:
+      type: object
+      properties:
+        connectionString:
+          type: string
+        state:
+          $ref: '#/components/schemas/BackendApiGameServerState'
+    BackendApiGameServerPingResponse:
+      type: object
+      properties:
+        loadTile:
+          $ref: '#/components/schemas/BackendApiGameServerPingResponseLoadTile'
+        shutdown:
+          $ref: '#/components/schemas/BackendApiGameServerPingResponseShutdown'
+    BackendApiGameServerPingResponseLoadTile:
+      type: object
+      properties:
+        realmId:
+          type: integer
+          format: int64
+        tileId:
+          type: integer
+          format: int64
+        mapPath:
+          type: string
+    BackendApiGameServerPingResponseShutdown:
+      type: object
+      properties:
+        requiresCleanup:
+          type: boolean
+    BackendApiGameServerRegisterRequest:
+      type: object
+      properties:
+        providerKey:
+          type: string
+        customerKey:
+          type: string
+        identifier:
+          type: string
+        port:
+          type: integer
+          format: int32
+        regionKey:
+          type: string
+        version:
+          type: string
+        slots:
+          type: integer
+          format: int32
+        description:
+          type: string
+        managementUrl:
+          type: string
+        useServerAddressAsConnectionString:
+          type: boolean
+    BackendApiGameServerRegisterResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        liveserverCert:
+          type: string
+    BackendApiStatisticsTrackGameDataRequest:
+      type: object
+      properties:
+        uptimeSinceSending:
+          type: number
+          format: float
+        avgPlayersCount:
+          type: number
+          format: float
+        gameEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiStatisticsTrackEvent'
+        auctionBids:
+          type: integer
+          format: int32
+        mapName:
+          type: string
+    BackendApiStatisticsTrackGameDataResponse:
+      type: object
+    BackendApiStatisticsTrackMetric:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: number
+          format: double
+    BackendApiStatisticsTrackEvent:
+      type: object
+      properties:
+        name:
+          type: string
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiStatisticsTrackEventEventMetric'
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiStatisticsTrackEventEventProperty'
+    BackendApiStatisticsTrackEventEventProperty:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    BackendApiStatisticsTrackEventEventMetric:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: number
+          format: double
+    BackendApiStatisticsTrackRequest:
+      type: object
+      properties:
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiStatisticsTrackMetric'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiStatisticsTrackEvent'
+    BackendApiStatisticsTrackResponse:
+      type: object
+    BackendApiJoinRealmGetSpawnTilesRequest:
+      type: object
+      properties:
+        realmId:
+          type: integer
+          format: int64
+        regionId:
+          type: integer
+          format: int64
+    BackendApiJoinRealmGetSpawnTilesResponse:
+      type: object
+      properties:
+        tiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiJoinRealmGetSpawnTilesResponseTile'
+    BackendApiJoinRealmGetSpawnTilesResponseTile:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        playerCount:
+          type: integer
+          format: int32
+        maxSlots:
+          type: integer
+          format: int32
+        platform:
+          $ref: '#/components/schemas/BackendApiGamePlatform'
+    BackendApiJoinRealmSearchRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        provider:
+          $ref: '#/components/schemas/BackendApiJoinRealmSearchRequestProvider'
+        regionKeys:
+          type: array
+          items:
+            type: string
+        platforms:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiGamePlatform'
+        status:
+          $ref: '#/components/schemas/BackendApiJoinRealmSearchRequestStatus'
+        restrictedAccess:
+          $ref: '#/components/schemas/BackendApiJoinRealmSearchRequestRestrictedAccess'
+        character:
+          $ref: '#/components/schemas/BackendApiJoinRealmSearchRequestCharacter'
+    BackendApiJoinRealmSearchRequestProvider:
+      type: string
+      enum:
+        - ANY_PROVIDER
+        - OFFICIAL
+        - PRIVATE
+    BackendApiJoinRealmSearchRequestStatus:
+      type: string
+      enum:
+        - ANY_STATUS
+        - OFFLINE
+        - ONLINE
+    BackendApiJoinRealmSearchRequestRestrictedAccess:
+      type: string
+      enum:
+        - ANY_RESTRICTED_ACCESS
+        - NO_RESTRICTED_ACCESS
+        - HAS_RESTRICTED_ACCESS
+    BackendApiJoinRealmSearchRequestCharacter:
+      type: string
+      enum:
+        - ANY_CHARACTER
+        - NO_CHARACTER
+        - HAS_CHARACTER
+    BackendApiJoinRealmSearchResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiJoinRealmSearchResponseRealmData'
+    BackendApiJoinRealmSearchResponseRealmData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        isOfficial:
+          type: boolean
+        regionKey:
+          type: string
+        platform:
+          $ref: '#/components/schemas/BackendApiGamePlatform'
+        isOnline:
+          type: boolean
+        message:
+          type: string
+        characterId:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        clanCap:
+          type: integer
+          format: int32
+        startDate:
+          type: integer
+          format: int64
+        endDate:
+          type: integer
+          format: int64
+        players:
+          type: integer
+          format: int32
+        maxPlayers:
+          type: integer
+          format: int32
+        hasPassword:
+          type: boolean
+        hasAllowlist:
+          type: boolean
+        description:
+          type: string
+    BackendApiJoinRealmVerifyRealmPasswordRequest:
+      type: object
+      properties:
+        realmId:
+          type: integer
+          format: int64
+        password:
+          type: string
+    BackendApiJoinRealmVerifyRealmPasswordResponse:
+      type: object
+      properties:
+        isValid:
+          type: boolean
+    BackendApiMigrationDeleteWalkerPreferenceRequest:
+      type: object
+      properties:
+        walkerId:
+          type: integer
+          format: int64
+    BackendApiMigrationDeleteWalkerPreferenceResponse:
+      type: object
+    BackendApiMigrationGetWalkerPreferencesRequest:
+      type: object
+    BackendApiMigrationGetWalkerPreferencesResponse:
+      type: object
+      properties:
+        walkers:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiMigrationGetWalkerPreferencesResponsePreferredWalker'
+        hasClan:
+          type: boolean
+        canManageClanPreferences:
+          type: boolean
+    BackendApiMigrationGetWalkerPreferencesResponsePreferredWalker:
+      type: object
+      properties:
+        isPersonal:
+          type: boolean
+        classPath:
+          type: string
+        realmTileId:
+          type: integer
+          format: int64
+        walkerId:
+          type: integer
+          format: int64
+        isPacked:
+          type: boolean
+        name:
+          type: string
+    BackendApiMigrationSetWalkerPreferenceRequest:
+      type: object
+      properties:
+        walkerId:
+          type: integer
+          format: int64
+    BackendApiMigrationSetWalkerPreferenceResponse:
+      type: object
+    BackendApiOffMapLobbyClearTargetRequest:
+      type: object
+    BackendApiOffMapLobbyClearTargetResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BackendApiOffMapLobbyData'
+    BackendApiOffMapLobbyCharacterData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        characterId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        crewId:
+          type: integer
+          format: int64
+        state:
+          $ref: '#/components/schemas/BackendApiOffMapLobbyCharacterDataOffMapCharacterState'
+        waterUnits:
+          type: integer
+          format: int32
+        flotillaFirstVisit:
+          type: boolean
+        accountName:
+          type: string
+        accountPlatform:
+          $ref: '#/components/schemas/BackendApiGamePlatform'
+    BackendApiOffMapLobbyCharacterDataOffMapCharacterState:
+      type: string
+      enum:
+        - ONLINE
+        - STANDBY
+        - OFFLINE
+    BackendApiOffMapLobbyWalkerData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        classPath:
+          type: string
+        crewId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        direction:
+          type: integer
+          format: int32
+        waterUnits:
+          type: integer
+          format: int32
+        waterCostMultiplier:
+          type: number
+          format: float
+        sandiness:
+          type: number
+          format: float
+        embarkNotAllowedReason:
+          $ref: '#/components/schemas/BackendApiOffMapLobbyWalkerDataEmbarkNotAllowedReason'
+        walkerId:
+          type: integer
+          format: int64
+    BackendApiOffMapLobbyWalkerDataEmbarkNotAllowedReason:
+      type: string
+      enum:
+        - NONE
+        - NO_PERMISSION
+        - RANK_TOO_LOW
+    BackendApiOffMapLobbyCrewData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        captainId:
+          type: integer
+          format: int64
+        walkerId:
+          type: integer
+          format: int64
+        targetTileId:
+          type: integer
+          format: int64
+        targetTileDirection:
+          type: integer
+          format: int32
+    BackendApiOffMapLobbyData:
+      type: object
+      properties:
+        characters:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiOffMapLobbyCharacterData'
+        walkers:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiOffMapLobbyWalkerData'
+        crews:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiOffMapLobbyCrewData'
+        player:
+          $ref: '#/components/schemas/BackendApiOffMapLobbyDataPlayer'
+    BackendApiOffMapLobbyDataPlayer:
+      type: object
+      properties:
+        clanId:
+          type: integer
+          format: int64
+        level:
+          type: integer
+          format: int32
+        money:
+          type: integer
+          format: int64
+        isAlive:
+          type: boolean
+        lastTransferDate:
+          type: integer
+          format: int64
+        isProtected:
+          type: boolean
+        intermediateCurrency:
+          type: integer
+          format: int64
+    BackendApiOffMapLobbyDisembarkRequest:
+      type: object
+    BackendApiOffMapLobbyDisembarkResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BackendApiOffMapLobbyData'
+    BackendApiOffMapLobbyDismissRequest:
+      type: object
+      properties:
+        dismissCharacterId:
+          type: integer
+          format: int64
+    BackendApiOffMapLobbyDismissResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BackendApiOffMapLobbyData'
+    BackendApiOffMapLobbyEmbarkRequest:
+      type: object
+      properties:
+        walkerId:
+          type: integer
+          format: int64
+    BackendApiOffMapLobbyEmbarkResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BackendApiOffMapLobbyData'
+    BackendApiOffMapLobbyQueryRequest:
+      type: object
+    BackendApiOffMapLobbyQueryResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BackendApiOffMapLobbyData'
+        queueId:
+          type: integer
+          format: int64
+        realmAccessDenied:
+          $ref: '#/components/schemas/BackendApiRealmAccessDeniedData'
+    BackendApiOffMapLobbyRecruitRequest:
+      type: object
+      properties:
+        recruitCharacterId:
+          type: integer
+          format: int64
+    BackendApiOffMapLobbyRecruitResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BackendApiOffMapLobbyData'
+    BackendApiOffMapLobbyRespawnRequest:
+      type: object
+    BackendApiOffMapLobbyRespawnResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BackendApiOffMapLobbyData'
+    BackendApiOffMapLobbySetTargetRequest:
+      type: object
+      properties:
+        tileId:
+          type: integer
+          format: int64
+        direction:
+          type: integer
+          format: int32
+    BackendApiOffMapLobbySetTargetResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BackendApiOffMapLobbyData'
+    BackendApiOffMapLobbyTransferRequest:
+      type: object
+      properties:
+        tileId:
+          type: integer
+          format: int64
+        direction:
+          type: integer
+          format: int32
+    BackendApiOffMapLobbyTransferResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BackendApiOffMapLobbyData'
+    BackendApiOffMapLobbyTravelRequest:
+      type: object
+      properties:
+        targetRealmTileId:
+          type: integer
+          format: int64
+        targetDirection:
+          type: integer
+          format: int32
+        orderedTravelPath:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntVector2D'
+    BackendApiOffMapLobbyTravelResponse:
+      type: object
+      properties:
+        queueId:
+          type: integer
+          format: int64
+        realmAccessDenied:
+          $ref: '#/components/schemas/BackendApiRealmAccessDeniedData'
+    BackendApiPlayerBanRequest:
+      type: object
+      properties:
+        uniqueNetId:
+          type: string
+    BackendApiPlayerBanResponse:
+      type: object
+    BackendApiPlayerCheckNameAvailabilityRequest:
+      type: object
+      properties:
+        realmId:
+          type: integer
+          format: int64
+        name:
+          type: string
+    BackendApiPlayerCheckNameAvailabilityResponse:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/BackendApiInvalidNameMessage'
+        success:
+          type: boolean
+    BackendApiPlayerCreateCharacterRequest:
+      type: object
+      properties:
+        realmId:
+          type: integer
+          format: int64
+        characterName:
+          type: string
+        characterCustomization:
+          type: string
+    BackendApiPlayerCreateCharacterResponse:
+      type: object
+      properties:
+        success:
+          $ref: '#/components/schemas/BackendApiPlayerCreateCharacterResponseSuccess'
+        invalidName:
+          $ref: '#/components/schemas/BackendApiInvalidNameMessage'
+        realmAccessDenied:
+          $ref: '#/components/schemas/BackendApiRealmAccessDeniedData'
+    BackendApiPlayerCreateCharacterResponseSuccess:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+    BackendApiPlayerDeleteCharacterRequest:
+      type: object
+    BackendApiPlayerDeleteCharacterResponse:
+      type: object
+      properties:
+        success:
+          $ref: '#/components/schemas/BackendApiPlayerDeleteCharacterResponseSuccess'
+        error:
+          $ref: '#/components/schemas/BackendApiPlayerDeleteCharacterResponseErrorState'
+    BackendApiPlayerDeleteCharacterResponseSuccess:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+    BackendApiPlayerDeleteCharacterResponseErrorState:
+      type: string
+      enum:
+        - AlreadyDeleted
+    BackendApiPlayerGetCharacterRequest:
+      type: object
+      properties:
+        realmId:
+          type: integer
+          format: int64
+    BackendApiPlayerGetCharacterResponse:
+      type: object
+      properties:
+        success:
+          $ref: '#/components/schemas/BackendApiPlayerGetCharacterResponseResultData'
+        notFound:
+          type: boolean
+        notAvailable:
+          type: boolean
+    BackendApiPlayerGetCharacterResponseRealmData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        isOfficial:
+          type: boolean
+        regionKey:
+          type: string
+        platform:
+          $ref: '#/components/schemas/BackendApiGamePlatform'
+        isOnline:
+          type: boolean
+        message:
+          type: string
+        size:
+          type: integer
+          format: int32
+        clanCap:
+          type: integer
+          format: int32
+        startDate:
+          type: integer
+          format: int64
+        endDate:
+          type: integer
+          format: int64
+        players:
+          type: integer
+          format: int32
+        maxPlayers:
+          type: integer
+          format: int32
+        hasPassword:
+          type: boolean
+        hasAllowlist:
+          type: boolean
+        description:
+          type: string
+        motd:
+          type: string
+        discordLink:
+          type: string
+    BackendApiPlayerGetCharacterResponseRegionData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        key:
+          type: string
+        canSpawn:
+          type: boolean
+    BackendApiPlayerGetCharacterResponseCharacterState:
+      type: string
+      enum:
+        - ON_MAP
+        - OFF_MAP
+        - UNASSIGNED
+        - EVADING
+        - MIGRATING
+    BackendApiPlayerGetCharacterResponseCharacterData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        state:
+          $ref: '#/components/schemas/BackendApiPlayerGetCharacterResponseCharacterState'
+        customization:
+          type: string
+        level:
+          type: integer
+          format: int32
+        money:
+          type: integer
+          format: int64
+        intermediateCurrency:
+          type: integer
+          format: int64
+    BackendApiPlayerGetCharacterResponseClanData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        colorId:
+          type: string
+        emblemId:
+          type: string
+    BackendApiPlayerGetCharacterResponseTileData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        regionId:
+          type: integer
+          format: int64
+        isActive:
+          type: boolean
+        canQueue:
+          type: boolean
+    BackendApiPlayerGetCharacterResponseAccountData:
+      type: object
+      properties:
+        hasValidRealmPassword:
+          type: boolean
+    BackendApiPlayerGetCharacterResponseResultData:
+      type: object
+      properties:
+        realm:
+          $ref: '#/components/schemas/BackendApiPlayerGetCharacterResponseRealmData'
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiPlayerGetCharacterResponseRegionData'
+        character:
+          $ref: '#/components/schemas/BackendApiPlayerGetCharacterResponseCharacterData'
+        clan:
+          $ref: '#/components/schemas/BackendApiPlayerGetCharacterResponseClanData'
+        tile:
+          $ref: '#/components/schemas/BackendApiPlayerGetCharacterResponseTileData'
+        account:
+          $ref: '#/components/schemas/BackendApiPlayerGetCharacterResponseAccountData'
+    BackendApiPlayerGetCharacterListRequest:
+      type: object
+    BackendApiPlayerGetCharacterListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiPlayerGetCharacterListResponseItemData'
+    BackendApiPlayerGetCharacterListResponseItemData:
+      type: object
+      properties:
+        realmId:
+          type: integer
+          format: int64
+        realmName:
+          type: string
+        characterId:
+          type: integer
+          format: int64
+        characterName:
+          type: string
+    BackendApiPlayerGetClanInvitesRequest:
+      type: object
+    BackendApiPlayerGetClanInvitesResponse:
+      type: object
+      properties:
+        invites:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiPlayerGetClanInvitesResponseBackendApiPlayerClanInvite'
+        joinCooldownDate:
+          type: integer
+          format: int64
+    BackendApiPlayerGetClanInvitesResponseBackendApiPlayerClanInvite:
+      type: object
+      properties:
+        inviteId:
+          type: integer
+          format: int64
+        clanId:
+          type: integer
+          format: int64
+        clanName:
+          type: string
+        inviterCharacterId:
+          type: integer
+          format: int64
+        inviterCharacterName:
+          type: string
+        inviterAccountName:
+          type: string
+        inviterAccountPlatform:
+          $ref: '#/components/schemas/BackendApiGamePlatform'
+        inviterAccountUniquenetid:
+          type: string
+    BackendApiPlayerLoginRequest:
+      type: object
+      properties:
+        uniqueNetId:
+          type: string
+        name:
+          type: string
+        createNewSession:
+          type: boolean
+        platform:
+          $ref: '#/components/schemas/BackendApiGamePlatform'
+    BackendApiPlayerLoginResponse:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/BackendApiPlayerLoginResultData'
+    BackendApiPlayerLoginResultData:
+      type: object
+      properties:
+        success:
+          $ref: '#/components/schemas/BackendApiPlayerLoginResultDataAccountAuthData'
+    BackendApiPlayerLoginResultDataAccountAuthData:
+      type: object
+      properties:
+        token:
+          type: string
+        name:
+          type: string
+        isNew:
+          type: boolean
+        banned:
+          type: boolean
+        banEndDate:
+          type: integer
+          format: int64
+        banMessage:
+          type: string
+        motd:
+          type: string
+        encryptionToken:
+          type: string
+        encryptionKey:
+          type: string
+          format: byte
+        platform:
+          $ref: '#/components/schemas/BackendApiGamePlatform'
+    BackendApiPlayerLoginWithSteamRequest:
+      type: object
+      properties:
+        uniqueNetId:
+          type: string
+        steamName:
+          type: string
+        steamSessionTicket:
+          type: string
+        createNewSession:
+          type: boolean
+    BackendApiPlayerLoginWithSteamResponse:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/BackendApiPlayerLoginResultData'
+    BackendApiPlayerLoginWithXboxLiveRequest:
+      type: object
+      properties:
+        uniqueNetId:
+          type: string
+        name:
+          type: string
+        xstsToken:
+          type: string
+        createNewSession:
+          type: boolean
+    BackendApiPlayerLoginWithXboxLiveResponse:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/BackendApiPlayerLoginResultData'
+    BackendApiPlayerPlayWithCharacterRequest:
+      type: object
+    BackendApiPlayerPlayWithCharacterResponse:
+      type: object
+      properties:
+        queueIdentifier:
+          type: integer
+          format: int64
+        realmAccessDenied:
+          $ref: '#/components/schemas/BackendApiRealmAccessDeniedData'
+        queueInitializing:
+          type: boolean
+    BackendApiPlayerPlayWithNewCharacterRequest:
+      type: object
+      properties:
+        realmTileId:
+          type: integer
+          format: int64
+        regionId:
+          type: integer
+          format: int64
+    BackendApiPlayerPlayWithNewCharacterResponse:
+      type: object
+      properties:
+        queueIdentifier:
+          type: integer
+          format: int64
+        realmAccessDenied:
+          $ref: '#/components/schemas/BackendApiRealmAccessDeniedData'
+    BackendApiPlayerCharacterNotificationType:
+      type: string
+      enum:
+        - ClanInvite
+    BackendApiPlayerCharacterClanInviteNotification:
+      type: object
+      properties:
+        clan:
+          type: string
+    BackendApiPlayerPullNotificationsRequest:
+      type: object
+      properties:
+        notificationsVersion:
+          type: integer
+          format: int64
+    BackendApiPlayerPullNotificationsResponse:
+      type: object
+      properties:
+        notificationsVersion:
+          type: integer
+          format: int64
+        clanInvites:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiPlayerCharacterClanInviteNotification'
+        clanInviteCancelled:
+          type: boolean
+    BackendApiQueuedConnectionRequest:
+      type: object
+      properties:
+        queueId:
+          type: integer
+          format: int64
+    BackendApiQueuedConnectionResponse:
+      type: object
+      properties:
+        queueId:
+          type: integer
+          format: int64
+        queuePosition:
+          type: integer
+          format: int32
+        connectionString:
+          type: string
+        waitingTime:
+          type: integer
+          format: int64
+        characterId:
+          type: integer
+          format: int64
+        direction:
+          type: integer
+          format: int32
+        tileOnline:
+          type: boolean
+        tileId:
+          type: integer
+          format: int64
+        realmId:
+          type: integer
+          format: int64
+        offmapCharacterId:
+          type: integer
+          format: int64
+    BackendApiConnectionResponse:
+      type: object
+      properties:
+        queueId:
+          type: integer
+          format: int64
+        connectionString:
+          type: string
+    BackendApiRealmTileType:
+      type: string
+      enum:
+        - OASIS
+        - MINI_OASIS
+        - EVENT
+        - FLOTILLA
+    BackendApiRealmTileDifficulty:
+      type: string
+      enum:
+        - EASY
+        - MEDIUM
+        - HARD
+    BackendApiRealmTilePvpMode:
+      type: string
+      enum:
+        - FULL_PVP
+        - NO_PVP
+    BackendApiRealmTileClaimability:
+      type: string
+      enum:
+        - NOT_CLAIMABLE
+        - PROXY_CLAIMABLE
+        - CLAIMABLE
+    BackendApiRealmTravelMode:
+      type: string
+      enum:
+        - DIRECT_PORTALS
+        - OFF_MAP_LOBBY_PORTALS
+    BackendApiRealmTileClaim:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        clanId:
+          type: integer
+          format: int64
+        createdDate:
+          type: integer
+          format: int64
+    BackendApiRealmTilePortal:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        direction:
+          type: integer
+          format: int32
+        targetTileId:
+          type: integer
+          format: int64
+        targetTileDirection:
+          type: integer
+          format: int32
+        closeTime:
+          type: integer
+          format: int64
+        openTime:
+          type: integer
+          format: int64
+        createTime:
+          type: integer
+          format: int64
+        targetTileType:
+          $ref: '#/components/schemas/BackendApiRealmTileType'
+    BackendApiRealmTileInformation:
+      type: object
+      properties:
+        x:
+          type: integer
+          format: int32
+        y:
+          type: integer
+          format: int32
+        type:
+          $ref: '#/components/schemas/BackendApiRealmTileType'
+        isSpawnable:
+          type: boolean
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        maxPlayerCount:
+          type: integer
+          format: int32
+        foliageRespawnRate:
+          type: number
+          format: float
+        experienceMultiplier:
+          type: number
+          format: float
+        harvestQuantityMultiplier:
+          type: number
+          format: float
+        decayDate:
+          type: integer
+          format: int64
+        claimability:
+          $ref: '#/components/schemas/BackendApiRealmTileClaimability'
+        claim:
+          $ref: '#/components/schemas/BackendApiRealmTileClaim'
+        clanCap:
+          type: integer
+          format: int32
+        reservedSlotsFraction:
+          type: number
+          format: float
+        additionalSettings:
+          type: string
+        quality:
+          type: integer
+          format: int32
+        pvpMode:
+          $ref: '#/components/schemas/BackendApiRealmTilePvpMode'
+    BackendApiRealmInformation:
+      type: object
+      properties:
+        name:
+          type: string
+        tile:
+          $ref: '#/components/schemas/BackendApiRealmTileInformation'
+        presentationModeEnabled:
+          type: boolean
+        travelMode:
+          $ref: '#/components/schemas/BackendApiRealmTravelMode'
+        statusMessage:
+          type: string
+        scheduledShutdownTime:
+          type: integer
+          format: int64
+        id:
+          type: integer
+          format: int64
+        isPrivate:
+          type: boolean
+        researchCostMultiplier:
+          type: number
+          format: float
+        additionalSettings:
+          type: string
+        worldTravelWaterCostMultiplier:
+          type: number
+          format: float
+    BackendApiRealmGetMapRequest:
+      type: object
+      properties:
+        realmId:
+          type: integer
+          format: int64
+    BackendApiRealmGetMapResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        minX:
+          type: integer
+          format: int64
+        maxX:
+          type: integer
+          format: int64
+        minY:
+          type: integer
+          format: int64
+        maxY:
+          type: integer
+          format: int64
+        tiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiRealmGetMapResponseTile'
+        characterX:
+          type: integer
+          format: int64
+        characterY:
+          type: integer
+          format: int64
+        characterDirection:
+          type: integer
+          format: int32
+        characterId:
+          type: integer
+          format: int64
+        clanLookup:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/BackendApiRealmGetMapResponseClanInfo'
+        characterLookup:
+          type: object
+          additionalProperties:
+            type: string
+        regionLookup:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/BackendApiRealmGetMapResponseRegion'
+        mapLookup:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/BackendApiRealmGetMapResponseMap'
+        travelMode:
+          $ref: '#/components/schemas/BackendApiRealmTravelMode'
+    BackendApiRealmGetMapResponseTile:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        x:
+          type: integer
+          format: int64
+        y:
+          type: integer
+          format: int64
+        isOnline:
+          type: boolean
+        isSpawnable:
+          type: boolean
+        name:
+          type: string
+        mapId:
+          type: integer
+          format: int64
+        type:
+          $ref: '#/components/schemas/BackendApiRealmTileType'
+        platform:
+          $ref: '#/components/schemas/BackendApiGamePlatform'
+        decayDate:
+          type: integer
+          format: int64
+        activationDate:
+          type: integer
+          format: int64
+        queueEstimatedWaitingTime:
+          type: integer
+          format: int64
+        usedSlots:
+          type: integer
+          format: int32
+        maxSlots:
+          type: integer
+          format: int32
+        tradeSummary:
+          $ref: '#/components/schemas/BackendApiRealmGetMapResponseTileTradeSummary'
+        tradeStationsTax:
+          type: integer
+          format: int32
+        directions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiRealmGetMapResponseTileDirection'
+        difficulty:
+          $ref: '#/components/schemas/BackendApiRealmTileDifficulty'
+        playerDeathsPast_24Hours:
+          type: integer
+          format: int32
+        playerDeathsPastHour:
+          type: integer
+          format: int32
+        claim:
+          $ref: '#/components/schemas/BackendApiRealmGetMapResponseTileClaim'
+        regionId:
+          type: integer
+          format: int64
+        claimability:
+          $ref: '#/components/schemas/BackendApiRealmTileClaimability'
+        clanCap:
+          type: integer
+          format: int32
+        pvpMode:
+          $ref: '#/components/schemas/BackendApiRealmTilePvpMode'
+        quality:
+          type: integer
+          format: int32
+    BackendApiRealmGetMapResponseTileTradeSummary:
+      type: object
+      properties:
+        totalTradeValue:
+          type: number
+          format: float
+        potentialRevenue:
+          type: number
+          format: float
+        supply:
+          type: integer
+          format: int64
+        demand:
+          type: integer
+          format: int64
+        sellOrders:
+          type: integer
+          format: int64
+        buyOrders:
+          type: integer
+          format: int64
+        tradingStations:
+          type: integer
+          format: int64
+    BackendApiRealmGetMapResponseTileDirection:
+      type: object
+      properties:
+        directionNumber:
+          type: integer
+          format: int32
+        walkers:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiRealmGetMapResponseTileWalker'
+    BackendApiRealmGetMapResponseTileWalker:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        classPath:
+          type: string
+        name:
+          type: string
+        waterCostMultiplier:
+          type: number
+          format: float
+        waterUnits:
+          type: integer
+          format: int32
+        characterOwnerId:
+          type: integer
+          format: int64
+        characterOwnerName:
+          type: string
+        sharedWithClan:
+          type: boolean
+        walkerId:
+          type: integer
+          format: int64
+    BackendApiRealmGetMapResponseTileClaim:
+      type: object
+      properties:
+        characterOwnerId:
+          type: integer
+          format: int64
+        clanOwnerId:
+          type: integer
+          format: int64
+        claimCreatedDate:
+          type: integer
+          format: int64
+        radius:
+          type: integer
+          format: int32
+        bonusEarned:
+          type: number
+          format: float
+        bonusStolen:
+          type: number
+          format: float
+    BackendApiRealmGetMapResponseClanInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        colorId:
+          type: string
+    BackendApiRealmGetMapResponseRegion:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+    BackendApiRealmGetMapResponseMap:
+      type: object
+      properties:
+        path:
+          type: string
+    BackendApiRealmGetMapPortalsRequest:
+      type: object
+      properties:
+        realmId:
+          type: integer
+          format: int64
+        version:
+          type: integer
+          format: int64
+    BackendApiRealmGetMapPortalsResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+        isDelta:
+          type: boolean
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiRealmGetMapPortalsResponseItemData'
+        deleted:
+          type: array
+          items:
+            type: integer
+            format: int64
+    BackendApiRealmGetMapPortalsResponseItemData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        sourceTileId:
+          type: integer
+          format: int64
+        sourceTileDirection:
+          type: integer
+          format: int32
+        targetTileId:
+          type: integer
+          format: int64
+        targetTileDirection:
+          type: integer
+          format: int32
+        openTime:
+          type: integer
+          format: int64
+        closeTime:
+          type: integer
+          format: int64
+    BackendApiRealmTileJoinQueueCancelRequest:
+      type: object
+      properties:
+        identifier:
+          type: integer
+          format: int64
+    BackendApiRealmTileJoinQueueCancelResponse:
+      type: object
+      properties:
+        trackingId:
+          type: integer
+          format: int64
+    BackendApiRealmTileJoinQueueEvadeRequest:
+      type: object
+      properties:
+        identifier:
+          type: integer
+          format: int64
+    BackendApiRealmTileJoinQueueEvadeResponse:
+      type: object
+      properties:
+        trackingId:
+          type: integer
+          format: int64
+    BackendApiRealmTileJoinQueueGetStatusRequest:
+      type: object
+      properties:
+        identifier:
+          type: integer
+          format: int64
+        changeTrackingIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+    BackendApiRealmTileJoinQueueGetStatusResponse:
+      type: object
+      properties:
+        identifier:
+          type: integer
+          format: int64
+        changeStates:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiRealmTileJoinQueueGetStatusResponseChangeState'
+        queued:
+          $ref: '#/components/schemas/BackendApiRealmTileJoinQueueGetStatusResponseQueued'
+        connect:
+          $ref: '#/components/schemas/BackendApiRealmTileJoinQueueGetStatusResponseConnect'
+        canceling:
+          $ref: '#/components/schemas/BackendApiRealmTileJoinQueueGetStatusResponseCanceling'
+        canceled:
+          $ref: '#/components/schemas/BackendApiRealmTileJoinQueueGetStatusResponseCanceled'
+        joined:
+          type: boolean
+    BackendApiRealmTileJoinQueueGetStatusResponseChangeState:
+      type: object
+      properties:
+        trackingId:
+          type: integer
+          format: int64
+        applied:
+          type: boolean
+    BackendApiRealmTileJoinQueueGetStatusResponseQueued:
+      type: object
+      properties:
+        position:
+          type: integer
+          format: int32
+        estimatedWaitingTime:
+          type: integer
+          format: int64
+        canEvade:
+          type: boolean
+        isOnline:
+          type: boolean
+    BackendApiRealmTileJoinQueueGetStatusResponseConnect:
+      type: object
+      properties:
+        connectionString:
+          type: string
+    BackendApiRealmTileJoinQueueGetStatusResponseCanceling:
+      type: object
+      properties:
+        requestedByUser:
+          type: boolean
+        isEvading:
+          type: boolean
+    BackendApiRealmTileJoinQueueGetStatusResponseCanceled:
+      type: object
+      properties:
+        requestedByUser:
+          type: boolean
+        wasEvaded:
+          type: boolean
+    BackendApiShopAddXboxFundsRequest:
+      type: object
+      properties:
+        consumableId:
+          type: string
+        amount:
+          type: integer
+          format: int32
+    BackendApiShopAddXboxFundsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    BackendApiShopBuyOfferRequest:
+      type: object
+      properties:
+        offerId:
+          type: integer
+          format: int64
+        offerVersionId:
+          type: integer
+          format: int64
+        transactionGuid:
+          type: string
+    BackendApiShopBuyOfferResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        invalidOffer:
+          type: boolean
+        outdatedOffer:
+          type: boolean
+        unavailableOffer:
+          type: boolean
+        insufficientFunds:
+          type: boolean
+    BackendApiShopGetBalanceRequest:
+      type: object
+    BackendApiShopGetBalanceResponse:
+      type: object
+      properties:
+        current:
+          type: integer
+          format: int64
+    BackendApiShopGetCurrencyBundleListRequest:
+      type: object
+    BackendApiShopGetCurrencyBundleListResponse:
+      type: object
+      properties:
+        currencyBundles:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiShopGetCurrencyBundleListResponseCurrencyBundle'
+    BackendApiShopGetCurrencyBundleListResponseCurrencyBundle:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        identifier:
+          type: string
+        totalAmount:
+          type: integer
+          format: int64
+        bonusAmount:
+          type: integer
+          format: int64
+        price:
+          type: integer
+          format: int64
+        priceCurrency:
+          type: string
+    BackendApiShopGetInventoryRequest:
+      type: object
+    BackendApiShopGetInventoryResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiShopGetInventoryResponseItem'
+    BackendApiShopGetInventoryResponseConsumable:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int32
+    BackendApiShopGetInventoryResponseItem:
+      type: object
+      properties:
+        identifier:
+          type: string
+        durable:
+          type: boolean
+        consumable:
+          $ref: '#/components/schemas/BackendApiShopGetInventoryResponseConsumable'
+    BackendApiShopGetOfferListRequest:
+      type: object
+    BackendApiShopGetOfferListResponse:
+      type: object
+      properties:
+        offers:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiShopGetOfferListResponseOffer'
+    BackendApiShopGetOfferListResponseConsumable:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int32
+    BackendApiShopGetOfferListResponseItem:
+      type: object
+      properties:
+        identifier:
+          type: string
+        durable:
+          type: boolean
+        consumable:
+          $ref: '#/components/schemas/BackendApiShopGetOfferListResponseConsumable'
+    BackendApiShopGetOfferListResponseOffer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        versionId:
+          type: integer
+          format: int64
+        identifier:
+          type: string
+        categoryIdentifier:
+          type: string
+        startDate:
+          type: integer
+          format: int64
+        endDate:
+          type: integer
+          format: int64
+        price:
+          type: integer
+          format: int64
+        originalPrice:
+          type: integer
+          format: int64
+        discount:
+          type: integer
+          format: int32
+        popularity:
+          type: number
+          format: float
+        featured:
+          type: boolean
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiShopGetOfferListResponseItem'
+    BackendApiShopReceiveUnclaimedItemsRequest:
+      type: object
+    BackendApiShopReceiveUnclaimedItemsResponse:
+      type: object
+      properties:
+        itemsReceived:
+          type: integer
+          format: int64
+    BackendApiShopSteamFinalizeCurrencyBundleMtxRequest:
+      type: object
+      properties:
+        orderId:
+          type: integer
+          format: int64
+        authorized:
+          type: boolean
+    BackendApiShopSteamFinalizeCurrencyBundleMtxResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        steamError:
+          $ref: '#/components/schemas/BackendApiShopSteamFinalizeCurrencyBundleMtxResponseSteamErrorData'
+    BackendApiShopSteamFinalizeCurrencyBundleMtxResponseSteamErrorData:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int64
+        description:
+          type: string
+    BackendApiShopSteamInitCurrencyBundleMtxRequest:
+      type: object
+      properties:
+        currencyBundleId:
+          type: integer
+          format: int64
+        language:
+          type: string
+        description:
+          type: string
+    BackendApiShopSteamInitCurrencyBundleMtxResponse:
+      type: object
+      properties:
+        success:
+          $ref: '#/components/schemas/BackendApiShopSteamInitCurrencyBundleMtxResponseSuccessData'
+        steamError:
+          $ref: '#/components/schemas/BackendApiShopSteamInitCurrencyBundleMtxResponseSteamErrorData'
+        invalidCurrencyBundle:
+          type: boolean
+    BackendApiShopSteamInitCurrencyBundleMtxResponseSuccessData:
+      type: object
+      properties:
+        orderId:
+          type: integer
+          format: int64
+    BackendApiShopSteamInitCurrencyBundleMtxResponseSteamErrorData:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int64
+        description:
+          type: string
+    BackendApiShopTestCreditCurrencyRequest:
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: int64
+    BackendApiShopTestCreditCurrencyResponse:
+      type: object
+    BackendApiSlotLeaseAuctionWindow:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        realmTileId:
+          type: integer
+          format: int64
+        softCloseDate:
+          type: integer
+          format: int64
+        hardCloseDate:
+          type: integer
+          format: int64
+        isClosed:
+          type: boolean
+        startDate:
+          type: integer
+          format: int64
+        endDate:
+          type: integer
+          format: int64
+        totalSlots:
+          type: integer
+          format: int32
+        playerSlots:
+          type: integer
+          format: int32
+        totalBidsAmount:
+          type: integer
+          format: int64
+        playerBidsAmount:
+          type: integer
+          format: int64
+        playerCanBid:
+          type: boolean
+    BackendApiSlotLeaseAuctionGetWindowListRequest:
+      type: object
+      properties:
+        realmTileId:
+          type: integer
+          format: int64
+    BackendApiSlotLeaseAuctionGetWindowListResponse:
+      type: object
+      properties:
+        windows:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiSlotLeaseAuctionWindow'
+    BackendApiSlotLeaseAuctionSetWindowBidRequest:
+      type: object
+      properties:
+        realmTileId:
+          type: integer
+          format: int64
+        realmTileWindowId:
+          type: integer
+          format: int64
+        amount:
+          type: integer
+          format: int64
+    BackendApiSlotLeaseAuctionSetWindowBidResponse:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/BackendApiSlotLeaseAuctionSetWindowBidResponseResult'
+        window:
+          $ref: '#/components/schemas/BackendApiSlotLeaseAuctionWindow'
+    BackendApiSlotLeaseAuctionSetWindowBidResponseResult:
+      type: string
+      enum:
+        - UNKNOWN
+        - SUCCESS
+        - INVALID_WINDOW
+        - CLOSED_WINDOW
+        - NO_CLAN
+        - INSUFFICIENT_CLAN_PERMISSION
+        - INSUFFICIENT_CLAN_BANK_FUNDS
+        - BID_CHANGED
+        - BID_AMOUNT_TOO_LOW
+    BackendApiStatisticsTrackPlayerDeathsRequest:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+    BackendApiStatisticsTrackPlayerDeathsResponse:
+      type: object
+    BackendApiSystemAccountData:
+      type: object
+      properties:
+        globalVersion:
+          type: integer
+          format: int64
+        customerVersion:
+          type: integer
+          format: int64
+        banned:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiSystemAccountDataBanData'
+        unbanned:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiSystemAccountDataUnbanData'
+        tierUpdates:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiSystemAccountDataTierUpdateData'
+    BackendApiSystemAccountDataBanData:
+      type: object
+      properties:
+        uniqueNetId:
+          type: string
+        banEndDate:
+          type: integer
+          format: int64
+        banMessage:
+          type: string
+    BackendApiSystemAccountDataUnbanData:
+      type: object
+      properties:
+        uniqueNetId:
+          type: string
+    BackendApiSystemAccountDataTierUpdateData:
+      type: object
+      properties:
+        uniqueNetId:
+          type: string
+        tier:
+          $ref: '#/components/schemas/BackendAccountTier'
+    BackendApiSystemAccountNotificationsRequest:
+      type: object
+      properties:
+        globalVersion:
+          type: integer
+          format: int64
+        customerVersion:
+          type: integer
+          format: int64
+    BackendApiSystemAccountNotificationsResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BackendApiSystemAccountData'
+    BackendApiSystemLoadAccountsRequest:
+      type: object
+    BackendApiSystemLoadAccountsResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/BackendApiSystemAccountData'
+    BackendApiTextFilterGetListRequest:
+      type: object
+    BackendApiTextFilterGetListResponse:
+      type: object
+      properties:
+        words:
+          type: array
+          items:
+            type: string
+        symbols:
+          type: array
+          items:
+            type: string
+        sentences:
+          type: array
+          items:
+            type: string
+    BackendApiTileData:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+        characters:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileDataCharacterData'
+        actors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actor'
+        arrivedWorldTravelParties:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileDataArrivedWorldTravelPartyData'
+        lookupCharacters:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileDataCharacterLookupData'
+        lookupClans:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileDataClanLookupData'
+        characterQueueEvasions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileDataCharacterQueueEvasionData'
+        tradeOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileDataTradeOrderData'
+        claimResourceTransfers:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileDataClaimResourceTransferData'
+        realmStatusChanged:
+          $ref: '#/components/schemas/BackendApiTileDataRealmStatusChangedNotification'
+        realmTileDecayTimeChanged:
+          $ref: '#/components/schemas/BackendApiTileDataRealmTileDecayTimeChangedNotification'
+        realmTileMultipliersChanged:
+          $ref: '#/components/schemas/BackendApiTileDataRealmTileMultipliersChangedNotification'
+        realmTileIsSpawnableChanged:
+          $ref: '#/components/schemas/BackendApiTileDataRealmTileIsSpawnableChangedNotification'
+        realmTileNameChanged:
+          $ref: '#/components/schemas/BackendApiTileDataRealmTileNameChangedNotification'
+        realmTileProxyClaimChanged:
+          $ref: '#/components/schemas/BackendApiTileDataRealmTileProxyClaimChangedNotification'
+        vaultMoneyDepositNotifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileDataVaultMoneyDepositNotification'
+        tradeOrderNotifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileDataTradeOrderData'
+        slotLeaseWindow:
+          $ref: '#/components/schemas/BackendApiTileDataSlotLeaseWindowData'
+    BackendApiTileDataCharacterData:
+      type: object
+      properties:
+        uniqueNetId:
+          type: string
+        name:
+          type: string
+        playerState:
+          $ref: '#/components/schemas/Actor'
+        clanId:
+          type: integer
+          format: int64
+        clanPermissions:
+          type: integer
+          format: int64
+        characterId:
+          type: integer
+          format: int64
+        level:
+          type: integer
+          format: int32
+        money:
+          type: integer
+          format: int64
+        customization:
+          type: string
+        tier:
+          $ref: '#/components/schemas/BackendAccountTier'
+        flotillaCitizen:
+          type: boolean
+        lastTransferDate:
+          type: integer
+          format: int64
+        vaultMoney:
+          type: integer
+          format: int64
+        accountName:
+          type: string
+        accountPlatform:
+          $ref: '#/components/schemas/BackendApiGamePlatform'
+        intermediateCurrency:
+          type: integer
+          format: int64
+        lastTransferProcessed:
+          type: boolean
+    BackendApiTileDataArrivedWorldTravelPartyData:
+      type: object
+      properties:
+        partyId:
+          type: string
+        enterDirection:
+          type: integer
+          format: int32
+        walkerGuid:
+          type: string
+        playerGuids:
+          type: array
+          items:
+            type: string
+        waterConsumed:
+          type: integer
+          format: int32
+    BackendApiTileDataCharacterLookupData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        clanId:
+          type: integer
+          format: int64
+        clanPermissions:
+          type: integer
+          format: int64
+        accountName:
+          type: string
+        accountPlatform:
+          $ref: '#/components/schemas/BackendApiGamePlatform'
+    BackendApiTileDataClanLookupData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        colorId:
+          type: string
+        emblemId:
+          type: string
+    BackendApiTileDataCharacterQueueEvasionData:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+    BackendApiTileDataTradeOrderData:
+      type: object
+      properties:
+        tradeStationGuid:
+          type: string
+        orderGuid:
+          type: string
+        characterId:
+          type: integer
+          format: int64
+        item:
+          $ref: '#/components/schemas/Item'
+        price:
+          type: number
+          format: float
+        quantity:
+          type: integer
+          format: int32
+        recycleTicks:
+          type: integer
+          format: int64
+    BackendApiTileDataClaimResourceTransferData:
+      type: object
+      properties:
+        senderTileId:
+          type: integer
+          format: int64
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemActor'
+    BackendApiTileDataRealmStatusChangedNotification:
+      type: object
+      properties:
+        statusMessage:
+          type: string
+        scheduledShutdownTime:
+          type: integer
+          format: int64
+    BackendApiTileDataRealmTileDecayTimeChangedNotification:
+      type: object
+      properties:
+        decayDate:
+          type: integer
+          format: int64
+    BackendApiTileDataRealmTileMultipliersChangedNotification:
+      type: object
+      properties:
+        foliageRespawnRate:
+          type: number
+          format: float
+        experience:
+          type: number
+          format: float
+        harvestQuantity:
+          type: number
+          format: float
+        researchCost:
+          type: number
+          format: float
+    BackendApiTileDataRealmTileIsSpawnableChangedNotification:
+      type: object
+      properties:
+        isSpawnable:
+          type: boolean
+    BackendApiTileDataRealmTileNameChangedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+    BackendApiTileDataRealmTileProxyClaimChangedNotification:
+      type: object
+      properties:
+        proxyClaim:
+          $ref: '#/components/schemas/BackendApiRealmTileClaim'
+    BackendApiTileDataVaultMoneyDepositNotification:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        amount:
+          type: integer
+          format: int64
+    BackendApiTileDataSlotLeaseWindowData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        startDate:
+          type: integer
+          format: int64
+        endDate:
+          type: integer
+          format: int64
+        leases:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileDataSlotLeaseWindowDataLease'
+    BackendApiTileDataSlotLeaseWindowDataLease:
+      type: object
+      properties:
+        clanId:
+          type: integer
+          format: int64
+        slots:
+          type: integer
+          format: int32
+    Item:
+      type: object
+      properties:
+        templateClass:
+          type: string
+        wear:
+          type: integer
+          format: int32
+        quality:
+          type: integer
+          format: int32
+        skin:
+          type: integer
+          format: int32
+        dyes:
+          type: array
+          items:
+            type: integer
+            format: int32
+        perks:
+          type: array
+          items:
+            type: string
+    ItemWithQuantity:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/Item'
+        quantity:
+          type: integer
+          format: int32
+    ItemActor:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        item:
+          $ref: '#/components/schemas/Item'
+    DropBag:
+      type: object
+      properties:
+        lockEndTime:
+          type: number
+          format: float
+        timeOffset:
+          $ref: '#/components/schemas/TimeOffset'
+    TimeOffset:
+      type: object
+      properties:
+        tileId:
+          type: integer
+          format: int64
+        timeValue:
+          type: number
+          format: double
+    TileTime:
+      type: object
+      properties:
+        totalTimeElapsed:
+          type: number
+          format: double
+    BackendApiTileLoadRequest:
+      type: object
+    BackendApiTileLoadResponse:
+      type: object
+      properties:
+        realmInfo:
+          $ref: '#/components/schemas/BackendApiRealmInformation'
+        data:
+          $ref: '#/components/schemas/BackendApiTileData'
+        snapshotVersion:
+          type: integer
+          format: int64
+    BackendApiTileNeighborsRequest:
+      type: object
+      properties:
+        radius:
+          type: integer
+          format: int32
+    BackendApiTileNeighborsResponse:
+      type: object
+      properties:
+        tiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileNeighborsResponseTile'
+    BackendApiTileNeighborsResponseTile:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/BackendApiRealmTileType'
+        difficulty:
+          $ref: '#/components/schemas/BackendApiRealmTileDifficulty'
+        claimability:
+          $ref: '#/components/schemas/BackendApiRealmTileClaimability'
+        x:
+          type: integer
+          format: int32
+        y:
+          type: integer
+          format: int32
+        activationDate:
+          type: integer
+          format: int64
+        decayDate:
+          type: integer
+          format: int64
+    BackendApiTileNotificationsRequest:
+      type: object
+      properties:
+        notificationsVersion:
+          type: integer
+          format: int64
+        requestedLookupCharacters:
+          type: array
+          items:
+            type: integer
+            format: int64
+        requestedLookupClans:
+          type: array
+          items:
+            type: integer
+            format: int64
+    BackendApiTileNotificationsResponse:
+      type: object
+      properties:
+        notifications:
+          $ref: '#/components/schemas/BackendApiTileData'
+    BackendApiTilePlayersRequest:
+      type: object
+      properties:
+        ActivePlayerCount:
+          type: integer
+          format: int32
+        ActiveReservedPlayerCount:
+          type: integer
+          format: int32
+        characterIdsConnectedSinceLastPing:
+          type: array
+          items:
+            type: integer
+            format: int64
+        characterIdsDisconnectedSinceLastPing:
+          type: array
+          items:
+            type: integer
+            format: int64
+    BackendApiTilePlayersResponse:
+      type: object
+    BackendApiTilePortalsRequest:
+      type: object
+    BackendApiTilePortalsResponse:
+      type: object
+      properties:
+        portals:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiRealmTilePortal'
+    BackendApiTileSnapshotRequest:
+      type: object
+      properties:
+        snapshot:
+          $ref: '#/components/schemas/BackendApiTileSnapshotData'
+    BackendApiTileSnapshotResponse:
+      type: object
+      properties:
+        confirmations:
+          $ref: '#/components/schemas/BackendApiTileSnapshotConfirmationData'
+    BackendApiTileSnapshotData:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+        actors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actor'
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataComponentData'
+        deletedActorGuids:
+          type: array
+          items:
+            type: string
+        deletedComponentGuids:
+          type: array
+          items:
+            type: string
+        departingWorldTravelParties:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataDepartingWorldTravelParty'
+        processedArrivedWorldTravelPartyIds:
+          type: array
+          items:
+            type: string
+        characters:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataCharacter'
+        tradeStations:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataTradeStationData'
+        tradeStationsTax:
+          type: integer
+          format: int32
+        forcePersistence:
+          type: boolean
+        cleanupCompleted:
+          type: boolean
+        characterTransferRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataTransferCharacter'
+        claim:
+          $ref: '#/components/schemas/BackendApiTileSnapshotDataClaimOwnerData'
+        cleanupData:
+          $ref: '#/components/schemas/BackendApiTileSnapshotDataCleanupData'
+        claimResourceTransferCompletedTileIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+        characterOffMapTransferRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataOffMapTransferCharacter'
+        walkers:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataWalker'
+        vaultMoneyWithdrawals:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataVaultMoneyWithdrawal'
+        clanBankDeposits:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataClanBankDeposit'
+        shopItemConsumptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataShopItemConsumptionData'
+        processedCharacterTransfers:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataProcessedCharacterTransfer'
+    BackendApiTileSnapshotDataDepartingWorldTravelPartyMember:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        playerActorGuid:
+          type: string
+        waterUnits:
+          type: integer
+          format: int32
+    BackendApiTileSnapshotDataDepartingWorldTravelParty:
+      type: object
+      properties:
+        partyId:
+          type: string
+        exitDirection:
+          type: integer
+          format: int32
+        walkerName:
+          type: string
+        walkerActorGuid:
+          type: string
+        walkerOwnerCharacterId:
+          type: integer
+          format: int64
+        walkerOwnerClanId:
+          type: integer
+          format: int64
+        walkerSharedWithClan:
+          type: boolean
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataDepartingWorldTravelPartyMember'
+        actors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actor'
+        createOffmapCrew:
+          type: boolean
+        walkerWaterUnits:
+          type: integer
+          format: int32
+        walkerWaterCostMultiplier:
+          type: number
+          format: float
+        walkerSandiness:
+          type: number
+          format: float
+        walkerPermission:
+          type: integer
+          format: int32
+        travelBackOnPlay:
+          type: boolean
+        travelToOrigin:
+          type: boolean
+        targetTileId:
+          type: integer
+          format: int64
+        targetTileDirection:
+          type: integer
+          format: int32
+    BackendApiTileSnapshotDataOffMapTransferCharacter:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        direction:
+          type: integer
+          format: int32
+        tileId:
+          type: integer
+          format: int64
+        cost:
+          type: integer
+          format: int64
+    BackendApiTileSnapshotDataTransferCharacter:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        tileId:
+          type: integer
+          format: int64
+        cost:
+          type: integer
+          format: int64
+    BackendApiTileSnapshotDataCharacter:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        money:
+          type: integer
+          format: int64
+        level:
+          type: integer
+          format: int32
+        playerState:
+          $ref: '#/components/schemas/Actor'
+        intermediateCurrency:
+          type: integer
+          format: int64
+    BackendApiTileSnapshotDataTradeStationData:
+      type: object
+      properties:
+        tradeStationGuid:
+          type: string
+        trades:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataTradeStationTradeOrderData'
+        deposits:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataTradeStationVaultMoneyDepositData'
+    BackendApiTileSnapshotDataTradeStationTradeOrderData:
+      type: object
+      properties:
+        orderGuid:
+          type: string
+        characterId:
+          type: integer
+          format: int64
+        item:
+          $ref: '#/components/schemas/Item'
+        price:
+          type: number
+          format: float
+        quantity:
+          type: integer
+          format: int32
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotDataTradeStationTradeOrderDataTradeStationTransactionData'
+    BackendApiTileSnapshotDataTradeStationTradeOrderDataTradeStationTransactionData:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/BackendApiTileSnapshotDataTradeOrderTransactionType'
+        characterId:
+          type: integer
+          format: int64
+        price:
+          type: number
+          format: float
+        quantity:
+          type: integer
+          format: int32
+        version:
+          type: integer
+          format: int64
+    BackendApiTileSnapshotDataTradeStationVaultMoneyDepositData:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        amount:
+          type: integer
+          format: int64
+    BackendApiTileSnapshotDataTradeOrderTransactionType:
+      type: string
+      enum:
+        - ADDED
+        - UPDATED
+        - DELETED
+        - EXECUTED
+    BackendApiTileSnapshotDataClaimOwnerData:
+      type: object
+      properties:
+        characterOwnerId:
+          type: integer
+          format: int64
+        clanOwnerId:
+          type: integer
+          format: int64
+        claimCreatedDate:
+          type: integer
+          format: int64
+        claimRadius:
+          type: integer
+          format: int32
+        bonusEarned:
+          type: number
+          format: float
+        bonusStolen:
+          type: number
+          format: float
+    BackendApiTileSnapshotDataCleanupData:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemActor'
+    BackendApiTileSnapshotDataComponentData:
+      type: object
+      properties:
+        actorGuid:
+          type: string
+        component:
+          $ref: '#/components/schemas/Component'
+    BackendApiTileSnapshotDataWalker:
+      type: object
+      properties:
+        actorGuid:
+          type: string
+        actorClassPath:
+          type: string
+        isDeleted:
+          type: boolean
+        name:
+          type: string
+        ownerCharacterId:
+          type: integer
+          format: int64
+        ownerClanId:
+          type: integer
+          format: int64
+    BackendApiTileSnapshotDataVaultMoneyWithdrawal:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        amount:
+          type: integer
+          format: int64
+    BackendApiTileSnapshotDataClanBankDeposit:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        clanId:
+          type: integer
+          format: int64
+        amount:
+          type: integer
+          format: int64
+    BackendApiTileSnapshotDataShopItemConsumptionData:
+      type: object
+      properties:
+        transactionGuid:
+          type: string
+        characterId:
+          type: integer
+          format: int64
+        identifier:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+    BackendApiTileSnapshotDataProcessedCharacterTransfer:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+    BackendApiTileSnapshotConfirmationData:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+        departingWorldTravelParties:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotConfirmationDataDepartingWorldTravelParty'
+        arrivedWorldTravelPartyIds:
+          type: array
+          items:
+            type: string
+        tradeStationTransactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotConfirmationDataTradeOrderTransaction'
+        characterTransfers:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotConfirmationDataTransferCharacter'
+        characterOffMapTransfers:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTileSnapshotConfirmationDataOffMapTransferCharacter'
+    BackendApiTileSnapshotConfirmationDataDepartingWorldTravelParty:
+      type: object
+      properties:
+        partyId:
+          type: string
+        wasSuccessful:
+          type: boolean
+        errorMessage:
+          type: string
+    BackendApiTileSnapshotConfirmationDataOffMapTransferCharacter:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        error:
+          type: string
+    BackendApiTileSnapshotConfirmationDataTransferCharacter:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        succeeded:
+          type: boolean
+        errorMessage:
+          type: string
+    BackendApiTileSnapshotConfirmationDataTradeOrderTransaction:
+      type: object
+      properties:
+        tradeStationGuid:
+          type: string
+        version:
+          type: integer
+          format: int64
+    BackendApiTradeOrder:
+      type: object
+      properties:
+        orderGuid:
+          type: string
+        characterId:
+          type: integer
+          format: int64
+        characterName:
+          type: string
+        clanId:
+          type: integer
+          format: int64
+        clanName:
+          type: string
+        clanColorId:
+          type: string
+        item:
+          $ref: '#/components/schemas/Item'
+        price:
+          type: number
+          format: float
+        quantity:
+          type: integer
+          format: int32
+        accountName:
+          type: string
+        accountPlatform:
+          $ref: '#/components/schemas/BackendApiGamePlatform'
+    BackendApiTradeGetOrdersRequest:
+      type: object
+      properties:
+        tradeStationGuid:
+          type: string
+    BackendApiTradeGetOrdersResponse:
+      type: object
+      properties:
+        tradeOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTradeOrder'
+    BackendApiTradeGetTileOverviewDetailedRequest:
+      type: object
+      properties:
+        tileId:
+          type: integer
+          format: int64
+    BackendApiTradeGetTileOverviewDetailedResponse:
+      type: object
+      properties:
+        tileId:
+          type: integer
+          format: int64
+        realmId:
+          type: integer
+          format: int64
+        trades:
+          type: array
+          items:
+            $ref: '#/components/schemas/BackendApiTradeGetTileOverviewDetailedResponseTradeItem'
+    BackendApiTradeGetTileOverviewDetailedResponseTradeItem:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/Item'
+        averageBuyUnitPrice:
+          type: number
+          format: float
+        averageSellUnitPrice:
+          type: number
+          format: float
+        demand:
+          type: integer
+          format: int64
+        supply:
+          type: integer
+          format: int64
+        supplyOrdersCount:
+          type: integer
+          format: int64
+        demandOrdersCount:
+          type: integer
+          format: int64
+        bestBuyUnitPrice:
+          type: number
+          format: float
+        bestSellUnitPrice:
+          type: number
+          format: float
+    BackendApiVoiceChatJoinTestChannelRequest:
+      type: object
+    BackendApiVoiceChatJoinTestChannelResponse:
+      type: object
+      properties:
+        channel:
+          type: string
+        token:
+          type: string
+    BackendApiVoiceChatJoinTileChannelRequest:
+      type: object
+      properties:
+        uniqueNetId:
+          type: string
+        maxRange:
+          type: integer
+          format: int32
+        clampingDistance:
+          type: integer
+          format: int32
+        rolloff:
+          type: number
+          format: float
+        distanceModel:
+          type: integer
+          format: int32
+    BackendApiVoiceChatJoinTileChannelResponse:
+      type: object
+      properties:
+        channel:
+          type: string
+        token:
+          type: string
+    BackendApiVoiceChatLoginRequest:
+      type: object
+    BackendApiVoiceChatLoginResponse:
+      type: object
+      properties:
+        server:
+          type: string
+        account:
+          type: string
+        token:
+          type: string
+    Placeable:
+      type: object
+      properties:
+        itemTemplate:
+          type: string
+        quality:
+          type: integer
+          format: int32
+        builtWithSchematic:
+          type: boolean
+    StructurePartConnection:
+      type: object
+      properties:
+        partGuid:
+          type: string
+        connectionId:
+          type: integer
+          format: int32
+    Structure:
+      type: object
+      properties:
+        attachedStructureParts:
+          type: array
+          items:
+            $ref: '#/components/schemas/StructureAttachedStructurePart'
+        structureType:
+          type: integer
+          format: int32
+    StructureAttachedStructurePart:
+      type: object
+      properties:
+        partGuid:
+          type: string
+    StructurePart:
+      type: object
+      properties:
+        health:
+          type: number
+          format: float
+        connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/StructurePartConnection'
+        customName:
+          type: string
+    InstancedStructurePart:
+      type: object
+      properties:
+        instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstancedStructurePartInstance'
+        nextConnectionId:
+          type: integer
+          format: int32
+    InstancedStructurePartInstance:
+      type: object
+      properties:
+        health:
+          type: number
+          format: float
+        transform:
+          $ref: '#/components/schemas/Transform'
+        connectionId:
+          type: integer
+          format: int32
+        connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/StructurePartConnection'
+        quality:
+          type: integer
+          format: int32
+    StructureCustomization:
+      type: object
+      properties:
+        decoration:
+          type: string
+        foregroundDye:
+          type: string
+        backgroundDye:
+          type: string
+        emblem:
+          type: string
+        edgePattern:
+          type: string
+    Character:
+      type: object
+      properties:
+        isDowned:
+          type: boolean
+        downedInstigatorGuid:
+          type: string
+        downedTimeElapsed:
+          type: number
+          format: float
+        downedDuration:
+          type: number
+          format: float
+        timeOffset:
+          $ref: '#/components/schemas/TimeOffset'
+    Player:
+      type: object
+      properties:
+        carriedPlayerGuid:
+          type: string
+        uniqueNetId:
+          type: string
+        characterId:
+          type: integer
+          format: int64
+    Tombstone:
+      type: object
+      properties:
+        deadPlayerName:
+          type: string
+    FightClubWeaponRack:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FightClubWeaponRackItem'
+        itemSetName:
+          type: string
+        useOncePerRespawn:
+          type: boolean
+    FightClubWeaponRackItem:
+      type: object
+      properties:
+        itemTemplate:
+          type: string
+        count:
+          type: integer
+          format: int32
+    WalkerClaimingComponent:
+      type: object
+      properties:
+        deployedDeprecated:
+          type: boolean
+        createdDate:
+          type: integer
+          format: int64
+        status:
+          $ref: '#/components/schemas/WalkerClaimingComponentStatus'
+        deploymentInProgress:
+          type: boolean
+        activationTimeSeconds:
+          type: integer
+          format: int32
+        timeOffset:
+          $ref: '#/components/schemas/TimeOffset'
+        walkDistance:
+          type: number
+          format: float
+    WalkerClaimingComponentStatus:
+      type: string
+      enum:
+        - UNDEPLOYED
+        - ACTIVE
+        - DESTROYED
+        - ACTIVATING
+    ClaimManager:
+      type: object
+      properties:
+        storedItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClaimManagerStoredItem'
+        characterInformations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClaimManagerCharacterInformation'
+    ClaimManagerStoredItem:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/Item'
+        count:
+          type: integer
+          format: int32
+    ClaimManagerCharacterInformation:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        lastMurderedDate:
+          type: integer
+          format: int64
+        harvestedAmount:
+          type: integer
+          format: int32
+        lastHarvestedDate:
+          type: integer
+          format: int64
+    PoachingComponent:
+      type: object
+      properties:
+        active:
+          type: boolean
+        activationSecondsLeft:
+          type: integer
+          format: int32
+        timeOffset:
+          $ref: '#/components/schemas/TimeOffset'
+    ClanOwnershipComponent:
+      type: object
+      properties:
+        ownerCharacterId:
+          type: integer
+          format: int64
+        sharedOwnership:
+          type: boolean
+    ClanPermissionComponent:
+      type: object
+      properties:
+        permission:
+          type: integer
+          format: int32
+    ConstructionSite:
+      type: object
+      properties:
+        constructedParts:
+          type: array
+          items:
+            type: string
+    WalkerConstructionSupport:
+      type: object
+      properties:
+        actorGuid:
+          type: string
+    Container:
+      type: object
+      properties:
+        capacity:
+          type: integer
+          format: int32
+        slots:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerSlot'
+        remoteCrafting:
+          type: boolean
+    ContainerSlot:
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+        count:
+          type: integer
+          format: int32
+        item:
+          $ref: '#/components/schemas/Item'
+    CraftingStation:
+      type: object
+      properties:
+        queueItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CraftingStationQueueItem'
+        timeOffset:
+          $ref: '#/components/schemas/TimeOffset'
+        takeItemsFromStructure:
+          type: boolean
+    CraftingStationQueueItem:
+      type: object
+      properties:
+        itemTemplate:
+          type: string
+        recipeIndex:
+          type: integer
+          format: int32
+        startingTime:
+          type: number
+          format: float
+        remainingQuantity:
+          type: integer
+          format: int32
+        state:
+          type: integer
+          format: int32
+        ordersNumberLeft:
+          type: integer
+          format: int32
+        craftingCharacterGuid:
+          type: string
+        targetQuality:
+          type: integer
+          format: int32
+        creatorCharacterId:
+          type: integer
+          format: int64
+        techUnlocked:
+          type: boolean
+    Quarry:
+      type: object
+      properties:
+        isQuarring:
+          type: boolean
+        elapsedTime:
+          type: number
+          format: float
+        timeOffset:
+          $ref: '#/components/schemas/TimeOffset'
+    Furnace:
+      type: object
+      properties:
+        isSmelting:
+          type: boolean
+        smeltingActionsCount:
+          type: integer
+          format: int32
+        shuffleBag:
+          type: object
+          additionalProperties:
+            type: number
+            format: float
+        smeltingActionIndex:
+          type: integer
+          format: int32
+        smeltingTime:
+          type: number
+          format: float
+        recipeIndex:
+          type: integer
+          format: int32
+    ToggleAutoCraftingStation:
+      type: object
+      properties:
+        stationActive:
+          type: boolean
+    LocalWorld:
+      type: object
+      properties:
+        actors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actor'
+        player:
+          $ref: '#/components/schemas/Actor'
+        playerState:
+          $ref: '#/components/schemas/Actor'
+    Equipment:
+      type: object
+      properties:
+        slots:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentSlot'
+        hands:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentHand'
+        componentCreationUniqueIdCounter:
+          type: integer
+          format: int32
+    EquipmentSlot:
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+        item:
+          $ref: '#/components/schemas/Item'
+        componentName:
+          type: string
+    EquipmentHand:
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+        equippedSlot:
+          type: integer
+          format: int32
+    EquipmentContainer:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/Item'
+    Exoskeleton:
+      type: object
+      properties:
+        itemTemplate:
+          type: string
+        quality:
+          type: integer
+          format: int32
+        builtWithSchematic:
+          type: boolean
+    PlayerFlotillaQuests:
+      type: object
+      properties:
+        currentQuest:
+          $ref: '#/components/schemas/FlotillaQuest'
+    FlotillaQuest:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int32
+        classData:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/FlotillaQuestClassData'
+        questClass:
+          type: string
+        flotsReward:
+          type: integer
+          format: int32
+        expReward:
+          type: integer
+          format: int32
+        questDifficulty:
+          $ref: '#/components/schemas/FlotillaQuestDifficulty'
+    FlotillaQuestDifficulty:
+      type: string
+      enum:
+        - EASY
+        - MEDIUM
+        - HARD
+    FlotillaQuestClassData:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int32
+        data:
+          $ref: '#/components/schemas/googleprotobufAny'
+    QuestGiver:
+      type: object
+      properties:
+        savedPlayerData:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/QuestGiverQuestGiverPlayerData'
+    QuestGiverQuestGiverPlayerData:
+      type: object
+      properties:
+        updateTime:
+          type: integer
+          format: int64
+        availableQuests:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlotillaQuest'
+    BringItemQuest:
+      type: object
+      properties:
+        itemTemplate:
+          type: string
+        amount:
+          type: integer
+          format: int32
+        targetTileId:
+          type: integer
+          format: int64
+        targetTileName:
+          type: string
+    KillCreatureQuest:
+      type: object
+      properties:
+        creatureTypeClass:
+          type: string
+        totalAmount:
+          type: integer
+          format: int32
+        amountKilled:
+          type: integer
+          format: int32
+    ClearRupuCampsQuest:
+      type: object
+      properties:
+        totalAmount:
+          type: integer
+          format: int32
+        amountCleared:
+          type: integer
+          format: int32
+    LootRuinsQuest:
+      type: object
+      properties:
+        subtasksTotalAmount:
+          type: array
+          items:
+            type: integer
+            format: int32
+        subtasksAmountCleared:
+          type: array
+          items:
+            type: integer
+            format: int32
+    ScoutOasisQuest:
+      type: object
+      properties:
+        subtasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScoutOasisQuestSubtask'
+        originTileId:
+          type: integer
+          format: int64
+        originTileName:
+          type: string
+    ScoutOasisQuestSubtask:
+      type: object
+      properties:
+        targetTileId:
+          type: integer
+          format: int64
+        targetTileName:
+          type: string
+        scoutProgress:
+          type: integer
+          format: int32
+    DeliverPackageQuest:
+      type: object
+      properties:
+        targetTileId:
+          type: integer
+          format: int64
+        targetTileName:
+          type: string
+        quality:
+          type: integer
+          format: int32
+    ArenaDuelQuest:
+      type: object
+      properties:
+        totalAmount:
+          type: integer
+          format: int64
+        duelsWon:
+          type: integer
+          format: int64
+    KillSpeicalRupuQuest:
+      type: object
+      properties:
+        hasKilled:
+          type: boolean
+        hasSpawned:
+          type: boolean
+    Foliage:
+      type: object
+      properties:
+        instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/FoliageInstance'
+        totalNumInstances:
+          type: integer
+          format: int32
+        spawnTime:
+          type: number
+          format: float
+        timeOffset:
+          $ref: '#/components/schemas/TimeOffset'
+    FoliageInstance:
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+        value:
+          type: number
+          format: float
+        respawnTime:
+          type: number
+          format: float
+        removed:
+          type: boolean
+        spawnTime:
+          type: number
+          format: float
+    FoliageQualityManager:
+      type: object
+      properties:
+        levelSeed:
+          type: integer
+          format: int32
+    FoliageTileParameters:
+      type: object
+      properties:
+        respawnBoosts:
+          type: array
+          items:
+            $ref: '#/components/schemas/FoliageTileParametersFoliageBoostInstance'
+    FoliageTileParametersFoliageBoostInstance:
+      type: object
+      properties:
+        foliageComponent:
+          type: string
+        boost:
+          type: number
+          format: float
+    Health:
+      type: object
+      properties:
+        Health:
+          type: number
+          format: float
+    RepairHoist:
+      type: object
+      properties:
+        consumedResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/RepairHoistConsumedResources'
+    RepairHoistConsumedResources:
+      type: object
+      properties:
+        resourcesTemplate:
+          type: string
+        count:
+          type: number
+          format: float
+    KiteHoistComponent:
+      type: object
+      properties:
+        state:
+          type: integer
+          format: int32
+        kiteActorGuid:
+          type: string
+    KnowledgeObjectsManager:
+      type: object
+      properties:
+        gatheredKnowledge:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerGatheredKnowledge'
+    PlayerGatheredKnowledge:
+      type: object
+      properties:
+        playerId:
+          type: integer
+          format: int64
+        knowledgeEntries:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatheredKnowledgeEntry'
+    GatheredKnowledgeEntry:
+      type: object
+      properties:
+        knowledgeTypeClass:
+          type: string
+        gatheredAmount:
+          type: integer
+          format: int32
+    KothComponent:
+      type: object
+      properties:
+        claimed:
+          type: boolean
+        claimSecondsLeft:
+          type: integer
+          format: int32
+        timeOffset:
+          $ref: '#/components/schemas/TimeOffset'
+        ownerClanId:
+          type: integer
+          format: int64
+        clanData:
+          type: array
+          items:
+            $ref: '#/components/schemas/KothComponentKothClanData'
+    KothComponentKothClanData:
+      type: object
+      properties:
+        clanId:
+          type: integer
+          format: int64
+        points:
+          type: number
+          format: float
+    LevelActor:
+      type: object
+    Liquid:
+      type: object
+      properties:
+        Min_Z:
+          type: number
+          format: float
+        Max_Z:
+          type: number
+          format: float
+        Current_Capacity:
+          type: integer
+          format: int64
+    Mannable:
+      type: object
+      properties:
+        mannedCharacterGuid:
+          type: string
+        firingGroup:
+          type: integer
+          format: int32
+    MannableGimbal:
+      type: object
+      properties:
+        currentRotation:
+          $ref: '#/components/schemas/Rotator'
+    Packing:
+      type: object
+      properties:
+        isPacked_DEPRECATED:
+          type: boolean
+        isSingleStructurePartPacked_DEPRECATED:
+          type: boolean
+        weight:
+          type: number
+          format: float
+        packedParts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackingPackedPart'
+        packedActors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actor'
+        packedOpaqueOwnerId:
+          type: integer
+          format: int64
+        packingState:
+          type: integer
+          format: int32
+        timeOffset:
+          $ref: '#/components/schemas/TimeOffset'
+        packedTime:
+          type: number
+          format: float
+    PackingPackedPart:
+      type: object
+      properties:
+        itemTemplate:
+          type: string
+        relativeTransforms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transform'
+    TradePacking:
+      type: object
+      properties:
+        usedTime:
+          type: number
+          format: float
+        boughtTime:
+          type: number
+          format: float
+    CharacterCustomization:
+      type: object
+      properties:
+        values:
+          type: object
+          additionalProperties:
+            type: number
+            format: float
+    PlayerState:
+      type: object
+      properties:
+        stats:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        experience:
+          type: integer
+          format: int64
+        techTreePoints:
+          type: integer
+          format: int32
+        unlockedTechs:
+          type: array
+          items:
+            type: string
+        perkTreePoints:
+          type: integer
+          format: int32
+        unlockedPerks:
+          type: array
+          items:
+            type: string
+        statPoints:
+          type: integer
+          format: int32
+        quickSlots:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerStateQuickSlot'
+        discoveredResourceIds:
+          type: array
+          items:
+            type: string
+        hasNeverSpawned:
+          type: boolean
+        latestTombstoneGuid:
+          type: string
+        isProtected:
+          type: boolean
+        hasIntroSceneBeenPlayed:
+          type: boolean
+        walkerCraftingSkills:
+          type: array
+          items:
+            type: integer
+            format: int32
+        protectedContainerItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemWithQuantity'
+        protectedEquipmentItems:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Item'
+        selectedWalkerSpawn:
+          type: string
+        locallyOwnedShopItems:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        questsIcEarnedToday:
+          type: integer
+          format: int32
+        lastDayQuestsIcEarned:
+          type: integer
+          format: int64
+        additionalStatPoints:
+          type: integer
+          format: int32
+        spawnWalkerSwitchingCooldownEnd:
+          type: integer
+          format: int64
+        lootFractions:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        homeTileId:
+          type: integer
+          format: int64
+        discoveredTechnology:
+          type: string
+          format: byte
+        relicPoints:
+          type: integer
+          format: int32
+        relicLevel:
+          type: integer
+          format: int32
+    PlayerStateQuickSlot:
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+        item:
+          $ref: '#/components/schemas/Item'
+    PoiMapData:
+      type: object
+      properties:
+        spawnPositionGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/PoiMapDataPoiSpawnPositionGroupData'
+    PoiMapDataPoiSpawnPositionGroupData:
+      type: object
+      properties:
+        groupName:
+          type: string
+        spawnedActors:
+          type: array
+          items:
+            type: string
+    Projectile:
+      type: object
+      properties:
+        hitDynamicObject:
+          type: boolean
+    QualityActor:
+      type: object
+      properties:
+        quality:
+          type: integer
+          format: int32
+    PlayerRelicHunter:
+      type: object
+      properties:
+        timeOffset:
+          $ref: '#/components/schemas/TimeOffset'
+        offersRefreshTimeLeft:
+          type: number
+          format: float
+        offers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerRelicHunterOffer'
+    PlayerRelicHunterOffer:
+      type: object
+      properties:
+        guid:
+          type: string
+        item:
+          $ref: '#/components/schemas/Item'
+        count:
+          type: integer
+          format: int32
+        price:
+          type: integer
+          format: int32
+    MissileWeapon:
+      type: object
+      properties:
+        projectileItem:
+          $ref: '#/components/schemas/Item'
+    Ballista:
+      type: object
+      properties:
+        tetheredToActorGuid:
+          type: string
+        tetheredToComponentName:
+          type: string
+    Catapult:
+      type: object
+      properties:
+        projectileItem:
+          $ref: '#/components/schemas/Item'
+    DoubleBarrelledGun:
+      type: object
+      properties:
+        leftProjectileItem:
+          $ref: '#/components/schemas/Item'
+        leftProjectileCount:
+          type: integer
+          format: int32
+        rightProjectileItem:
+          $ref: '#/components/schemas/Item'
+        rightProjectileCount:
+          type: integer
+          format: int32
+    BattleFan:
+      type: object
+      properties:
+        storedEffectClass:
+          type: string
+        storedEffectCount:
+          type: integer
+          format: int32
+    RemoteTurret:
+      type: object
+      properties:
+        loadedPellets:
+          type: integer
+          format: int32
+    StatusEffectPlayer:
+      type: object
+      properties:
+        activeStatusEffects:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusEffectPlayerActiveStatusEffect'
+        currentId:
+          type: integer
+          format: int64
+        timeOffset:
+          $ref: '#/components/schemas/TimeOffset'
+    StatusEffectPlayerActiveStatusEffect:
+      type: object
+      properties:
+        effect:
+          type: string
+        startTime:
+          type: number
+          format: float
+        duration:
+          type: number
+          format: float
+        id:
+          type: integer
+          format: int64
+        magnitude:
+          type: number
+          format: float
+        accumulatedMagnitudeTime:
+          type: number
+          format: float
+        quality:
+          type: integer
+          format: int32
+    Thirst:
+      type: object
+      properties:
+        Thirst:
+          type: number
+          format: float
+    TradeStation:
+      type: object
+      properties:
+        vault:
+          type: array
+          items:
+            $ref: '#/components/schemas/TradeStationVaultContent'
+        vaultTax:
+          type: integer
+          format: int32
+        auction:
+          type: array
+          items:
+            $ref: '#/components/schemas/TradeStationAuctionData'
+        newAuctionTime:
+          type: integer
+          format: int64
+        tradeHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/TradeStationTradeHistory'
+    TradeStationVaultItem:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/Item'
+        count:
+          type: integer
+          format: int32
+    TradeStationVaultContent:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        moneyDeposits:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TradeStationVaultItem'
+    TradeStationAuctionData:
+      type: object
+      properties:
+        highestBid:
+          type: integer
+          format: int32
+        time:
+          type: number
+          format: float
+        item:
+          $ref: '#/components/schemas/Item'
+        quantity:
+          type: integer
+          format: int32
+        winner:
+          type: integer
+          format: int64
+        participants:
+          type: array
+          items:
+            type: integer
+            format: int64
+    TradeStationTradeHistoryEntry:
+      type: object
+      properties:
+        characterId:
+          type: integer
+          format: int64
+        item:
+          $ref: '#/components/schemas/Item'
+        count:
+          type: integer
+          format: int32
+        totalPrice:
+          type: integer
+          format: int32
+        time:
+          type: integer
+          format: int64
+        isBuyOrder:
+          type: boolean
+    TradeStationTradeHistory:
+      type: object
+      properties:
+        creatorId:
+          type: integer
+          format: int64
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/TradeStationTradeHistoryEntry'
+    Trader:
+      type: object
+      properties:
+        depletingSeconds:
+          type: number
+          format: float
+        purchasableItem:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraderTraderOffer'
+        sellableItem:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraderTraderOffer'
+        containerItem:
+          type: array
+          items:
+            $ref: '#/components/schemas/TraderTraderItem'
+        merchantName:
+          type: string
+        timeOffset:
+          $ref: '#/components/schemas/TimeOffset'
+    TraderTraderItem:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/Item'
+        count:
+          type: integer
+          format: int32
+    TraderTraderOffer:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/Item'
+        count:
+          type: integer
+          format: int32
+        price:
+          type: integer
+          format: int32
+    RearmableTrap:
+      type: object
+      properties:
+        isArmed:
+          type: boolean
+        armedByPlayerGuid:
+          type: string
+    DoorInteractable:
+      type: object
+      properties:
+        doorState:
+          type: integer
+          format: int32
+        openingTime:
+          type: number
+          format: float
+    TutorialState:
+      type: object
+      properties:
+        EntryName:
+          type: string
+        Subtasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/TutorialStateSubtaskState'
+        TutorialOver:
+          type: boolean
+    TutorialStateSubtaskState:
+      type: object
+      properties:
+        SubtaskName:
+          type: string
+        Progress:
+          type: integer
+          format: int32
+    VitaminUser:
+      type: object
+      properties:
+        activeVitamins:
+          type: array
+          items:
+            $ref: '#/components/schemas/VitaminUserActiveVitamin'
+        timeOffset:
+          $ref: '#/components/schemas/TimeOffset'
+    VitaminUserActiveVitamin:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/Item'
+        useTime:
+          type: number
+          format: float
+        duration:
+          type: number
+          format: float
+    Walker:
+      type: object
+      properties:
+        health:
+          type: number
+          format: float
+        wreckageState:
+          type: integer
+          format: int32
+        customName:
+          type: string
+        sandinessLevel:
+          type: number
+          format: float
+        sandinessTileId:
+          type: integer
+          format: int64
+        sandinessDirection:
+          type: integer
+          format: int32
+        stage:
+          type: integer
+          format: int32
+        repairHealth:
+          type: number
+          format: float
+    WalkerPart:
+      type: object
+      properties:
+        health:
+          type: number
+          format: float
+    WalkerWing:
+      type: object
+      properties:
+        retracted:
+          type: boolean
+    WalkerLeg:
+      type: object
+      properties:
+        state:
+          type: integer
+          format: int32
+        distanceTravelled:
+          type: number
+          format: float
+    WalkerTurret:
+      type: object
+      properties:
+        turretState:
+          type: integer
+          format: int32
+    WalkerPump:
+      type: object
+      properties:
+        pumpState:
+          type: integer
+          format: int32
+    WalkerRig:
+      type: object
+      properties:
+        rigName:
+          type: string

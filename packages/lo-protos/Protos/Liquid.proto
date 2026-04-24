@@ -1,0 +1,11 @@
+﻿syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message Liquid
+{
+	float Min_Z = 1; 
+	float Max_Z = 2;
+	int64 Current_Capacity = 3;
+}

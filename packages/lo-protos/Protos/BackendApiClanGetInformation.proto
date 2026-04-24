@@ -1,0 +1,50 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiCommon.proto";
+package MistProto;
+
+message BackendApiClanGetInformationRequest
+{
+	int64 clan_id = 1;
+}
+
+message BackendApiClanGetInformationResponse
+{
+	message BackendApiClanMemberInformation
+	{
+		int64 character_id = 1;
+		string name = 2;
+		int64 rank_id = 3;
+		string account_name = 4;
+		BackendApiGamePlatform account_platform = 5;
+	}
+	
+	message BackendApiClanInviteInformation
+	{
+		int64 invite_id = 1;
+		int64 character_id = 2;
+		string character_name = 3;
+		string account_name = 4;
+		BackendApiGamePlatform account_platform = 5;
+	}
+	
+	message BackendApiClanRankInformation
+	{
+		int64 rank_id = 1;
+		string name = 2;
+		int32 priority = 3;
+		int64 permissions = 4;
+		string icon = 5;
+	}
+	
+	int64 clan_id = 1;
+	string name = 2;
+	string color_id = 5;
+	string emblem_id = 7;
+	repeated BackendApiClanMemberInformation members = 3;
+	repeated BackendApiClanInviteInformation invites = 4;
+	repeated BackendApiClanRankInformation ranks = 6;
+	int64 bank_balance = 8;
+	int32 max_members = 9;
+}

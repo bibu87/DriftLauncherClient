@@ -1,0 +1,23 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+package MistProto;
+
+message BackendApiShopBuyOfferRequest
+{
+	int64 offer_id = 1;
+	int64 offer_version_id = 2;
+	string transaction_guid = 3;
+}
+
+message BackendApiShopBuyOfferResponse
+{
+	oneof result
+	{
+		bool success = 1;
+		bool invalid_offer = 2;
+		bool outdated_offer = 3;
+		bool unavailable_offer = 4;
+		bool insufficient_funds = 5;
+	}
+}

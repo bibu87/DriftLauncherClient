@@ -1,0 +1,19 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiPlayerLoginCommon.proto";
+package MistProto;
+
+message BackendApiPlayerLoginWithSteamRequest
+{
+	string unique_net_id = 1;
+	string steam_name = 2;
+	string steam_session_ticket = 3;
+	bool create_new_session = 4;
+}
+
+message BackendApiPlayerLoginWithSteamResponse
+{
+	reserved 1 to 9;
+	BackendApiPlayerLoginResultData result = 10;
+}

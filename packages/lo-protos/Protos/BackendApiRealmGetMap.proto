@@ -1,0 +1,136 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiRealmCommon.proto";
+import "BackendApiCommon.proto";
+package MistProto;
+
+message BackendApiRealmGetMapRequest
+{
+	int64 realm_id = 1;
+}
+
+message BackendApiRealmGetMapResponse
+{
+	int64 id = 1;
+	string name = 2;
+	int64 min_x = 3;
+	int64 max_x = 4;
+	int64 min_y = 5;
+	int64 max_y = 6;
+	
+	repeated Tile tiles = 7;
+	
+	int64 character_x = 8;
+	int64 character_y = 9;
+	// Int min_value determines that the character is on map and the direction therefore doesn't matter
+	int32 character_direction = 10;
+	int64 character_id = 11;
+	
+	// Used for claim information, only characters and clans with a claim will be present.
+	map<int64, ClanInfo> clan_lookup = 12;
+	map<int64, string> character_lookup = 13;
+	// region id -> region
+	map<int64, Region> region_lookup = 14;
+	
+	map<int64, Map> map_lookup = 15;
+
+	BackendApiRealmTravelMode travel_mode = 16;
+	
+	message Tile 
+	{
+		int64 id = 1;
+		int64 x = 2;
+		int64 y = 3;
+		bool is_online = 4;
+		bool is_spawnable = 6;
+		string name = 7;
+		int64 map_id = 29;
+
+		BackendApiRealmTileType type = 10;
+		BackendApiGamePlatform platform = 30;
+
+		int64 decay_date = 11;
+		int64 activation_date = 14;
+
+		int64 queue_estimated_waiting_time = 13;
+		int32 used_slots = 26;
+		int32 max_slots = 27;
+
+		TradeSummary trade_summary = 15;
+		int32 trade_stations_tax = 24;
+
+		repeated Direction directions = 16;
+		BackendApiRealmTileDifficulty difficulty = 17;
+		reserved 18;
+		int32 player_deaths_past_24_hours = 19; 
+		int32 player_deaths_past_hour = 20;
+		Claim claim = 21;
+		int64 region_id = 22;
+		BackendApiRealmTileClaimability claimability = 23;
+		
+		int32 clan_cap = 28;
+
+		reserved 31;
+
+		BackendApiRealmTilePvpMode pvp_mode = 32;
+		int32 quality = 33;
+		
+		message TradeSummary 
+		{
+			float total_trade_value = 1;
+			float potential_revenue = 2;
+			int64 supply = 3;
+			int64 demand = 4;
+			int64 sell_orders = 5;
+			int64 buy_orders = 6;
+			int64 trading_stations = 7;
+		}
+
+		message Direction 
+		{
+			int32 direction_number = 1;
+			repeated Walker walkers = 2;
+		}
+		
+		message Walker 
+		{	// Off-map walker id.
+			int64 id = 1;
+			string class_path = 2;
+			string name = 3;
+			float water_cost_multiplier = 4;
+			int32 water_units = 5;
+			int64 character_owner_id = 6;
+			string character_owner_name = 7;
+			bool shared_with_clan = 8;
+			int64 walker_id = 9;
+		}
+		
+		message Claim
+		{	// Send only a character or a clan.
+			int64 character_owner_id = 1;
+			int64 clan_owner_id = 2;
+			int64 claim_created_date = 4;
+			int32 radius = 5;
+			float bonus_earned = 6;
+			float bonus_stolen = 7;
+		}
+	}
+	
+	message ClanInfo 
+	{
+		string name = 1;
+		string color_id = 2;
+	}
+	
+	message Region 
+	{
+		string name = 1;
+		string key = 2;
+	}
+	
+	message Map
+	{
+		string path = 1;
+	}
+}

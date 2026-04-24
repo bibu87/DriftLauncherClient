@@ -1,0 +1,49 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+package MistProto;
+
+enum BackendApiGameServerState
+{
+	UNKNOWN = 0;
+	AVAILABLE = 1;
+	LOADING_TILE = 2;
+	HOSTING_TILE = 3;
+	SHUTTING_DOWN = 4;
+	LOADING_TILE_FAILED = 5;
+}
+
+// An account has a tier that determines priority and permissions.
+enum BackendAccountTier 
+{
+	DEFAULT = 0;
+	TRUSTED = 1;
+	DEVELOPER = 2;
+	MACHINE = 3;
+}
+
+enum BackendApiGamePlatform
+{
+	NONE = 0;
+	XBOX = 1;
+	PC = 2;
+	CROSS = 3;
+}
+
+message BackendApiRealmAccessDeniedData
+{
+	message BannedData
+	{
+		int64 until = 1;
+		string message = 2;
+		bool is_global = 3;
+	}
+	
+	oneof reason
+	{
+		BannedData banned = 1;
+		bool invalid_password = 2;
+		bool not_allowed = 3;
+		bool incompatible_platform = 4;
+	}
+}

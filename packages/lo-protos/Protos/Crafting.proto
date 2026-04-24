@@ -1,0 +1,48 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+import "Time.proto";
+package MistProto;
+
+message CraftingStation
+{
+	message QueueItem
+	{
+		string item_template = 1;
+		int32 recipe_index = 2;
+		float starting_time = 3;
+		int32 remaining_quantity = 4;
+		uint32 state = 5;
+		int32 orders_number_left = 6;
+		string crafting_character_guid = 7;
+		int32 target_quality = 8;
+		int64 creator_character_id = 9;
+		bool tech_unlocked = 10;
+	}
+
+	repeated QueueItem queue_items = 1;
+	TimeOffset time_offset = 2;
+	bool take_items_from_structure = 3;
+}
+
+message Quarry
+{
+	bool is_quarring =  1;
+	float elapsed_time = 2;
+	TimeOffset time_offset = 3;
+}
+
+message Furnace
+{
+	bool is_smelting = 1;
+	int32 smelting_actions_count = 2;
+	map<string, float> shuffle_bag = 3;
+	int32 smelting_action_index = 4;
+	float smelting_time = 5;
+	int32 recipe_index = 6;
+}
+
+message ToggleAutoCraftingStation
+{
+	bool station_active = 1;
+}

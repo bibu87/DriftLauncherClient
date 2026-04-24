@@ -1,0 +1,54 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+import "Items.proto";
+package MistProto;
+
+message CharacterCustomization
+{
+	map<int32, float> values = 1;
+}
+
+message PlayerState
+{
+	message QuickSlot
+	{
+		uint32 index = 1;
+		Item item = 2;
+	}
+
+	reserved 1;
+	map<uint32, uint32> stats = 2;
+	uint64 experience = 3;
+	uint32 tech_tree_points = 4;
+	repeated string unlocked_techs = 5;
+	uint32 perk_tree_points = 6;
+	repeated string unlocked_perks = 7;
+	reserved 8;
+	reserved 9;
+	uint32 stat_points = 10;
+	reserved 11;
+	repeated QuickSlot quick_slots = 12;
+	reserved 13;
+	reserved 14;
+	reserved 15;
+	repeated string discovered_resource_ids = 16;
+	bool has_never_spawned = 17;
+	string latest_tombstone_guid = 18;
+	bool is_protected = 19;
+	bool has_intro_scene_been_played = 20;
+	repeated int32 walker_crafting_skills = 21;
+	repeated ItemWithQuantity protected_container_items = 22;
+	map<int32, Item> protected_equipment_items = 23;
+	string selected_walker_spawn = 24;
+	map<string, int32> locally_owned_shop_items = 25;
+	int32 quests_ic_earned_today = 26;
+	int64 last_day_quests_ic_earned = 27;
+	uint32 additional_stat_points = 28;
+	int64 spawn_walker_switching_cooldown_end = 29;
+	map<string, int32> loot_fractions = 30;
+	int64 home_tile_id = 31;
+	bytes discovered_technology = 32;
+	uint32 relic_points = 33;
+	uint32 relic_level = 34;
+}

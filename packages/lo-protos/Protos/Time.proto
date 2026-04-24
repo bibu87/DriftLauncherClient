@@ -1,0 +1,15 @@
+﻿syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message TimeOffset
+{
+	int64 tile_id = 1;
+	double time_value = 2;
+}
+
+message TileTime
+{
+	double total_time_elapsed = 1;
+}

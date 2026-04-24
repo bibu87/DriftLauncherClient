@@ -1,0 +1,16 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+package MistProto;
+
+// Requires player with authorized character, with founder rank.
+message BackendApiClanDiscordIntegrationRequest
+{
+	
+}
+
+message BackendApiClanDiscordIntegrationResponse
+{
+	string webhook_url = 1;
+	bool webhook_enabled = 2;
+}

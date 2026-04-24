@@ -1,0 +1,17 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message FightClubWeaponRack
+{
+	message Item
+	{
+		string item_template = 1;
+		int32 count = 2;
+	}
+
+	repeated Item items = 1;
+	string item_set_name = 2;
+	bool use_once_per_respawn = 3;
+}

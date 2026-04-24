@@ -1,0 +1,30 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiCommon.proto";
+import "BackendApiNameCheckCommon.proto";
+package MistProto;
+
+message BackendApiPlayerCreateCharacterRequest
+{
+	int64 realm_id = 1;
+	string character_name = 2;
+	string character_customization = 3;
+}
+
+message BackendApiPlayerCreateCharacterResponse
+{
+	message Success
+	{
+		int64 character_id = 1;
+	}
+	
+	reserved 3;
+
+	oneof result
+	{
+		Success success = 1;
+		BackendApiInvalidNameMessage invalid_name = 4;
+		BackendApiRealmAccessDeniedData realm_access_denied = 5;
+	}
+}

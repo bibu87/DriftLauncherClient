@@ -1,0 +1,16 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+import "BaseTypes.proto";
+package MistProto;
+
+message Mannable
+{
+	string manned_character_guid = 1;
+	int32 firing_group = 2;
+}
+
+message MannableGimbal
+{
+	Rotator current_rotation = 1;
+}

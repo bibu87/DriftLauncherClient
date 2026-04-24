@@ -1,0 +1,37 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+package MistProto;
+
+message BackendApiInvalidNameMessage
+{
+	oneof error_reason 
+	{
+		CharacterError character = 1;
+		NameReason name = 2;
+		// Whatever word, symbol, or sentence that was detected to be inappropriate. 
+		string contains_inappropriate = 3;
+	}
+	
+	message CharacterError
+	{
+		string character = 1;
+		CharacterReason reason = 2;
+		
+		enum CharacterReason  
+		{
+			DISALLOWED = 0;
+			DISALLOWED_IN_NAME_START = 1;
+			DISALLOWED_IN_NAME_END = 2;
+			REPETITION_DISALLOWED = 3;
+		}
+	}
+
+	enum NameReason 
+	{
+		DUPLICATE = 0;
+		TOO_SHORT = 1;
+		TOO_LONG = 2;
+		EMPTY = 3;
+	}
+}

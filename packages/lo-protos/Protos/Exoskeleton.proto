@@ -1,0 +1,11 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message Exoskeleton
+{
+	string item_template = 1;
+	int32 quality = 2;
+	bool built_with_schematic = 3;
+}

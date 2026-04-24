@@ -1,0 +1,20 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiNameCheckCommon.proto";
+package MistProto;
+
+message BackendApiPlayerCheckNameAvailabilityRequest
+{
+	int64 realm_id = 1;
+	string name = 2;
+}
+
+message BackendApiPlayerCheckNameAvailabilityResponse
+{
+	oneof result 
+	{
+		BackendApiInvalidNameMessage name = 2;
+		bool success = 1;
+	}
+}

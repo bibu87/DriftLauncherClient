@@ -1,0 +1,15 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message ConstructionSite
+{
+	reserved 1;
+	repeated string constructed_parts = 2;
+}
+
+message WalkerConstructionSupport
+{
+	string actor_guid = 1;
+}

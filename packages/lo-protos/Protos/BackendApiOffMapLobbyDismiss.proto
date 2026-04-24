@@ -1,0 +1,15 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiOffMapLobbyData.proto";
+package MistProto;
+
+message BackendApiOffMapLobbyDismissRequest
+{
+	int64 dismiss_character_id = 1;
+}
+
+message BackendApiOffMapLobbyDismissResponse
+{
+	BackendApiOffMapLobbyData data = 1;
+}

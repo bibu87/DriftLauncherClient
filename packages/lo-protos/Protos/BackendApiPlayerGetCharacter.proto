@@ -1,0 +1,108 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiCommon.proto";
+package MistProto;
+
+message BackendApiPlayerGetCharacterRequest
+{
+	int64 realm_id = 1;
+}
+
+message BackendApiPlayerGetCharacterResponse
+{
+	message RealmData
+	{
+		int64 id = 1;
+		string name = 2;
+		
+		bool is_official = 3;
+		string region_key = 4;
+		BackendApiGamePlatform platform = 5;
+		
+		bool is_online = 6;
+		string message = 7;
+		
+		int32 size = 8;
+		int32 clan_cap = 9;
+		reserved 10;
+		int64 start_date = 11;
+		int64 end_date = 12;
+		
+		int32 players = 13;
+		int32 max_players = 14;
+		
+		bool has_password = 15;
+		bool has_allowlist = 16;
+
+		string description = 17;
+		string motd = 18;
+		string discord_link = 19;
+	}
+	
+	message RegionData
+	{
+		int64 id = 1;
+		string key = 2;
+		bool can_spawn = 3;
+	}
+
+	enum CharacterState
+	{
+		ON_MAP = 0;
+		OFF_MAP = 1;
+		UNASSIGNED = 2;
+		EVADING = 3;
+		MIGRATING = 4;
+	}
+
+	message CharacterData
+	{
+		int64 id = 1;
+		string name = 2;
+		CharacterState state = 3;
+		string customization = 4;
+		int32 level = 5;
+		int64 money = 6;
+		int64 intermediate_currency = 7;
+	}
+	
+	message ClanData
+	{
+		int64 id = 1;
+		string name = 2;
+		string color_id = 3;
+		string emblem_id = 4;
+	}
+	
+	message TileData
+	{
+		int64 id = 1;
+		string name = 2;
+		int64 region_id = 3;
+		bool is_active = 4;
+		bool can_queue = 5;
+	}
+	
+	message AccountData
+	{
+		bool has_valid_realm_password = 1;
+	}
+	
+	message ResultData
+	{
+		RealmData realm = 1;
+		repeated RegionData regions = 2;
+		CharacterData character = 3;
+		ClanData clan = 4;
+		TileData tile = 5;
+		AccountData account = 6;
+	}
+	
+	oneof result
+	{
+		ResultData success = 1;
+		bool not_found = 2;
+		bool not_available = 3;
+	}
+}

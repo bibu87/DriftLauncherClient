@@ -1,0 +1,15 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+package MistProto;
+
+message BackendApiVoiceChatLoginRequest
+{
+}
+
+message BackendApiVoiceChatLoginResponse
+{
+	string server = 1;
+	string account = 2;
+	string token = 3;
+}

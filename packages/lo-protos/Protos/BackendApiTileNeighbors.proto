@@ -1,0 +1,28 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiRealmCommon.proto";
+package MistProto;
+
+message BackendApiTileNeighborsRequest
+{
+	int32 radius = 1;
+}
+
+message BackendApiTileNeighborsResponse
+{
+	message Tile
+	{
+		int64 id = 1;
+		string name = 2;
+		BackendApiRealmTileType type = 3;
+		BackendApiRealmTileDifficulty difficulty = 4;
+		BackendApiRealmTileClaimability claimability = 5;
+		int32 x = 6;
+		int32 y = 7;
+		int64 activation_date = 8;
+		int64 decay_date = 9;
+	}
+
+	repeated Tile tiles = 1;
+}

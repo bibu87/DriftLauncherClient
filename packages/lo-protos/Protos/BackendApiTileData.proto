@@ -1,0 +1,177 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "Actor.proto";
+import "Items.proto";
+import "BackendApiCommon.proto";
+import "BackendApiRealmCommon.proto";
+package MistProto;
+
+message BackendApiTileData
+{
+	message CharacterData
+	{
+		string unique_net_id = 1;
+		string name = 2;
+		Actor player_state = 3;
+		int64 clan_id = 4;
+		int64 clan_permissions = 9;
+		int64 character_id = 5;
+		uint32 level = 6;
+		uint64 money = 7;
+		string customization = 8;
+		BackendAccountTier tier = 10;
+		bool flotilla_citizen = 11;
+		int64 last_transfer_date = 12;
+		uint64 vault_money = 13;
+		string account_name = 14;
+		BackendApiGamePlatform account_platform = 15;
+		uint64 intermediate_currency = 16;
+		bool last_transfer_processed = 17;
+	}
+	
+	message ArrivedWorldTravelPartyData
+	{
+		string party_id = 1;
+		int32 enter_direction = 2;
+		string walker_guid = 3;
+		repeated string player_guids = 4;
+		reserved 5;
+		int32 water_consumed = 6;
+	}
+
+	message CharacterLookupData
+	{
+		int64 id = 1;
+		string name = 2;
+		int64 clan_id = 3;
+		int64 clan_permissions = 4;
+		string account_name = 5;
+		BackendApiGamePlatform account_platform = 6;
+	}
+
+	message ClanLookupData
+	{
+		int64 id = 1;
+		string name = 2;
+		string color_id = 3;
+		string emblem_id = 4;
+	}
+
+	message CharacterQueueEvasionData
+	{
+		int64 character_id = 1;
+	}
+
+	message TradeOrderData
+	{
+		string trade_station_guid = 1;
+		string order_guid = 2;
+		int64 character_id = 3;
+		Item item = 4;
+		float price = 5;
+		int32 quantity = 6;
+		int64 recycle_ticks = 7;
+		reserved 8 to 10;
+	}
+
+	message ClaimResourceTransferData
+	{
+		int64 sender_tile_id = 1;
+		repeated ItemActor resources = 2;
+	}
+
+	message RealmStatusChangedNotification
+	{
+		string status_message = 1;
+		int64 scheduled_shutdown_time = 2;
+	}
+
+	message RealmTileDecayTimeChangedNotification
+	{
+		int64 decay_date = 2;
+	}
+
+	message RealmTileMultipliersChangedNotification
+	{
+		float foliage_respawn_rate = 2;
+		float experience = 3;
+		float harvest_quantity = 4;
+		float research_cost = 5;
+	}
+
+	message RealmTileIsSpawnableChangedNotification
+	{
+		bool is_spawnable = 2;
+	}
+	
+	message RealmTileNameChangedNotification
+	{
+		string name = 2;
+	}
+
+	message RealmTileProxyClaimChangedNotification
+	{
+		BackendApiRealmTileClaim proxy_claim = 6;
+	}
+
+	message VaultMoneyDepositNotification
+	{
+		int64 character_id = 1;
+		uint64 amount = 2;
+	}
+	
+	message SlotLeaseWindowData
+	{
+		message Lease
+		{
+			int64 clan_id = 1;
+			int32 slots = 2;
+		}
+
+		int64 id = 1;
+		int64 start_date = 2;
+		int64 end_date = 3;
+		
+		repeated Lease leases = 4;
+	}
+
+	int64 version = 99;
+
+	repeated CharacterData characters = 1;
+	repeated Actor actors = 2;
+
+	repeated ArrivedWorldTravelPartyData arrived_world_travel_parties = 6;
+
+	repeated CharacterLookupData lookup_characters = 9;
+	repeated ClanLookupData lookup_clans = 10;
+
+	reserved 12;
+	reserved 13;
+
+	repeated CharacterQueueEvasionData character_queue_evasions = 19;
+	repeated TradeOrderData trade_orders = 20;
+
+	reserved 21;
+	
+	reserved 23;
+	reserved 24;
+	reserved 25;
+	reserved 26;
+	reserved 27;
+
+	repeated ClaimResourceTransferData claim_resource_transfers = 31;
+
+	RealmStatusChangedNotification realm_status_changed = 32;
+	RealmTileDecayTimeChangedNotification realm_tile_decay_time_changed = 33;
+	RealmTileMultipliersChangedNotification realm_tile_multipliers_changed = 34;
+	RealmTileIsSpawnableChangedNotification realm_tile_is_spawnable_changed = 35;
+	RealmTileNameChangedNotification realm_tile_name_changed = 36;
+	RealmTileProxyClaimChangedNotification realm_tile_proxy_claim_changed = 37;
+	reserved 38;
+	repeated VaultMoneyDepositNotification vault_money_deposit_notifications = 39;
+	
+	repeated TradeOrderData trade_order_notifications = 40;
+
+	SlotLeaseWindowData slot_lease_window = 41;
+}

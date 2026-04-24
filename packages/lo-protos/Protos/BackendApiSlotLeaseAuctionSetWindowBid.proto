@@ -1,0 +1,31 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiSlotLeaseAuctionCommon.proto";
+package MistProto;
+
+message BackendApiSlotLeaseAuctionSetWindowBidRequest
+{
+	int64 realm_tile_id = 1;
+	int64 realm_tile_window_id = 2;
+	uint64 amount = 3;
+}
+
+message BackendApiSlotLeaseAuctionSetWindowBidResponse
+{
+	enum Result
+	{
+		UNKNOWN = 0;
+		SUCCESS = 1;
+		INVALID_WINDOW = 2;
+		CLOSED_WINDOW = 3;
+		NO_CLAN = 4;
+		INSUFFICIENT_CLAN_PERMISSION = 5;
+		INSUFFICIENT_CLAN_BANK_FUNDS = 6;
+		BID_CHANGED = 7;
+		BID_AMOUNT_TOO_LOW = 8;
+	};
+	
+	Result result = 1;
+	BackendApiSlotLeaseAuctionWindow window = 2;
+}

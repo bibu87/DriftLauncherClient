@@ -1,0 +1,18 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiTileData.proto";
+package MistProto;
+
+message BackendApiTileNotificationsRequest
+{
+	int64 notifications_version = 2;
+	
+	repeated int64 requested_lookup_characters = 11;
+	repeated int64 requested_lookup_clans = 12;
+}
+
+message BackendApiTileNotificationsResponse
+{
+	BackendApiTileData notifications = 2;
+}

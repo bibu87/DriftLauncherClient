@@ -1,0 +1,13 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+package MistProto;
+
+message BackendApiShopReceiveUnclaimedItemsRequest
+{
+}
+
+message BackendApiShopReceiveUnclaimedItemsResponse
+{
+	int64 items_received = 1;
+}

@@ -1,0 +1,15 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message ClanOwnershipComponent
+{
+	int64 owner_character_id = 1;
+	bool shared_ownership = 2;
+}
+
+message ClanPermissionComponent
+{
+	int32 permission = 1;
+}

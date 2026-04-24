@@ -1,0 +1,97 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+package MistProto;
+
+enum BackendApiRealmTileType
+{
+	OASIS = 0;
+	MINI_OASIS = 1;
+	EVENT = 2;
+	FLOTILLA = 3;
+}
+
+enum BackendApiRealmTileDifficulty
+{
+	EASY = 0;
+	MEDIUM = 1;
+	HARD = 2;
+}
+
+enum BackendApiRealmTilePvpMode
+{
+	FULL_PVP = 0;
+	NO_PVP = 1;
+}
+
+enum BackendApiRealmTileClaimability
+{
+	NOT_CLAIMABLE = 0;
+	PROXY_CLAIMABLE = 1;
+	CLAIMABLE = 2;
+}
+
+enum BackendApiRealmTravelMode
+{
+	DIRECT_PORTALS = 0;
+	OFF_MAP_LOBBY_PORTALS = 1;
+}
+
+message BackendApiRealmTileClaim
+{
+	int64 character_id = 1;
+	int64 clan_id = 2;
+	int64 created_date = 3;
+}
+
+message BackendApiRealmTilePortal
+{
+	int64 id = 1;
+	string name = 2;
+	int32 direction = 3;
+	int64 target_tile_id = 4;
+	int32 target_tile_direction = 5;
+	int64 close_time = 6;
+	int64 open_time = 7;
+	int64 create_time = 8;
+	BackendApiRealmTileType target_tile_type = 9;
+}
+
+message BackendApiRealmTileInformation
+{
+	int32 x = 1;
+	int32 y = 2;
+	BackendApiRealmTileType type = 3;
+	bool is_spawnable = 6;
+	int64 id = 7;
+	string name = 8;
+	int32 max_player_count = 10;
+	float foliage_respawn_rate = 11;
+	float experience_multiplier = 20;
+	float harvest_quantity_multiplier = 21;
+	int64 decay_date = 14;
+	BackendApiRealmTileClaimability claimability = 18;
+	BackendApiRealmTileClaim claim = 19;
+	int32 clan_cap = 22;
+	float reserved_slots_fraction = 23;
+	string additional_settings = 24;
+	reserved 25;
+	int32 quality = 26;
+	BackendApiRealmTilePvpMode pvp_mode = 27;
+}
+
+message BackendApiRealmInformation
+{
+	string name = 1;
+	BackendApiRealmTileInformation tile = 6;
+	bool presentation_mode_enabled = 7;
+	BackendApiRealmTravelMode travel_mode = 17;
+	reserved 8;
+	string status_message = 9;
+	int64 scheduled_shutdown_time = 10;
+	int64 id = 12;
+	bool is_private = 13;
+	float research_cost_multiplier = 14;
+	string additional_settings = 15;
+	float world_travel_water_cost_multiplier = 16;
+}

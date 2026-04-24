@@ -1,0 +1,119 @@
+# DriftLauncher
+
+A custom launcher for **Last Oasis** built with Electron, React, and the Steamworks SDK. Browse realms, manage mods, and launch the game — all from one place.
+
+![Electron](https://img.shields.io/badge/Electron-30-47848F?logo=electron&logoColor=white)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
+![pnpm](https://img.shields.io/badge/pnpm-workspace-F69220?logo=pnpm&logoColor=white)
+
+---
+
+## Features
+
+- **Realm Browser** — Search, filter, and sort all available Last Oasis servers. Filter by region, provider, type (vanilla/modded), and player count. Pin a realm as your Quick Play target for one-click launches.
+- **Multi-backend support** — Query the official prod backend alongside community-run backends in parallel. Each realm is tagged with its origin so follow-up calls (map, join) route to the right server. Add/remove community URLs under Settings → Backends; the prod URL stays pinned as the primary identity source.
+- **Mod Manager** — View installed and subscribed Workshop mods, download updates, enable/disable mods per-session, and subscribe/unsubscribe directly from the launcher.
+- **Automatic mod activation** — When joining a modded realm, the launcher automatically downloads missing mods, copies them into the game folder, and sets the correct `active` flags before launching.
+- **Steam integration** — Authenticates via Steam, fetches your profile picture, and uses the Steamworks Workshop API for mod state and download management.
+- **Quick Play** — Pin any realm and launch the game instantly from the sidebar without navigating back to the browser.
+- **Persistent preferences** — Favorites, recent realms, quick-play realm, and all settings are saved to disk and restored on next launch.
+- **Settings** — Configure launch arguments, EAC toggle, game channel (stable/beta/staging), default realm tab, theme, language, and backend URLs.
+
+---
+
+## Project Structure
+
+```
+DriftLauncherClient/
+├── apps/
+│   └── launcher/          # Electron app (main + renderer)
+│       ├── src/main/      # Main process: game launch, mods, Steam IPC handlers
+│       ├── src/preload/   # Context bridge / IPC surface
+│       └── src/renderer/  # React UI (pages, store, layouts)
+└── packages/
+    ├── shared/            # Shared TypeScript types
+    └── lo-protos/         # Last Oasis protobuf schemas
+```
+
+The **Drift backend** (realm-mod consensus service at `drift.nexteam.net`) is a separate proprietary service; its source is not included in this repository. The launcher talks to it over a small HTTP API (`GET /realms`, `POST /realms/:id/mods`), so third parties can run their own compatible backend by pointing `DRIFT_BACKEND_URL` at their service.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Desktop shell | Electron 30 |
+| Build tool | electron-vite |
+| UI | React 18, React Router, Tailwind CSS |
+| State | Zustand |
+| Steam | steamworks.js (Greenworks-style native bindings) |
+| Language | TypeScript throughout |
+| Package manager | pnpm workspaces |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- pnpm 9+
+- Steam running (required for Steamworks SDK initialisation)
+- Last Oasis installed via Steam (App ID `903950`)
+
+### Install
+
+```bash
+pnpm install
+```
+
+### Development
+
+```bash
+# Launcher (Electron + Vite dev server)
+pnpm --filter launcher dev
+```
+
+### Build
+
+```bash
+# Compile main / preload / renderer bundles into out/
+pnpm --filter launcher build
+
+# Regenerate resources/icon.ico from drift_launcher.svg (after editing the SVG)
+pnpm --filter launcher icon
+
+# Package a portable Windows exe into apps/launcher/dist/
+pnpm --filter launcher dist
+```
+
+---
+
+## How Mods Work
+
+Last Oasis loads mods from:
+
+```
+Steam\steamapps\common\Last Oasis\Mist\Content\Mods\<workshopId>\
+```
+
+Each mod folder contains a `modinfo.json` with an `"active"` boolean. The launcher:
+
+1. Checks which mods a realm requires against what's installed in the game folder.
+2. Downloads any missing mods via the Steam Workshop API.
+3. Copies mod folders from the Steam workshop cache into the game mods directory if needed.
+4. Sets `"active": true` for required mods and `"active": false` for all others before launch.
+
+Official and vanilla servers always launch with all mods deactivated.
+
+---
+
+## License
+
+Licensed under the [GNU General Public License v3.0 or later](./LICENSE).
+
+You are free to use, modify, and redistribute this code, provided that any distributed derivative works are also released under the GPL and that their source code is made available. See the [LICENSE](./LICENSE) file for the full terms.
+
+This project is not affiliated with Donkey Crew or Last Oasis; "Last Oasis" remains a trademark of its respective owner.

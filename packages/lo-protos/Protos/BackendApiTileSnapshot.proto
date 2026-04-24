@@ -1,0 +1,15 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiTileSnapshotData.proto";
+package MistProto;
+
+message BackendApiTileSnapshotRequest
+{
+	BackendApiTileSnapshotData snapshot = 1;
+}
+
+message BackendApiTileSnapshotResponse
+{
+	BackendApiTileSnapshotConfirmationData confirmations = 1;
+}

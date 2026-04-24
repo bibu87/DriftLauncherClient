@@ -1,0 +1,61 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+import "BaseTypes.proto";
+package MistProto;
+
+message Placeable
+{
+	string item_template = 1;
+	int32 quality = 2;
+	bool built_with_schematic = 3;
+}
+
+message StructurePartConnection
+{
+	string part_guid = 1;
+	int32 connection_id = 2;
+}
+
+message Structure
+{
+	message AttachedStructurePart
+	{
+		string part_guid = 1;
+	};
+
+	repeated AttachedStructurePart attached_structure_parts = 1;
+	reserved 2;
+	uint32 structure_type = 3;
+}
+
+message StructurePart
+{
+	float health = 1;
+	repeated StructurePartConnection connections = 2;
+	string custom_name = 3;
+}
+
+message InstancedStructurePart
+{
+	message Instance
+	{
+		float health = 1;
+		Transform transform = 2;
+		int32 connection_id = 3;
+		repeated StructurePartConnection connections = 4;
+		int32 quality = 5;
+	};
+	
+	repeated Instance instances = 1;
+	int32 next_connection_id = 2;
+}
+
+message StructureCustomization
+{
+	string decoration = 1;
+	string foreground_dye = 2;
+	string background_dye = 3;
+	string emblem = 4;
+	string edge_pattern = 5;
+}

@@ -1,0 +1,78 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiCommon.proto";
+package MistProto;
+
+message BackendApiOffMapLobbyCharacterData
+{
+	enum OffMapCharacterState
+	{
+		ONLINE = 0;
+		STANDBY = 1;
+		OFFLINE = 2;
+	}
+
+	int64 id = 1;
+	int64 character_id = 2;
+	string name = 3;
+	int64 crew_id = 4;
+	OffMapCharacterState state = 5;
+	int32 water_units = 6;
+	bool flotilla_first_visit = 7;
+	string account_name = 8;
+	BackendApiGamePlatform account_platform = 9;
+}
+
+message BackendApiOffMapLobbyWalkerData
+{
+	enum EmbarkNotAllowedReason
+	{
+		NONE = 0;
+		NO_PERMISSION = 1;
+		RANK_TOO_LOW = 2;
+	}
+
+	int64 id = 1;
+	string class_path = 2;
+	int64 crew_id = 3;
+	string name = 4;
+	reserved 5;
+	int32 direction = 6;
+	int32 water_units = 7;
+	float water_cost_multiplier = 8;
+	reserved 9;
+	float sandiness = 10;
+	EmbarkNotAllowedReason embark_not_allowed_reason = 11;
+	int64 walker_id = 12;
+}
+
+message BackendApiOffMapLobbyCrewData
+{
+	int64 id = 1;
+	int64 captain_id = 2;
+	int64 walker_id = 3;
+	reserved 4;
+	int64 target_tile_id = 5;
+	int32 target_tile_direction = 6;
+	reserved 7;
+}
+
+message BackendApiOffMapLobbyData
+{
+	message Player
+	{
+		int64 clan_id = 1;
+		int32 level = 2;
+		int64 money = 3;
+		bool is_alive = 4;
+		int64 last_transfer_date = 5;
+		bool is_protected = 6;
+		int64 intermediate_currency = 7;
+	}
+
+	repeated BackendApiOffMapLobbyCharacterData characters = 1;
+	repeated BackendApiOffMapLobbyWalkerData walkers = 2;
+	repeated BackendApiOffMapLobbyCrewData crews = 3;
+	Player player = 4;
+}

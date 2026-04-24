@@ -1,0 +1,22 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+import "google/protobuf/any.proto";
+package MistProto;
+
+message Component
+{
+	message ClassData
+	{
+		int32 version = 1;
+		google.protobuf.Any data = 2;
+	}
+	
+	int32 version  = 1;
+	map<string, ClassData> class_data = 2;
+	string guid = 7;
+	string name = 3;
+	string class_path = 4;
+	bool replicated = 5;
+	bool created_at_runtime = 6;
+}

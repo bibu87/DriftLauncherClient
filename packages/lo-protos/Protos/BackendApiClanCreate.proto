@@ -1,0 +1,32 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiNameCheckCommon.proto";
+package MistProto;
+
+message BackendApiClanCreateRequest
+{
+	string name = 1;
+	string color_id = 2;
+	string emblem_id = 3;
+}
+
+message BackendApiClanCreateResponse
+{	
+	oneof result 
+	{
+		// Set on success
+		int64 clan_id = 1;
+		// Set on error
+		ErrorData error = 2;
+	}
+	
+	message ErrorData
+	{
+		oneof error_type 
+		{
+			BackendApiInvalidNameMessage name_error = 1;
+			bool already_clan_member = 2;
+		}
+	}
+}

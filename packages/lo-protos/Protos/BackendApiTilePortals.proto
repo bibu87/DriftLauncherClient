@@ -1,0 +1,14 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiRealmCommon.proto";
+package MistProto;
+
+message BackendApiTilePortalsRequest
+{
+}
+
+message BackendApiTilePortalsResponse
+{
+	repeated BackendApiRealmTilePortal portals = 1;
+}

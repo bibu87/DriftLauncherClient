@@ -1,0 +1,41 @@
+﻿syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+import "Items.proto";
+package MistProto;
+
+message MissileWeapon
+{
+	Item projectile_item = 1;
+}
+
+message Ballista
+{
+	string tethered_to_actor_guid = 1;
+	string tethered_to_component_name = 2;
+}
+
+message Catapult
+{
+	Item projectile_item = 1;
+}
+
+message DoubleBarrelledGun
+{
+	Item left_projectile_item = 1;
+	int32 left_projectile_count = 2;
+
+	Item right_projectile_item = 3;
+	int32 right_projectile_count = 4;
+}
+
+message BattleFan
+{
+	string stored_effect_class = 1;
+	int32 stored_effect_count = 2;
+}
+
+message RemoteTurret
+{
+	int32 loaded_pellets = 1;
+}

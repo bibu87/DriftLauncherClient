@@ -1,0 +1,14 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiSystemAccountData.proto";
+package MistProto;
+
+message BackendApiSystemLoadAccountsRequest
+{
+}
+
+message BackendApiSystemLoadAccountsResponse
+{
+	BackendApiSystemAccountData data = 1;
+}

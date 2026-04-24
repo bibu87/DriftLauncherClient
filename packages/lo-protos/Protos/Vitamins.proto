@@ -1,0 +1,19 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+import "Items.proto";
+import "Time.proto";
+package MistProto;
+
+message VitaminUser
+{
+	message ActiveVitamin
+	{
+		Item item = 1;
+		float use_time = 2;
+		float duration = 3;
+	}
+
+	repeated ActiveVitamin active_vitamins = 1;
+	TimeOffset time_offset = 2;
+}

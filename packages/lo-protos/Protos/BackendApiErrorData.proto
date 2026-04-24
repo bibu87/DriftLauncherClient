@@ -1,0 +1,66 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Framework.Protos";
+package MistProto;
+
+enum BackendApiErrorCode
+{
+	GenericError = 0;
+	GenericError_InvalidRealm = 1;
+	GenericError_InvalidRealmTile = 2;
+	GenericError_TileNotHosted = 3;
+	GenericError_TileNotActive = 4;
+	GenericError_NotFound = 5;
+
+	TradeStationError = 100;
+	TradeStationTradeInterferenceError = 101;
+	TradeStationMerchantDoesNotExist = 102;
+	TradeStationOrderDoesNotExist = 103;
+	TradeStationQuantityUnavailable = 104;
+	TradeStationRealmTileDoesNotExist = 105;
+
+	RealmTileQueueUnitAlreadyQueued = 201;
+
+	PlayerPlayInRealm_Error = 300;
+	PlayerPlayInRealm_PlayerOffMap = 301;
+	PlayerPlayInRealm_MissingTileId = 302;
+	PlayerPlayInRealm_TileNotSpawnable = 303;
+	PlayerPlayInRealm_CharacterIsOffMap = 304;
+	PlayerPlayInRealm_SpawnTargetInformationMissing = 305;
+	// This can be because the tile is not status active, the tile is pending a status change, or the tile is being cleaned-up,
+	PlayerPlayInRealm_TileIsNotPlayable = 306;
+
+	Account_Error = 400;
+	Account_DoesNotExist = 401;
+	Account_IsBanned = 402;
+
+	Character_Error = 500;
+	Character_InvalidName = 501;
+	Character_NameTaken = 502;
+	Character_NotFound = 503;
+	
+	QueueError = 600;
+	QueueEvasion_CharacterIsOffMap = 601;
+	QueueEvasion_RealmSwitchForbidden = 602;
+	QueueEvasion_CharacterNotInQueue = 603;
+	QueueEvasion_TargetIsOrigin = 604;
+	QueueEvasion_CharacterTileInactive = 605;
+	
+	RealmError = 700;
+	RealmError_NotFound = 701;
+	
+	RealmEventError = 800;
+	RealmEventError_PrematureEventStartingNotification = 801;
+	RealmEventError_PrematureEventStartedNotification = 802;
+	RealmEventError_PrematureEventEndedNotification = 803;
+	
+	// Errors when there is something wrong with input provided by the user.
+	InputError = 10000;
+	InputError_TooLong = 10001;
+	InputError_TooShort = 10002;
+	InputError_TooBig = 10003;
+	InputError_TooSmall = 10004;
+	InputError_LesserThanZero = 10005;
+	InputError_IsZero = 10006;
+	InputError_IllegalInput = 10007;
+}

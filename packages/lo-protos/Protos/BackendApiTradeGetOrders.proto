@@ -1,0 +1,32 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "Items.proto";
+import "BackendApiCommon.proto";
+package MistProto;
+
+message BackendApiTradeOrder
+{
+	string order_guid = 1;
+	int64 character_id = 2;
+	string character_name = 3;
+	int64 clan_id = 4;
+	string clan_name = 5;
+	string clan_color_id = 6;
+	Item item = 7;
+	float price = 8;
+	int32 quantity = 9;
+	reserved 10 to 12;
+	string account_name = 13;
+	BackendApiGamePlatform account_platform = 14;
+}
+
+message BackendApiTradeGetOrdersRequest
+{
+	string trade_station_guid = 1;
+}
+
+message BackendApiTradeGetOrdersResponse
+{
+	repeated BackendApiTradeOrder trade_orders = 1;
+}

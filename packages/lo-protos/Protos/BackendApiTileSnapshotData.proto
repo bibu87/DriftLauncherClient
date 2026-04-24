@@ -1,0 +1,261 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "Actor.proto";
+import "Component.proto";
+import "Items.proto";
+package MistProto;
+
+message BackendApiTileSnapshotData
+{
+	message DepartingWorldTravelPartyMember
+	{
+		int64 character_id = 1;
+		string player_actor_guid = 2;
+		int32 water_units = 3;
+	}
+
+	message DepartingWorldTravelParty
+	{
+		string party_id = 1;
+		int32 exit_direction = 2;
+		reserved 3;
+		reserved 4;
+		string walker_name = 5;
+		string walker_actor_guid = 6;
+		int64 walker_owner_character_id = 7;
+		int64 walker_owner_clan_id = 8;
+		bool walker_shared_with_clan = 15;
+		repeated DepartingWorldTravelPartyMember members = 9;
+		reserved 10;
+		repeated Actor actors = 11;
+		bool create_offmap_crew = 12;
+		int32 walker_water_units = 13;
+		float walker_water_cost_multiplier = 14;
+		float walker_sandiness = 16;
+		int32 walker_permission = 17;
+		
+		oneof follow_up_action
+		{
+			// travel = to 18+19 if set
+			bool travel_back_on_play = 20;
+			bool travel_to_origin = 21;
+		}
+		
+		int64 target_tile_id = 18;
+		int32 target_tile_direction = 19;
+	}
+
+	// Transfer a character to the given edge of an off-map lobby, the character's actor will not be moved. It is assumed that the player is dead.
+	message OffMapTransferCharacter
+	{
+		int64 character_id = 1;
+		int32 direction = 2;
+		int64 tile_id = 3;
+		uint64 cost = 4;
+	}
+
+	message TransferCharacter
+	{
+		int64 character_id = 1;
+		reserved 2;
+		reserved 3;
+		int64 tile_id = 4;
+		uint64 cost = 5;
+	}
+
+	message Character
+	{
+		int64 character_id = 1;
+		uint64 money = 2;
+		uint32 level = 3;
+		Actor player_state = 4;
+		uint64 intermediate_currency = 5;
+	}
+
+	message TradeStationData
+	{
+		string trade_station_guid = 1;
+		repeated TradeStationTradeOrderData trades = 2;
+		repeated TradeStationVaultMoneyDepositData deposits = 3;
+	}
+
+	message TradeStationTradeOrderData
+	{
+		message TradeStationTransactionData 
+		{
+			TradeOrderTransactionType type = 1;
+			int64 character_id = 2;
+			float price = 3;
+			int32 quantity = 4;
+			int64 version = 5;
+		}
+
+		string order_guid = 1;
+		int64 character_id = 2;
+		Item item = 3;
+		float price = 4;
+		int32 quantity = 5;
+		reserved 6 to 7;
+		reserved 9 to 10;
+	
+		repeated TradeStationTransactionData transactions = 8;
+	}
+
+	message TradeStationVaultMoneyDepositData
+	{
+		int64 character_id = 1;
+		uint64 amount = 2;
+	}
+
+	enum TradeOrderTransactionType
+	{
+		ADDED = 0;
+		UPDATED = 1;
+		DELETED = 2;
+		EXECUTED = 3;
+	}
+
+	message ClaimOwnerData 
+	{	// Send only a character or a clan.
+		int64 character_owner_id = 1;
+		int64 clan_owner_id = 2;
+		int64 claim_created_date = 3;
+		int32 claim_radius = 4;
+		float bonus_earned = 5;
+		float bonus_stolen = 6;
+	}
+
+	message CleanupData
+	{
+		repeated ItemActor items = 1;
+	}
+
+	message ComponentData
+	{
+		string actor_guid = 1;
+		Component component = 2;
+	}
+
+	message Walker
+	{
+		string actor_guid = 1;
+		string actor_class_path = 6;
+		bool is_deleted = 2;
+		string name = 3;
+		int64 owner_character_id = 4;
+		int64 owner_clan_id = 5;
+	}
+	
+	message VaultMoneyWithdrawal
+	{
+		int64 character_id = 1;
+		uint64 amount = 2;
+	}
+	
+	message ClanBankDeposit
+	{
+		int64 character_id = 1;
+		int64 clan_id = 2;
+		uint64 amount = 3;
+	}
+	
+	message ShopItemConsumptionData
+	{
+		string transaction_guid = 1;
+		int64 character_id = 2;
+		string identifier = 3;
+		int32 quantity = 4;
+	}
+	
+	message ProcessedCharacterTransfer
+	{
+		int64 character_id = 1;
+	}
+	
+	int64 version = 99;
+
+	repeated Actor actors = 1;
+	repeated ComponentData components = 29;
+	repeated string deleted_actor_guids = 2;
+	repeated string deleted_component_guids = 28;
+	reserved 4;
+	repeated DepartingWorldTravelParty departing_world_travel_parties = 5;
+	reserved 6;
+	repeated string processed_arrived_world_travel_party_ids = 7;
+	repeated Character characters = 8;
+
+	reserved 9 to 12;
+
+	reserved 13;
+	reserved 14;
+	reserved 15;
+	repeated TradeStationData trade_stations = 16;
+	int32 trade_stations_tax = 22;
+
+	bool force_persistence = 17;
+	bool cleanup_completed = 18;
+	
+	repeated TransferCharacter character_transfer_requests = 19;
+	
+	ClaimOwnerData claim = 20;
+	CleanupData cleanup_data = 21;
+	repeated int64 claim_resource_transfer_completed_tile_ids = 23;
+	repeated OffMapTransferCharacter character_off_map_transfer_requests = 24;
+	
+	repeated Walker walkers = 25;
+	
+	repeated VaultMoneyWithdrawal vault_money_withdrawals = 26;
+	
+	repeated ClanBankDeposit clan_bank_deposits = 27;
+	
+	repeated ShopItemConsumptionData shop_item_consumptions = 30;
+	
+	repeated ProcessedCharacterTransfer processed_character_transfers = 31;
+}
+
+message BackendApiTileSnapshotConfirmationData
+{
+	message DepartingWorldTravelParty
+	{
+		string party_id = 1;
+		bool was_successful = 2;
+		string error_message = 3;
+		reserved 4;
+		reserved 5;
+	}
+
+	// Transfer a character to the given edge of an off-map lobby, the character's actor will not be moved. It is assumed that the player is dead.
+	message OffMapTransferCharacter
+	{
+		int64 character_id = 1;
+		// If this is not null or empty there was an error.
+		string error = 2;
+	}
+
+	message TransferCharacter
+	{
+		int64 character_id = 1;
+		bool succeeded = 2;
+		string error_message = 3;
+		reserved 4;
+	}
+
+	message TradeOrderTransaction
+	{
+		string trade_station_guid = 1;
+		reserved 2 to 3;
+		int64 version = 4;
+	}
+	
+	int64 version = 99;
+
+	repeated DepartingWorldTravelParty departing_world_travel_parties = 1;
+	reserved 2;
+	repeated string arrived_world_travel_party_ids = 3;
+
+	reserved 4 to 9;
+	repeated TradeOrderTransaction trade_station_transactions = 10;
+	repeated TransferCharacter character_transfers = 11;
+	repeated OffMapTransferCharacter character_off_map_transfers = 12;
+}

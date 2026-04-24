@@ -1,0 +1,12 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+import "Actor.proto";
+package MistProto;
+
+message LocalWorld
+{
+	repeated Actor actors = 1;
+	Actor player = 2;
+	Actor player_state = 3;
+}

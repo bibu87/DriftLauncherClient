@@ -1,0 +1,40 @@
+﻿syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+
+import "BackendApiStatisticsTrack.proto";
+package MistProto;
+
+
+
+message BackendApiStatisticsTrackGameDataRequest
+{
+	float uptime_since_sending = 1;
+	float avg_players_count = 2;
+
+	repeated BackendApiStatisticsTrackEvent game_events = 3;
+
+	reserved 4;
+	reserved 5;
+	reserved 6;
+	reserved 7;
+
+	reserved 8;
+	reserved 9;
+	reserved 10;
+
+	reserved 11;
+	reserved 12;
+
+	int32 auction_bids = 13;
+
+	string map_name = 14;
+
+	reserved 15;
+
+	reserved 16;
+}
+
+message BackendApiStatisticsTrackGameDataResponse
+{
+}

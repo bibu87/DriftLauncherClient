@@ -1,0 +1,10 @@
+﻿syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message Projectile
+{
+	reserved 1;
+	bool hit_dynamic_object = 2;
+}

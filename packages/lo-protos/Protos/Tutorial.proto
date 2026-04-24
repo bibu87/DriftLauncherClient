@@ -1,0 +1,18 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message TutorialState
+{
+	message SubtaskState
+	{
+		string SubtaskName = 1;
+		int32 Progress = 2;
+	}
+
+	string EntryName = 1;
+	repeated SubtaskState Subtasks = 2;
+	bool TutorialOver = 3;
+
+}

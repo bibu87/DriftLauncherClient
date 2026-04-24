@@ -1,0 +1,21 @@
+﻿syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Game.Protos";
+package MistProto;
+
+message KnowledgeObjectsManager
+{
+	repeated PlayerGatheredKnowledge gathered_knowledge = 1;
+}
+
+message PlayerGatheredKnowledge
+{
+	int64 player_id = 1;
+	repeated GatheredKnowledgeEntry knowledge_entries = 2;
+}
+
+message GatheredKnowledgeEntry
+{
+	string knowledge_type_class = 1;
+	int32 gathered_amount = 2;
+}

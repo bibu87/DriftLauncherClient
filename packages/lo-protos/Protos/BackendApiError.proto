@@ -1,0 +1,13 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+option csharp_namespace = "DonkeyCrew.Oasis.Backend.Web.Protos";
+import "BackendApiErrorData.proto";
+package MistProto;
+
+message BackendApiErrorResponse
+{
+	BackendApiErrorCode code = 1;
+	reserved 2;
+	string errorMessage = 3;
+	string userMessage = 4;
+}
