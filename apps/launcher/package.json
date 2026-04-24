@@ -38,9 +38,12 @@
     ],
     "npmRebuild": false,
     "win": {
-      "target": "portable",
       "icon": "resources/icon.ico",
-      "artifactName": "DriftLauncher-${version}-portable.exe"
+      "target": [
+        { "target": "portable", "arch": ["x64"] },
+        { "target": "zip", "arch": ["x64"] }
+      ],
+      "artifactName": "DriftLauncher-${version}-${os}-${arch}.${ext}"
     }
   },
   "dependencies": {
