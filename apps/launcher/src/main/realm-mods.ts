@@ -68,7 +68,14 @@ export async function pullFromBackend(): Promise<void> {
     store.set('records', incoming)
     console.log(`[realm-mods] startup pull: cached ${incoming.length} record(s) from backend`)
   } catch (err) {
-    console.warn('[realm-mods] startup pull failed:', (err as Error).message)
+    if (axios.isAxiosError(err)) {
+      console.warn(
+        `[realm-mods] startup pull failed: code=${err.code ?? 'none'} status=${err.response?.status ?? 'network'} url=${err.config?.url} msg=${err.message || '(empty)'}`,
+        err.response?.data ?? ''
+      )
+    } else {
+      console.warn('[realm-mods] startup pull failed (non-axios):', err)
+    }
   }
 }
 

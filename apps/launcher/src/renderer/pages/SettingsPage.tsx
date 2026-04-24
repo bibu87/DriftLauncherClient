@@ -110,18 +110,6 @@ export default function SettingsPage(): React.JSX.Element {
             </Field>
           </Section>
 
-          {/* Game files */}
-          <Section title="Game Files">
-            <Field label="Verify game files" description="Check game installation integrity via Steam.">
-              <button
-                onClick={() => window.api.steam.getTicket().then(() => {}).catch(() => {})}
-                className="px-4 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded text-sm text-gray-300 transition-colors"
-              >
-                Verify via Steam
-              </button>
-            </Field>
-          </Section>
-
           {/* Cache */}
           <Section title="Cache">
             <Field label="Clear launcher cache" description="Clears HTTP cache, workshop preview images, and the realm-mods cache. Does not sign you out or change settings.">
