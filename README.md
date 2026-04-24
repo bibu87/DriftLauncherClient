@@ -18,7 +18,20 @@ A custom launcher for **Last Oasis** built with Electron, React, and the Steamwo
 - **Steam integration** — Authenticates via Steam, fetches your profile picture, and uses the Steamworks Workshop API for mod state and download management.
 - **Quick Play** — Pin any realm and launch the game instantly from the sidebar without navigating back to the browser.
 - **Persistent preferences** — Favorites, recent realms, quick-play realm, and all settings are saved to disk and restored on next launch.
-- **Settings** — Configure launch arguments, EAC toggle, game channel (stable/beta/staging), default realm tab, theme, language, and backend URLs.
+- **Settings** — Configure launch arguments, EAC toggle, default realm tab, theme, and backend URLs.
+
+---
+
+## Download
+
+Pre-built Windows binaries are published on the [GitHub Releases](https://github.com/bibu87/DriftLauncherClient/releases/latest) page. Two flavours are provided for each release:
+
+- **`DriftLauncher-<version>-win-x64.exe`** — single-file portable build. Download and run; no installation step.
+- **`DriftLauncher-<version>-win-x64.zip`** — zipped unpacked build. Extract anywhere and run `DriftLauncher.exe` from the extracted folder.
+
+Steam must be running when you launch, and Last Oasis (App ID `903950`) must be installed via Steam.
+
+> Builds are currently unsigned, so Windows SmartScreen may warn the first time you run the exe. Click *More info → Run anyway* if you trust the source.
 
 ---
 
