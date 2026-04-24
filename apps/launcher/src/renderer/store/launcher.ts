@@ -36,9 +36,7 @@ const defaultSettings: LauncherSettings = {
   launchArgs: '',
   eacEnabled: true,
   theme: 'dark',
-  language: 'en',
   launchOnStartup: false,
-  gameChannel: 'default',
   defaultRealmTab: 'realms',
   backendUrls: [PROD_BACKEND_URL],
 }

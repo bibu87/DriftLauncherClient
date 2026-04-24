@@ -21,7 +21,7 @@ export default function SettingsPage(): React.JSX.Element {
       </div>
 
       <div className="flex-1 overflow-auto px-6 py-6">
-        <div className="max-w-lg flex flex-col gap-6">
+        <div className="flex flex-col gap-6">
 
           {/* Launch */}
           <Section title="Launch">
@@ -41,18 +41,6 @@ export default function SettingsPage(): React.JSX.Element {
 
             <Field label="Launch on startup" description="Start Drift Launcher when Windows starts.">
               <Toggle value={settings.launchOnStartup} onChange={v => update({ launchOnStartup: v })} label={settings.launchOnStartup ? 'On' : 'Off'} />
-            </Field>
-
-            <Field label="Game channel" description="Switch between game branches (requires restart).">
-              <select
-                value={settings.gameChannel}
-                onChange={e => update({ gameChannel: e.target.value })}
-                className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-gray-500"
-              >
-                <option value="default">Default (Stable)</option>
-                <option value="beta">Beta</option>
-                <option value="staging">Staging</option>
-              </select>
             </Field>
           </Section>
 
@@ -96,18 +84,6 @@ export default function SettingsPage(): React.JSX.Element {
               </div>
             </Field>
 
-            <Field label="Language" description="Interface language.">
-              <select
-                value={settings.language}
-                onChange={e => update({ language: e.target.value })}
-                className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-gray-500"
-              >
-                <option value="en">English</option>
-                <option value="de">Deutsch</option>
-                <option value="fr">Français</option>
-                <option value="ru">Русский</option>
-              </select>
-            </Field>
           </Section>
 
           {/* Cache */}

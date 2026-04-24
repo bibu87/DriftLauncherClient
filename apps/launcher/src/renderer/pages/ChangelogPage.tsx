@@ -9,7 +9,7 @@ interface Release {
 const RELEASES: Release[] = [
   {
     version: '0.1.0',
-    date: '2026-04-19',
+    date: '2026-04-24',
     entries: [
       { type: 'added', text: 'Server browser with Official, Vanilla, and Modded server classification' },
       { type: 'added', text: 'Favourites and recently played server tabs' },
@@ -17,7 +17,7 @@ const RELEASES: Release[] = [
       { type: 'added', text: 'Mod manager — enable/disable, update, and remove installed workshop mods' },
       { type: 'added', text: 'Game process monitoring and workshop ID discovery from game logs' },
       { type: 'added', text: 'Drift backend overlay: modded realm detection and mod reporting' },
-      { type: 'added', text: 'Settings: launch arguments, EAC toggle, theme, language, game channel' },
+      { type: 'added', text: 'Settings: launch arguments, EAC toggle, theme' },
       { type: 'added', text: 'Steam authentication with session persistence' },
     ],
   },
