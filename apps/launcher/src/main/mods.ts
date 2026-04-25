@@ -245,9 +245,13 @@ export async function unsubscribeMod(workshopId: string): Promise<void> {
 }
 
 export function toggleMod(workshopId: string, active: boolean): void {
+  // checkMods reads `active` from the game folder when the mod is installed
+  // there, falling back to the workshop folder otherwise. Update both so the
+  // toggle is visible regardless of which path checkMods picks.
   const workshopDir = findWorkshopDir()
-  if (!workshopDir) return
-  setModinfoActive(join(workshopDir, workshopId), active)
+  if (workshopDir) setModinfoActive(join(workshopDir, workshopId), active)
+  const gameModsDir = findGameModsDir()
+  if (gameModsDir) setModinfoActive(join(gameModsDir, workshopId), active)
 }
 
 export function activateMods(targetIds: string[], workshopDir: string): void {

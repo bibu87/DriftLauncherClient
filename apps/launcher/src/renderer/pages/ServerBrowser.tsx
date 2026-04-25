@@ -105,6 +105,18 @@ export default function ServerBrowser(): React.JSX.Element {
       if (failures.length > 0) {
         console.warn('[realms] partial search failures:', failures)
       }
+      // If the primary (prod) backend session expired, the main process has
+      // already cleared its stored token — bounce to login so a fresh Steam
+      // ticket can re-establish the session. Failures from secondary backends
+      // alone shouldn't kick the user out: their realms just won't appear.
+      const primaryExpired = failures.some(
+        (f: { backend: string; code: string }) => f.backend === PROD_BACKEND_URL && f.code === 'SESSION_EXPIRED'
+      )
+      if (primaryExpired) {
+        clearAll()
+        navigate('/login', { replace: true })
+        return
+      }
       const allModRecords = await window.api.drift.getAllRealmMods()
       const modMap = new Map(allModRecords.map(r => [r.realmId, r.workshopIds]))
       const overlaid: Realm[] = raw.map((r: Realm) => ({
