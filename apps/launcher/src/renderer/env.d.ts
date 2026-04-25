@@ -1,5 +1,5 @@
 import type { LOLoginResult, StoredSession, RealmSearchResult, LauncherPrefs } from '../preload/index'
-import type { Realm, RealmMap, RealmSearchFilters, RealmModRecord, ModStatus, DownloadProgress } from '@drift/shared'
+import type { Realm, RealmMap, RealmSearchFilters, RealmModRecord, ModStatus, DownloadProgress, WalkerPreferences } from '@drift/shared'
 
 interface API {
   dev: {
@@ -29,6 +29,7 @@ interface API {
   realms: {
     search(filters: RealmSearchFilters): Promise<RealmSearchResult>
     getMap(realmId: number, characterId: number, backend: string): Promise<RealmMap>
+    getWalkerPreferences(realmId: number, characterId: number, backend: string): Promise<WalkerPreferences>
   }
   drift: {
     getAllRealmMods(): Promise<RealmModRecord[]>

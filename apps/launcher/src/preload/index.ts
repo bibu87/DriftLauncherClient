@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import type { Realm, RealmMap, RealmSearchFilters, RealmModRecord, ModStatus, DownloadProgress, LauncherPrefs } from '@drift/shared'
+import type { Realm, RealmMap, RealmSearchFilters, RealmModRecord, ModStatus, DownloadProgress, LauncherPrefs, WalkerPreferences } from '@drift/shared'
 
 export type { LauncherPrefs }
 
@@ -55,6 +55,8 @@ const api = {
       ipcRenderer.invoke('realms:search', filters),
     getMap: (realmId: number, characterId: number, backend: string): Promise<RealmMap> =>
       ipcRenderer.invoke('realms:get-map', realmId, characterId, backend),
+    getWalkerPreferences: (realmId: number, characterId: number, backend: string): Promise<WalkerPreferences> =>
+      ipcRenderer.invoke('realms:get-walker-preferences', realmId, characterId, backend),
   },
   drift: {
     getAllRealmMods: (): Promise<RealmModRecord[]> =>

@@ -12,6 +12,11 @@ html, body, #root {
   height: 100%;
 }
 
+/* Tell Chromium to render native UA widgets (select option popups, scrollbars,
+   date pickers, etc.) in dark mode by default. Without this, <option> popups
+   render with light system colors regardless of CSS on the <select>. */
+html { color-scheme: dark; }
+
 html, body { background: #030712; } /* fallback / default */
 
 /* ── Dark theme: concept-art background + glass surfaces ──────────────────

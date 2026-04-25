@@ -2,7 +2,7 @@ import protobuf from 'protobufjs'
 import axios from 'axios'
 import path from 'path'
 import { app } from 'electron'
-import type { Realm, RealmMap, RealmMapTile } from '@drift/shared'
+import type { Realm, RealmMap, RealmMapTile, RealmMapWalker, WalkerPreferences } from '@drift/shared'
 
 // Log verbosity. At 'info' (default) each LO call logs a single line with
 // method, endpoint, status and timing. At 'debug' the decoded request and
@@ -122,6 +122,7 @@ async function getRoot(): Promise<protobuf.Root> {
     path.join(PROTO_DIR, 'BackendApiJoinRealmSearch.proto'),
     path.join(PROTO_DIR, 'BackendApiRealmCommon.proto'),
     path.join(PROTO_DIR, 'BackendApiRealmGetMap.proto'),
+    path.join(PROTO_DIR, 'BackendApiMigrationGetWalkerPreferences.proto'),
   ])
   return _root
 }
@@ -293,8 +294,33 @@ export async function decodeRealmGetMapResponse(buf: ArrayBuffer): Promise<Realm
     }
   }
 
+  type RawWalker = {
+    id?: string | number
+    walkerId?: string | number
+    classPath?: string
+    name?: string
+    characterOwnerId?: string | number
+    characterOwnerName?: string
+    sharedWithClan?: boolean
+    waterCostMultiplier?: number
+    waterUnits?: number
+  }
+  type RawDirection = { walkers?: RawWalker[] }
+
   const tiles: RealmMapTile[] = (msg.tiles ?? []).map(t => {
     const claim = (t.claim as { clanOwnerId?: string | number; characterOwnerId?: string | number } | undefined) ?? {}
+    const directions = ((t as Record<string, unknown>).directions as RawDirection[] | undefined) ?? []
+    const walkers: RealmMapWalker[] = directions.flatMap(d => (d.walkers ?? []).map(w => ({
+      id: Number(w.id ?? 0),
+      walkerId: Number(w.walkerId ?? 0),
+      classPath: String(w.classPath ?? ''),
+      name: String(w.name ?? ''),
+      characterOwnerId: Number(w.characterOwnerId ?? 0),
+      characterOwnerName: String(w.characterOwnerName ?? ''),
+      sharedWithClan: Boolean(w.sharedWithClan),
+      waterCostMultiplier: Number(w.waterCostMultiplier ?? 0),
+      waterUnits: Number(w.waterUnits ?? 0),
+    })))
     return {
       id: Number(t.id ?? 0),
       x: Number(t.x ?? 0),
@@ -318,8 +344,23 @@ export async function decodeRealmGetMapResponse(buf: ArrayBuffer): Promise<Realm
       claimCharacterId: Number(claim.characterOwnerId ?? 0),
       activationDate: fromDotNetTicks(t.activationDate),
       decayDate: fromDotNetTicks(t.decayDate),
+      walkers,
     }
   })
+
+  // One-shot summary of walker class_paths so we can confirm the renderer's
+  // species matcher covers the actual values the backend sends. Always-on at
+  // info level — payload is small (just unique strings + sample names).
+  const walkerSamples = new Map<string, string>()
+  for (const t of tiles) {
+    for (const w of t.walkers) {
+      if (!walkerSamples.has(w.classPath)) walkerSamples.set(w.classPath, w.name)
+    }
+  }
+  if (walkerSamples.size > 0) {
+    console.log(`[lo-proto] walker class_paths (${walkerSamples.size} unique):`)
+    for (const [cp, name] of walkerSamples) console.log(`  ${cp}  (e.g. "${name}")`)
+  }
 
   // protobufjs returns int64 map keys as raw 8-byte little-endian char strings
   // (not decimal), while scalar int64 values are returned as decimal strings.
@@ -356,6 +397,43 @@ export async function decodeRealmGetMapResponse(buf: ArrayBuffer): Promise<Realm
     regionLookup: normalizeLookup(msg.regionLookup, v => ({ name: String(v.name ?? ''), key: String(v.key ?? '') })) as RealmMap['regionLookup'],
     clanLookup: normalizeLookup(msg.clanLookup, v => ({ name: String(v.name ?? ''), colorId: String(v.colorId ?? '') })) as RealmMap['clanLookup'],
     mapLookup: normalizeLookup(msg.mapLookup, v => ({ path: String(v.path ?? '') })) as RealmMap['mapLookup'],
+  }
+}
+
+export async function encodeWalkerPreferencesRequest(): Promise<Buffer> {
+  const root = await getRoot()
+  const ReqType = root.lookupType('MistProto.BackendApiMigrationGetWalkerPreferencesRequest')
+  const msg = ReqType.create({})
+  return Buffer.from(ReqType.encode(msg).finish())
+}
+
+export async function decodeWalkerPreferencesResponse(buf: ArrayBuffer): Promise<WalkerPreferences> {
+  const root = await getRoot()
+  const ResType = root.lookupType('MistProto.BackendApiMigrationGetWalkerPreferencesResponse')
+  const msg = ResType.decode(new Uint8Array(buf)).toJSON() as {
+    walkers?: Array<{
+      isPersonal?: boolean
+      classPath?: string
+      realmTileId?: string | number
+      walkerId?: string | number
+      isPacked?: boolean
+      name?: string
+    }>
+    hasClan?: boolean
+    canManageClanPreferences?: boolean
+  }
+  logProto('decode WalkerPreferencesResponse', { count: msg.walkers?.length ?? 0, hasClan: msg.hasClan })
+  return {
+    walkers: (msg.walkers ?? []).map(w => ({
+      walkerId: Number(w.walkerId ?? 0),
+      realmTileId: Number(w.realmTileId ?? 0),
+      classPath: String(w.classPath ?? ''),
+      name: String(w.name ?? ''),
+      isPersonal: Boolean(w.isPersonal),
+      isPacked: Boolean(w.isPacked),
+    })),
+    hasClan: Boolean(msg.hasClan),
+    canManageClanPreferences: Boolean(msg.canManageClanPreferences),
   }
 }
 

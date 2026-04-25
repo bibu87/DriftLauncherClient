@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import type { RealmMap, RealmMapTile } from '@drift/shared'
+import type { RealmMap, RealmMapTile, RealmMapWalker, WalkerPreferences } from '@drift/shared'
 
 import iconSleepingGiantsRoads from '../assets/maps/sleeping_giants_roads.png'
 import iconSleepingGiants from '../assets/maps/sleeping_giants.png'
@@ -11,6 +11,28 @@ import iconAncientCity from '../assets/maps/ancient_city.png'
 import iconCraterIron from '../assets/maps/crater_iron.png'
 import iconWormMap from '../assets/maps/wormmap.png'
 import iconCradle from '../assets/maps/cradle.png'
+
+import walkerBalang from '../assets/walkers/Balang_Walker_icon.png'
+import walkerBuffalo from '../assets/walkers/Buffalo_Walker_icon.png'
+import walkerCamelop from '../assets/walkers/Camelop_Walker_icon.png'
+import walkerCobra from '../assets/walkers/Cobra_Walker_icon.png'
+import walkerDinghy from '../assets/walkers/Dinghy_Walker_icon.png'
+import walkerDomus from '../assets/walkers/Domus_Walker_icon.png'
+import walkerFalco from '../assets/walkers/Falco_Walker_icon.png'
+import walkerFirefly from '../assets/walkers/Firefly_Walker_icon.png'
+import walkerHercul from '../assets/walkers/Hercul_Walker_icon.png'
+import walkerHornet from '../assets/walkers/Hornet_Walker_icon.png'
+import walkerMollusk from '../assets/walkers/Mollusk_Walker_icon.png'
+import walkerPanda from '../assets/walkers/Panda_Walker.png'
+import walkerProxy from '../assets/walkers/Proxy_Walker_icon.png'
+import walkerRaptor from '../assets/walkers/Raptor_Sky_Walker_icon.png'
+import walkerSchmetterling from '../assets/walkers/Schmetterling_Walker_icon.png'
+import walkerSilur from '../assets/walkers/Silur_Walker_icon.png'
+import walkerSpider from '../assets/walkers/Spider_Walker_icon.png'
+import walkerStiletto from '../assets/walkers/Stiletto_Walker_icon.png'
+import walkerTitan from '../assets/walkers/Titan_Walker_icon.png'
+import walkerToboggan from '../assets/walkers/Toboggan_Walker_icon.png'
+import walkerTusker from '../assets/walkers/Tusker_Walker.png'
 
 // Order matters: more specific substrings must come first
 // (e.g. "SleepingGiants_Roads" before "SleepingGiants").
@@ -32,6 +54,59 @@ function iconForMapPath(path: string | undefined): string | null {
   for (const [re, icon] of ICON_MATCHERS) if (re.test(path)) return icon
   return null
 }
+
+// Walker class_path → species + icon. Order matters where one name is a substring
+// of another (e.g. "RaptorSky" before "Raptor", "Schmetterling" before plain prefixes).
+// `species` is the human-readable label used in the type filter dropdown.
+// `icon: null` = species recognised but no icon shipped (drop a PNG into
+// src/renderer/assets/walkers/ and add an import + entry to enable it).
+const WALKER_MATCHERS: Array<{ re: RegExp; species: string; icon: string | null }> = [
+  { re: /Schmetterling/i, species: 'Schmetterling', icon: walkerSchmetterling },
+  { re: /Raptor[_\s]?Sky|RaptorSky/i, species: 'Raptor Sky', icon: walkerRaptor },
+  { re: /Camelop/i, species: 'Camelop', icon: walkerCamelop },
+  { re: /Toboggan/i, species: 'Toboggan', icon: walkerToboggan },
+  { re: /Stiletto/i, species: 'Stiletto', icon: walkerStiletto },
+  { re: /Mollusk/i, species: 'Mollusk', icon: walkerMollusk },
+  { re: /Buffalo/i, species: 'Buffalo', icon: walkerBuffalo },
+  { re: /Firefly/i, species: 'Firefly', icon: walkerFirefly },
+  { re: /Balang/i, species: 'Balang', icon: walkerBalang },
+  { re: /Hercul/i, species: 'Hercul', icon: walkerHercul },
+  { re: /Hornet/i, species: 'Hornet', icon: walkerHornet },
+  { re: /Spider/i, species: 'Spider', icon: walkerSpider },
+  { re: /Dinghy/i, species: 'Dinghy', icon: walkerDinghy },
+  { re: /Tusker/i, species: 'Tusker', icon: walkerTusker },
+  { re: /Cobra/i, species: 'Cobra', icon: walkerCobra },
+  { re: /Domus/i, species: 'Domus', icon: walkerDomus },
+  { re: /Falco/i, species: 'Falco', icon: walkerFalco },
+  { re: /Panda/i, species: 'Panda', icon: walkerPanda },
+  { re: /Proxy/i, species: 'Proxy', icon: walkerProxy },
+  { re: /Silur/i, species: 'Silur', icon: walkerSilur },
+  { re: /Titan/i, species: 'Titan', icon: walkerTitan },
+  // Nomad is the starter walker; no dedicated icon shipped, so reuse the Spider art.
+  { re: /Nomad/i, species: 'Nomad', icon: walkerSpider },
+]
+
+function walkerSpecies(classPath: string, name?: string): { species: string; icon: string | null } {
+  for (const m of WALKER_MATCHERS) {
+    if (classPath && m.re.test(classPath)) return { species: m.species, icon: m.icon }
+  }
+  // Fallback: walker user-given name often contains the species
+  // (e.g. "My Stiletto", "Big Hercul"). Useful when class_path uses
+  // a code name we don't recognize.
+  if (name) {
+    for (const m of WALKER_MATCHERS) {
+      if (m.re.test(name)) return { species: m.species, icon: m.icon }
+    }
+  }
+  // Log the unmatched class_path once per session so we can extend matchers.
+  if (classPath && !loggedUnknown.has(classPath)) {
+    loggedUnknown.add(classPath)
+    console.warn(`[walkers] unknown class_path: ${classPath}${name ? ` (name: "${name}")` : ''}`)
+  }
+  return { species: 'Unknown', icon: null }
+}
+
+const loggedUnknown = new Set<string>()
 
 // Flat-top hex, odd-q offset coords. Size = distance from center to corner.
 const HEX_SIZE = 48
@@ -71,15 +146,23 @@ interface Props {
 
 export default function RealmMapModal({ realmId, realmName, characterId, backend, onClose }: Props): React.JSX.Element {
   const [data, setData] = useState<RealmMap | null>(null)
+  const [walkerPrefs, setWalkerPrefs] = useState<WalkerPreferences | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [hover, setHover] = useState<{ tile: RealmMapTile; x: number; y: number } | null>(null)
+  const [focusedTileId, setFocusedTileId] = useState<number | null>(null)
+  const [filterQuery, setFilterQuery] = useState('')
+  const [filterSpecies, setFilterSpecies] = useState<string>('')
+  const [filterFavOnly, setFilterFavOnly] = useState(false)
   const overlayRef = useRef<HTMLDivElement>(null)
+  const mapBodyRef = useRef<HTMLDivElement>(null)
+  const tileRefs = useRef<Map<number, HTMLDivElement>>(new Map())
 
   useEffect(() => {
     let cancelled = false
     setLoading(true)
     setError(null)
+    setWalkerPrefs(null)
     window.api.realms.getMap(realmId, characterId, backend)
       .then(map => { if (!cancelled) { setData(map); setLoading(false) } })
       .catch((err: unknown) => {
@@ -88,6 +171,11 @@ export default function RealmMapModal({ realmId, realmName, characterId, backend
         setError(msg)
         setLoading(false)
       })
+    // Walker prefs are best-effort: a failure here just means we won't show
+    // favorite indicators — the map itself should still render.
+    window.api.realms.getWalkerPreferences(realmId, characterId, backend)
+      .then(prefs => { if (!cancelled) setWalkerPrefs(prefs) })
+      .catch(() => { /* ignore — favorites become invisible */ })
     return () => { cancelled = true }
   }, [realmId, characterId, backend])
 
@@ -133,6 +221,61 @@ export default function RealmMapModal({ realmId, realmName, characterId, backend
     return out
   }, [layout, tileByKey])
 
+  // Set of walker_ids the player has marked as a preferred (favorite) walker.
+  // Walker prefs come from /Api/Migration/GetWalkerPreferences — presence in
+  // the list = favorite. Empty when no prefs are set or the call failed.
+  const favoriteIds = useMemo(() => {
+    const set = new Set<number>()
+    for (const w of walkerPrefs?.walkers ?? []) {
+      if (w.walkerId > 0) set.add(w.walkerId)
+    }
+    return set
+  }, [walkerPrefs])
+
+  const allWalkers = useMemo<SidebarWalker[]>(() => {
+    if (!data) return []
+    const out: SidebarWalker[] = []
+    for (const tile of data.tiles) {
+      for (const w of tile.walkers) {
+        const { species, icon } = walkerSpecies(w.classPath, w.name)
+        out.push({ ...w, tile, species, icon, isFavorite: favoriteIds.has(w.walkerId) })
+      }
+    }
+    return out
+  }, [data, favoriteIds])
+
+  const speciesOptions = useMemo(() => {
+    const set = new Set<string>()
+    for (const w of allWalkers) set.add(w.species)
+    return Array.from(set).sort()
+  }, [allWalkers])
+
+  const filteredWalkers = useMemo(() => {
+    const q = filterQuery.trim().toLowerCase()
+    return allWalkers
+      .filter(w => !filterFavOnly || w.isFavorite)
+      .filter(w => !filterSpecies || w.species === filterSpecies)
+      .filter(w => {
+        if (!q) return true
+        return (
+          w.name.toLowerCase().includes(q) ||
+          w.characterOwnerName.toLowerCase().includes(q) ||
+          w.species.toLowerCase().includes(q)
+        )
+      })
+      .sort((a, b) => {
+        // Favorites first, then by name.
+        if (a.isFavorite !== b.isFavorite) return a.isFavorite ? -1 : 1
+        return (a.name || a.species).localeCompare(b.name || b.species)
+      })
+  }, [allWalkers, filterQuery, filterSpecies, filterFavOnly])
+
+  const focusTile = (tileId: number): void => {
+    setFocusedTileId(tileId)
+    const el = tileRefs.current.get(tileId)
+    if (el) el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' })
+  }
+
   return (
     <div
       ref={overlayRef}
@@ -158,7 +301,24 @@ export default function RealmMapModal({ realmId, realmName, characterId, backend
         </div>
 
         {/* Body */}
-        <div className="flex-1 overflow-auto p-4 bg-gray-950">
+        <div className="flex-1 flex overflow-hidden bg-gray-950">
+          {/* Walker sidebar — only shown once we have a successful map load. */}
+          {!loading && !error && data && (
+            <WalkerSidebar
+              walkers={filteredWalkers}
+              speciesOptions={speciesOptions}
+              filterQuery={filterQuery}
+              setFilterQuery={setFilterQuery}
+              filterSpecies={filterSpecies}
+              setFilterSpecies={setFilterSpecies}
+              filterFavOnly={filterFavOnly}
+              setFilterFavOnly={setFilterFavOnly}
+              focusedTileId={focusedTileId}
+              onFocus={focusTile}
+              totalCount={allWalkers.length}
+            />
+          )}
+          <div ref={mapBodyRef} className="flex-1 overflow-auto p-4">
           {loading && (
             <div className="flex items-center justify-center min-h-[300px] min-w-[400px] text-gray-500 text-sm">
               Loading map…
@@ -221,6 +381,24 @@ export default function RealmMapModal({ realmId, realmName, characterId, backend
                     />
                   )
                 })}
+                {/* Focus ring — drawn last in the SVG so it overlays cell fills, but the
+                    HTML <img> overlay still renders on top. That's fine: the ring sits on the
+                    polygon edge and the icon doesn't reach the corners, so the highlight is
+                    still visible on iconified tiles. */}
+                {focusedTileId !== null && (() => {
+                  const tile = data.tiles.find(t => t.id === focusedTileId)
+                  if (!tile) return null
+                  const { cx, cy } = hexCenter(tile.x - layout.minX, tile.y - layout.minY)
+                  return (
+                    <polygon
+                      points={hexPoints(cx, cy)}
+                      fill="none"
+                      stroke="#fbbf24"
+                      strokeWidth={3}
+                      style={{ filter: 'drop-shadow(0 0 6px #fbbf24)' }}
+                    />
+                  )
+                })()}
               </svg>
 
               {/* HTML overlay for tile icons + hover targets. <img> is more reliable than SVG <image> in Electron. */}
@@ -234,6 +412,10 @@ export default function RealmMapModal({ realmId, realmName, characterId, backend
                 return (
                   <div
                     key={`hit-${tile.id}`}
+                    ref={el => {
+                      if (el) tileRefs.current.set(tile.id, el)
+                      else tileRefs.current.delete(tile.id)
+                    }}
                     className="absolute"
                     style={{
                       left: cx - HEX_WIDTH / 2,
@@ -245,6 +427,7 @@ export default function RealmMapModal({ realmId, realmName, characterId, backend
                     onMouseEnter={e => setHover({ tile, x: e.clientX, y: e.clientY })}
                     onMouseMove={e => setHover({ tile, x: e.clientX, y: e.clientY })}
                     onMouseLeave={() => setHover(null)}
+                    onClick={() => setFocusedTileId(prev => prev === tile.id ? null : tile.id)}
                   >
                     {icon && (
                       <img
@@ -268,6 +451,7 @@ export default function RealmMapModal({ realmId, realmName, characterId, backend
               })}
             </div>
           )}
+          </div>
         </div>
       </div>
 
@@ -275,6 +459,208 @@ export default function RealmMapModal({ realmId, realmName, characterId, backend
         <TileTooltip tile={hover.tile} x={hover.x} y={hover.y} regionName={data?.regionLookup[String(hover.tile.regionId)]?.name ?? ''} clanName={data?.clanLookup[String(hover.tile.claimClanId)]?.name} />
       )}
     </div>
+  )
+}
+
+interface SidebarWalker extends RealmMapWalker {
+  tile: RealmMapTile
+  species: string
+  icon: string | null
+  isFavorite: boolean
+}
+
+function WalkerSidebar({
+  walkers,
+  speciesOptions,
+  filterQuery,
+  setFilterQuery,
+  filterSpecies,
+  setFilterSpecies,
+  filterFavOnly,
+  setFilterFavOnly,
+  focusedTileId,
+  onFocus,
+  totalCount,
+}: {
+  walkers: SidebarWalker[]
+  speciesOptions: string[]
+  filterQuery: string
+  setFilterQuery: (v: string) => void
+  filterSpecies: string
+  setFilterSpecies: (v: string) => void
+  filterFavOnly: boolean
+  setFilterFavOnly: (v: boolean) => void
+  focusedTileId: number | null
+  onFocus: (tileId: number) => void
+  totalCount: number
+}): React.JSX.Element {
+  return (
+    <aside className="w-72 flex-shrink-0 border-r border-gray-800 bg-gray-900/40 flex flex-col">
+      <div className="p-3 border-b border-gray-800 flex-shrink-0 space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="text-xs uppercase tracking-wider text-gray-400 font-semibold">Walkers</div>
+          <div className="text-[11px] text-gray-500">
+            {walkers.length === totalCount ? totalCount : `${walkers.length} / ${totalCount}`}
+          </div>
+        </div>
+        <input
+          type="text"
+          value={filterQuery}
+          onChange={e => setFilterQuery(e.target.value)}
+          placeholder="Search name, owner, type…"
+          className="w-full bg-gray-950 border border-gray-800 rounded px-2 py-1.5 text-xs text-gray-200 placeholder-gray-600 focus:outline-none focus:border-gray-600"
+        />
+        <div className="flex gap-2">
+          <SpeciesSelect
+            value={filterSpecies}
+            onChange={setFilterSpecies}
+            options={speciesOptions}
+          />
+          <button
+            type="button"
+            onClick={() => setFilterFavOnly(!filterFavOnly)}
+            title={filterFavOnly ? 'Show all walkers' : 'Show favorites only'}
+            className={`px-2 rounded border text-xs transition-colors ${
+              filterFavOnly
+                ? 'border-amber-500/60 bg-amber-500/10 text-amber-300'
+                : 'border-gray-800 bg-gray-950 text-gray-500 hover:text-gray-300'
+            }`}
+          >
+            <FavoriteStar filled={filterFavOnly} />
+          </button>
+        </div>
+      </div>
+      <div className="flex-1 overflow-y-auto">
+        {walkers.length === 0 ? (
+          <div className="p-4 text-center text-xs text-gray-500">
+            {totalCount === 0 ? 'No walkers found on this realm.' : 'No walkers match the current filters.'}
+          </div>
+        ) : (
+          <ul className="divide-y divide-gray-800/60">
+            {walkers.map(w => (
+              <li key={`${w.tile.id}-${w.id}`}>
+                <button
+                  type="button"
+                  onClick={() => onFocus(w.tile.id)}
+                  className={`w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-gray-800/50 transition-colors ${
+                    focusedTileId === w.tile.id ? 'bg-amber-500/10' : ''
+                  }`}
+                >
+                  <div className="w-9 h-9 flex-shrink-0 bg-gray-950 border border-gray-800 rounded overflow-hidden flex items-center justify-center">
+                    {w.icon ? (
+                      <img src={w.icon} alt="" className="w-full h-full object-contain" draggable={false} />
+                    ) : (
+                      <span className="text-[9px] uppercase tracking-wide text-gray-500 font-semibold px-1 truncate">
+                        {w.species.slice(0, 3)}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1">
+                      <span className="text-xs font-medium text-gray-200 truncate">
+                        {w.name || `${w.species} walker`}
+                      </span>
+                      {w.isFavorite && <FavoriteStar filled className="w-3 h-3 text-amber-400 flex-shrink-0" />}
+                    </div>
+                    <div className="text-[10px] text-gray-500 truncate">
+                      {w.species}
+                      {w.characterOwnerName ? ` · ${w.characterOwnerName}` : ''}
+                    </div>
+                    <div className="text-[10px] text-gray-600">
+                      Tile {w.tile.name || `${w.tile.x},${w.tile.y}`}
+                    </div>
+                  </div>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </aside>
+  )
+}
+
+// Custom dropdown — native <select> option popups in Electron can render with
+// light OS colors regardless of CSS, so we render our own button + list instead.
+function SpeciesSelect({
+  value,
+  onChange,
+  options,
+}: {
+  value: string
+  onChange: (v: string) => void
+  options: string[]
+}): React.JSX.Element {
+  const [open, setOpen] = useState(false)
+  const wrapRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    const onDocClick = (e: MouseEvent): void => {
+      if (!wrapRef.current?.contains(e.target as Node)) setOpen(false)
+    }
+    const onKey = (e: KeyboardEvent): void => { if (e.key === 'Escape') setOpen(false) }
+    document.addEventListener('mousedown', onDocClick)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onDocClick)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [open])
+
+  const label = value || 'All types'
+
+  return (
+    <div ref={wrapRef} className="relative flex-1">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between bg-gray-950 border border-gray-800 rounded px-2 py-1.5 text-xs text-gray-200 hover:border-gray-700 focus:outline-none focus:border-gray-600"
+      >
+        <span className="truncate">{label}</span>
+        <svg viewBox="0 0 12 12" className="w-3 h-3 text-gray-500 flex-shrink-0 ml-1" fill="currentColor">
+          <path d="M3 4.5l3 3 3-3" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+      {open && (
+        // Dark theme rebinds .bg-gray-950 to transparent, so we use .bg-gray-900/80
+        // (rebound to frosted dark glass) to match the modal header's surface.
+        <div className="absolute z-10 left-0 right-0 mt-1 bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded shadow-xl max-h-60 overflow-y-auto">
+          <button
+            type="button"
+            onClick={() => { onChange(''); setOpen(false) }}
+            className={`w-full text-left px-2 py-1.5 text-xs hover:bg-gray-800 ${value === '' ? 'bg-gray-800 text-white' : 'text-gray-300'}`}
+          >
+            All types
+          </button>
+          {options.map(opt => (
+            <button
+              key={opt}
+              type="button"
+              onClick={() => { onChange(opt); setOpen(false) }}
+              className={`w-full text-left px-2 py-1.5 text-xs hover:bg-gray-800 ${value === opt ? 'bg-gray-800 text-white' : 'text-gray-300'}`}
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function FavoriteStar({ filled, className }: { filled?: boolean; className?: string }): React.JSX.Element {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      className={className ?? 'w-4 h-4'}
+      fill={filled ? 'currentColor' : 'none'}
+      stroke="currentColor"
+      strokeWidth={1.4}
+      strokeLinejoin="round"
+    >
+      <path d="M8 1.6l1.96 4.18 4.54.51-3.39 3.1.93 4.46L8 11.62l-4.04 2.23.93-4.46-3.39-3.1 4.54-.51L8 1.6z" />
+    </svg>
   )
 }
 

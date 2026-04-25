@@ -41,6 +41,21 @@ export interface RealmSearchFilters {
   character?: string
 }
 
+export interface RealmMapWalker {
+  // Per-instance off-map id (changes between sessions).
+  id: number
+  // Stable walker entity id used by the in-game walker preferences API.
+  walkerId: number
+  // UE4 class path, e.g. "/Game/Walkers/Balang/...". Used to pick the species icon.
+  classPath: string
+  name: string
+  characterOwnerId: number
+  characterOwnerName: string
+  sharedWithClan: boolean
+  waterCostMultiplier: number
+  waterUnits: number
+}
+
 export interface RealmMapTile {
   id: number
   x: number
@@ -65,6 +80,8 @@ export interface RealmMapTile {
   // decayDate = when tile will burn / despawn.
   activationDate: number
   decayDate: number
+  // Walkers stationed on this tile, flattened across all directions.
+  walkers: RealmMapWalker[]
 }
 
 export interface RealmMap {
@@ -81,4 +98,22 @@ export interface RealmMap {
   regionLookup: Record<string, { name: string; key: string }>
   clanLookup: Record<string, { name: string; colorId: string }>
   mapLookup: Record<string, { path: string }>
+}
+
+// One entry from /Api/Migration/GetWalkerPreferences. The launcher uses these
+// purely as an "is this walker favorited?" indicator on the map view —
+// presence in the list = favorited (matched by walkerId against tile walkers).
+export interface WalkerPreference {
+  walkerId: number
+  realmTileId: number
+  classPath: string
+  name: string
+  isPersonal: boolean
+  isPacked: boolean
+}
+
+export interface WalkerPreferences {
+  walkers: WalkerPreference[]
+  hasClan: boolean
+  canManageClanPreferences: boolean
 }

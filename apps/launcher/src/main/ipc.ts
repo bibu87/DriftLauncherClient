@@ -9,6 +9,8 @@ import {
   decodeRealmSearchResponse,
   encodeRealmGetMapRequest,
   decodeRealmGetMapResponse,
+  encodeWalkerPreferencesRequest,
+  decodeWalkerPreferencesResponse,
   postLoProtobuf,
 } from './lo'
 import { checkMods, downloadMods, activateMods, findWorkshopDir, listInstalledMods, listAllMods, removeMod, toggleMod, subscribeMod, unsubscribeMod } from './mods'
@@ -157,6 +159,31 @@ export function registerIpcHandlers(): void {
         if (status === 500) {
           // Realm exists but backend can't produce a map — usually realm offline / no live state.
           throw new Error('MAP_UNAVAILABLE')
+        }
+        throw new Error(`LO backend error ${status}`)
+      }
+      throw err
+    }
+  })
+
+  // Walker preferences are per-character; the launcher only uses them as a
+  // "favorited?" indicator on the map view. Empty list (no clan / no prefs set)
+  // is a normal response, not an error.
+  ipcMain.handle('realms:get-walker-preferences', async (_event, realmId: number, characterId: number, backend: string) => {
+    if (!characterId || characterId <= 0) throw new Error('NO_CHARACTER')
+    const session = loadSession(backend)
+    if (!session) throw new Error('SESSION_EXPIRED')
+
+    const body = await encodeWalkerPreferencesRequest()
+    try {
+      const resBuf = await postLoProtobuf(backend, '/Api/Migration/GetWalkerPreferences', body, { token: session.token, realmId, characterId })
+      return await decodeWalkerPreferencesResponse(resBuf)
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const status = err.response?.status
+        if (status === 403) {
+          clearSession(backend)
+          throw new Error('SESSION_EXPIRED')
         }
         throw new Error(`LO backend error ${status}`)
       }
