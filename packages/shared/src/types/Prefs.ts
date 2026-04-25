@@ -16,4 +16,20 @@ export interface LauncherPrefs {
   recent: number[]
   selectedServerId: number | null
   settings: LauncherSettings
+  // gid (Steam news item id) of news the user has marked as read.
+  readNewsIds: string[]
+}
+
+// One announcement from Steam's GetNewsForApp endpoint, normalised for the UI.
+export interface NewsItem {
+  gid: string
+  title: string
+  url: string
+  author: string
+  // Unix seconds.
+  date: number
+  // e.g. "Community Announcements", "Steam Blog".
+  feedlabel: string
+  // Plain-text snippet derived from `contents` with HTML/BBCode stripped.
+  snippet: string
 }

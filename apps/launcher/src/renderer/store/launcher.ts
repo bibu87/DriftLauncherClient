@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { Realm, LauncherSettings, LauncherPrefs, DownloadProgress } from '@drift/shared'
+import type { Realm, LauncherSettings, LauncherPrefs, DownloadProgress, NewsItem } from '@drift/shared'
 import { PROD_BACKEND_URL } from '@drift/shared'
 
 export type GameStatus = 'idle' | 'launching' | 'running' | 'stopped'
@@ -20,6 +20,9 @@ interface LauncherStore {
   prefsLoaded: boolean
   gameStatus: GameStatus
   playState: PlayPhase
+  news: NewsItem[]
+  newsLoading: boolean
+  readNewsIds: string[]
 
   setQuickPlayServer: (realm: Realm | null) => void
   addFavorite: (id: number) => void
@@ -30,6 +33,9 @@ interface LauncherStore {
   hydrate: (prefs: LauncherPrefs) => void
   setGameStatus: (status: GameStatus) => void
   play: (server: Realm) => Promise<void>
+  refreshNews: () => Promise<void>
+  markNewsRead: (gids: string[]) => void
+  markAllNewsRead: () => void
 }
 
 const defaultSettings: LauncherSettings = {
@@ -50,6 +56,9 @@ export const useLauncherStore = create<LauncherStore>((set, get) => ({
   prefsLoaded: false,
   gameStatus: 'idle',
   playState: { phase: 'idle' },
+  news: [],
+  newsLoading: false,
+  readNewsIds: [],
 
   setQuickPlayServer: (realm) => {
     set({ quickPlayServer: realm })
@@ -88,7 +97,36 @@ export const useLauncherStore = create<LauncherStore>((set, get) => ({
     settings: { ...defaultSettings, ...prefs.settings },
     prefsLoaded: true,
     savedServerId: prefs.selectedServerId ?? null,
+    readNewsIds: prefs.readNewsIds ?? [],
   }),
+
+  refreshNews: async () => {
+    if (get().newsLoading) return
+    set({ newsLoading: true })
+    try {
+      const news = await window.api.news.fetch()
+      set({ news, newsLoading: false })
+    } catch {
+      set({ newsLoading: false })
+    }
+  },
+
+  markNewsRead: (gids) => {
+    set(s => {
+      const next = Array.from(new Set([...s.readNewsIds, ...gids]))
+      window.api.prefs.save({ readNewsIds: next }).catch(() => {})
+      return { readNewsIds: next }
+    })
+  },
+
+  markAllNewsRead: () => {
+    set(s => {
+      const allIds = s.news.map(n => n.gid)
+      const next = Array.from(new Set([...s.readNewsIds, ...allIds]))
+      window.api.prefs.save({ readNewsIds: next }).catch(() => {})
+      return { readNewsIds: next }
+    })
+  },
 
   setGameStatus: (gameStatus) => set({ gameStatus }),
 

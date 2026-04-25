@@ -7,8 +7,9 @@ import driftLauncherLogo from '../assets/drift_launcher.svg'
 
 export default function AppLayout(): React.JSX.Element {
   const { lo, avatarUrl, setAvatarUrl } = useAuthStore()
-  const { quickPlayServer, gameStatus, playState, setGameStatus, play } = useLauncherStore()
+  const { quickPlayServer, gameStatus, playState, setGameStatus, play, news, readNewsIds } = useLauncherStore()
   const navigate = useNavigate()
+  const unreadNews = news.reduce((n, item) => n + (readNewsIds.includes(item.gid) ? 0 : 1), 0)
 
   useEffect(() => {
     const off = window.api.game.onStatus(setGameStatus)
@@ -41,6 +42,7 @@ export default function AppLayout(): React.JSX.Element {
         <nav className="flex-1 flex flex-col gap-1 p-3 pt-4">
           <SideNavLink to="/servers" icon={<ServersIcon />} label="Realms" />
           <SideNavLink to="/mods" icon={<ModsIcon />} label="Mods" />
+          <SideNavLink to="/news" icon={<NewsIcon />} label="News" badge={unreadNews} />
           <SideNavLink to="/settings" icon={<SettingsIcon />} label="Settings" />
           <SideNavLink to="/changelog" icon={<ChangelogIcon />} label="Changelog" />
         </nav>
@@ -124,7 +126,7 @@ function getPlayLabel(playState: PlayPhase, gameStatus: GameStatus): string {
   return 'PLAY'
 }
 
-function SideNavLink({ to, icon, label }: { to: string; icon: React.ReactNode; label: string }): React.JSX.Element {
+function SideNavLink({ to, icon, label, badge }: { to: string; icon: React.ReactNode; label: string; badge?: number }): React.JSX.Element {
   return (
     <NavLink
       to={to}
@@ -137,7 +139,12 @@ function SideNavLink({ to, icon, label }: { to: string; icon: React.ReactNode; l
       }
     >
       <span className="w-4 h-4 flex-shrink-0">{icon}</span>
-      {label}
+      <span className="flex-1">{label}</span>
+      {badge !== undefined && badge > 0 && (
+        <span className="ml-auto inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-amber-500 text-gray-950 text-[10px] font-bold">
+          {badge > 99 ? '99+' : badge}
+        </span>
+      )}
     </NavLink>
   )
 }
@@ -175,6 +182,15 @@ function ChangelogIcon(): React.JSX.Element {
     <svg viewBox="0 0 16 16" fill="currentColor">
       <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h11A1.5 1.5 0 0 1 15 2.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 13.5v-11zm1.5-.5a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-.5-.5h-11z"/>
       <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+    </svg>
+  )
+}
+
+function NewsIcon(): React.JSX.Element {
+  return (
+    <svg viewBox="0 0 16 16" fill="currentColor">
+      <path d="M2.5 2A1.5 1.5 0 0 0 1 3.5v9A1.5 1.5 0 0 0 2.5 14h11a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 13.5 2h-11zm.5 1.5h10v9H3v-9z"/>
+      <path d="M4 5h8v1H4zm0 2h8v1H4zm0 2h5v1H4zm0 2h5v1H4z"/>
     </svg>
   )
 }

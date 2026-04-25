@@ -12,12 +12,15 @@ A custom launcher for **Last Oasis** built with Electron, React, and the Steamwo
 ## Features
 
 - **Realm Browser** — Search, filter, and sort all available Last Oasis servers. Filter by region, provider, type (vanilla/modded), and player count. Pin a realm as your Quick Play target for one-click launches.
+- **Realm map view** — Click any realm to open its hex grid with tile types, claim ownership, online state, and lifecycle timers (spawn / burn / decayed).
+- **Walker sidebar** — On the realm map, the left panel lists every walker stationed on the realm with species icon, owner, and tile location. Filter by name, walker type, or favourites only; click a row to scroll the map to its tile and highlight it. The favourite marker is pulled live from your in-game walker preferences.
+- **News** — Last Oasis announcements pulled directly from Steam (refreshed on launch and every 15 minutes). Unread badge in the sidebar, per-item or bulk "Mark read", and an Open-on-Steam button that opens the original article in your default browser.
 - **Multi-backend support** — Query the official prod backend alongside community-run backends in parallel. Each realm is tagged with its origin so follow-up calls (map, join) route to the right server. Add/remove community URLs under Settings → Backends; the prod URL stays pinned as the primary identity source.
 - **Mod Manager** — View installed and subscribed Workshop mods, download updates, enable/disable mods per-session, and subscribe/unsubscribe directly from the launcher.
 - **Automatic mod activation** — When joining a modded realm, the launcher automatically downloads missing mods, copies them into the game folder, and sets the correct `active` flags before launching.
 - **Steam integration** — Authenticates via Steam, fetches your profile picture, and uses the Steamworks Workshop API for mod state and download management.
 - **Quick Play** — Pin any realm and launch the game instantly from the sidebar without navigating back to the browser.
-- **Persistent preferences** — Favorites, recent realms, quick-play realm, and all settings are saved to disk and restored on next launch.
+- **Persistent preferences** — Favorites, recent realms, quick-play realm, read-news state, and all settings are saved to disk and restored on next launch.
 - **Settings** — Configure launch arguments, EAC toggle, default realm tab, theme, and backend URLs.
 
 ---
