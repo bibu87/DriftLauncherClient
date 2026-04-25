@@ -113,7 +113,17 @@ const api = {
       const handler = (_e: Electron.IpcRendererEvent, status: string): void => cb(status)
       ipcRenderer.on('game:status', handler)
       return () => ipcRenderer.removeListener('game:status', handler)
-    }
+    },
+    onJoinedTile: (
+      cb: (data: { realmId: number; levelPath: string; remoteAddr: string | null }) => void
+    ): (() => void) => {
+      const handler = (
+        _e: Electron.IpcRendererEvent,
+        data: { realmId: number; levelPath: string; remoteAddr: string | null }
+      ): void => cb(data)
+      ipcRenderer.on('game:joined-tile', handler)
+      return () => ipcRenderer.removeListener('game:joined-tile', handler)
+    },
   },
   window: {
     minimize: (): void => { ipcRenderer.send('window:minimize') },

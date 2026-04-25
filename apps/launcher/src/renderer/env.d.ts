@@ -58,6 +58,9 @@ interface API {
   game: {
     launch(realmId: number, backend: string): Promise<void>
     onStatus(cb: (status: 'idle' | 'launching' | 'running' | 'stopped') => void): () => void
+    onJoinedTile(
+      cb: (data: { realmId: number; levelPath: string; remoteAddr: string | null }) => void
+    ): () => void
   }
   log: {
     onModsFound(cb: (data: { realmId: number; workshopIds: string[] }) => void): () => void

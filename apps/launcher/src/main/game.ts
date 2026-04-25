@@ -23,41 +23,82 @@ function backendOverrideArg(backend: string | undefined): string | null {
   }
 }
 
-function findLaunchExe(): string | null {
-  const gameDir = findGameDir()
-  if (!gameDir) return null
-
-  // Common UE4 game exe layouts — check most-specific paths first
+// EAC EOS protection is initialized inside the game process via SDK calls,
+// not by an external bootstrap. But the shipping exe started in isolation
+// can't get the Steam/Epic auth ticket EAC needs — Last Oasis ships its own
+// front-end launcher (`OasisLauncher.exe`) that handles environment setup
+// before spawning the game. That's the EAC-friendly entry point.
+function findGameLauncher(gameDir: string): string | null {
+  // OasisLauncher.exe (≈4 MB, install root) is the official front-end launcher.
+  // MistClient.exe (≈500 KB) is a thinner wrapper; treat as fallback.
   const candidates = [
-    join(gameDir, 'Mist', 'Binaries', 'Win64', 'MistClient-Win64-Shipping.exe'),
-    join(gameDir, 'Binaries', 'Win64', 'MistClient-Win64-Shipping.exe'),
-    join(gameDir, 'MistClient-Win64-Shipping.exe'),
-    join(gameDir, 'MistClient.exe'),
     join(gameDir, 'OasisLauncher.exe'),
+    join(gameDir, 'MistClient.exe'),
   ]
   return candidates.find(existsSync) ?? null
 }
 
-export function launchGame(backend?: string): Promise<void> {
+function findShippingExe(gameDir: string): string | null {
+  // Direct shipping exe — bypasses the front-end launcher and EAC's
+  // ticket-handoff. Used only when EAC is explicitly disabled.
+  const candidates = [
+    join(gameDir, 'Mist', 'Binaries', 'Win64', 'MistClient-Win64-Shipping.exe'),
+    join(gameDir, 'Binaries', 'Win64', 'MistClient-Win64-Shipping.exe'),
+    join(gameDir, 'MistClient-Win64-Shipping.exe'),
+  ]
+  return candidates.find(existsSync) ?? null
+}
+
+export interface LaunchOptions {
+  backend?: string
+  eacEnabled?: boolean
+  // Free-form args from Settings → Launch arguments. Whitespace-separated;
+  // forwarded after the backend override and any EAC-required args.
+  launchArgs?: string
+}
+
+export function launchGame(opts: LaunchOptions = {}): Promise<void> {
+  const { backend, eacEnabled = true, launchArgs = '' } = opts
   const extraArgs: string[] = []
   const override = backendOverrideArg(backend)
   if (override) extraArgs.push(override)
+  // Free-form user args (eg. "-dx11 -log"). Empty / whitespace-only is a no-op.
+  for (const tok of launchArgs.split(/\s+/)) {
+    if (tok) extraArgs.push(tok)
+  }
 
   // SteamAPI_Init() registers the launcher with the Steam client as app 903950.
   // Steam then considers this Electron process to BE the running game, and any
   // steam:// URL or -applaunch command is silently no-op'd.
   // Spawning the game exe directly bypasses that check entirely — the game
   // process connects to the already-running Steam client on its own.
-  const exePath = findLaunchExe()
-  if (exePath) {
-    console.log('[game] launching directly:', exePath, extraArgs)
+  //
+  // Two paths from here:
+  //   - EAC on  → run the EAC EOS bootstrap; it spawns the game with the
+  //     anti-cheat ring active. Required by official servers.
+  //   - EAC off → run the shipping exe directly. Useful for offline / modded
+  //     testing only; official servers will reject the connection.
+  const gameDir = findGameDir()
+  const launcher = gameDir && eacEnabled ? findGameLauncher(gameDir) : null
+  const shipping = gameDir ? findShippingExe(gameDir) : null
+  const exePath = launcher ?? shipping
+  if (exePath && gameDir) {
+    // OasisLauncher.exe needs cwd at the install root so it finds its sibling
+    // configs and the Mist/ subtree. The shipping exe is happy in its own dir.
+    const cwd = launcher ? gameDir : join(exePath, '..')
+    console.log(`[game] launching ${launcher ? 'via game launcher' : 'shipping exe directly (EAC off)'}:`, exePath, extraArgs, `cwd=${cwd}`)
     return new Promise<void>((resolve, reject) => {
       const child = spawn(exePath, extraArgs, {
         detached: true,
-        stdio: 'ignore',
-        cwd: join(exePath, '..'),
+        stdio: ['ignore', 'pipe', 'pipe'],
+        cwd,
       })
+      // Log any stderr/stdout the bootstrap emits before exiting; helpful
+      // when EAC silently fails (missing service, bad config, etc.).
+      child.stdout?.on('data', d => console.log(`[game stdout] ${d.toString().trim()}`))
+      child.stderr?.on('data', d => console.warn(`[game stderr] ${d.toString().trim()}`))
       child.once('error', reject)
+      child.once('exit', code => { if (code !== 0 && code !== null) console.warn(`[game] launch exit code ${code}`) })
       child.once('spawn', () => { child.unref(); resolve() })
     })
   }
@@ -158,6 +199,17 @@ function extractWorkshopIds(lines: string[]): string[] {
   return [...ids]
 }
 
+// UE4 writes `Log file open, MM/DD/YY HH:MM:SS` as the first line of every
+// fresh log file. Returns the parsed unix-ms timestamp, or null if the line
+// isn't a session-start marker. Allows a leading BOM (﻿) since UE4
+// writes the log as UTF-8 with BOM.
+function parseSessionStart(line: string): number | null {
+  const m = line.match(/^﻿?Log file open, (\d{2})\/(\d{2})\/(\d{2}) (\d{2}):(\d{2}):(\d{2})/)
+  if (!m) return null
+  const [, MM, DD, YY, hh, mm, ss] = m
+  return new Date(2000 + Number(YY), Number(MM) - 1, Number(DD), Number(hh), Number(mm), Number(ss)).getTime()
+}
+
 function safeSend(sender: WebContents, channel: string, ...args: unknown[]): void {
   if (!sender.isDestroyed()) sender.send(channel, ...args)
 }
@@ -180,6 +232,7 @@ export async function monitorGame(
     await new Promise(r => setTimeout(r, 3000))
   }
 
+  const gameDetectedAt = Date.now()
   safeSend(sender, 'game:status', 'running' satisfies GameStatus)
   console.log('[game] game process detected')
 
@@ -194,8 +247,65 @@ export async function monitorGame(
   else console.warn('[game] log file not found — mod discovery disabled')
 
   const discovered = new Set<string>()
+  // Session boundaries — used to gate mod collection so workshop IDs from a
+  // post-migration realm don't get attributed to the realm we launched into.
+  //
+  //   pre-welcome     → collect (server may push a mod list during the join handshake)
+  //   primary session → collect
+  //   primary closed  → STOP (any subsequent session may be a different realm)
+  let primaryWelcomed = false
+  let primaryClosed = false
+  let lastRemoteAddr: string | null = null
+
+  // Until the log file has been rotated for this game launch (UE4 renames the
+  // previous session's Mist.log on startup), we may be reading stale content
+  // from the previous session. Wait for a "Log file open, …" marker whose
+  // timestamp is at or after when we detected the game process.
+  let freshSessionSeen = false
+  // Allow some slack: the log can be opened a couple of seconds before our
+  // 3-second polling loop catches the process.
+  const FRESH_SLACK_MS = 30_000
+
   const stopTail = logPath
     ? tailLog(logPath, lines => {
+        if (!freshSessionSeen) {
+          for (const line of lines) {
+            const ts = parseSessionStart(line)
+            if (ts !== null && ts >= gameDetectedAt - FRESH_SLACK_MS) {
+              freshSessionSeen = true
+              // Discard any state accumulated from the prior session's log.
+              primaryWelcomed = false
+              primaryClosed = false
+              lastRemoteAddr = null
+              discovered.clear()
+              console.log(`[game] fresh session marker found in log (${new Date(ts).toISOString()})`)
+              break
+            }
+          }
+          if (!freshSessionSeen) return
+        }
+
+        for (const line of lines) {
+          // Track the most recent connect target so we can pair it with the
+          // following Welcomed-by-server line.
+          const sij = line.match(/SendInitialJoin: Sending hello[^\n]*RemoteAddr: ([\d.]+:\d+)/)
+          if (sij) lastRemoteAddr = sij[1]
+
+          const welcome = line.match(/Welcomed by server \(Level: (\S+?),/)
+          if (welcome && !primaryWelcomed) {
+            primaryWelcomed = true
+            const levelPath = welcome[1]
+            console.log(`[game] joined tile: ${levelPath} via ${lastRemoteAddr ?? '?'}`)
+            safeSend(sender, 'game:joined-tile', { realmId, levelPath, remoteAddr: lastRemoteAddr })
+          }
+
+          if (primaryWelcomed && !primaryClosed && /UNetConnection::Close/.test(line)) {
+            primaryClosed = true
+            console.log('[game] primary session ended; mod discovery paused (further joins may be a different realm)')
+          }
+        }
+
+        if (primaryClosed) return
         for (const id of extractWorkshopIds(lines)) {
           if (!discovered.has(id)) {
             discovered.add(id)

@@ -299,7 +299,12 @@ export function registerIpcHandlers(): void {
   // ── Phase 6: Launch & log watcher ─────────────────────────────────────────
 
   ipcMain.handle('game:launch', async (event, realmId: number, backend: string) => {
-    await launchGame(backend)
+    const { settings } = loadPrefs()
+    await launchGame({
+      backend,
+      eacEnabled: settings.eacEnabled,
+      launchArgs: settings.launchArgs,
+    })
     // Fire-and-forget — monitor runs async and posts events back via sender
     monitorGame(event.sender, realmId, (id, workshopIds) => {
       reportRealmMods(id, workshopIds, 'log-watcher')
