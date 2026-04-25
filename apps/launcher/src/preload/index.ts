@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import type { Realm, RealmMap, RealmSearchFilters, RealmModRecord, ModStatus, DownloadProgress, LauncherPrefs, WalkerPreferences } from '@drift/shared'
+import type { Realm, RealmMap, RealmSearchFilters, RealmModRecord, ModStatus, DownloadProgress, LauncherPrefs, WalkerPreferences, NewsItem } from '@drift/shared'
 
 export type { LauncherPrefs }
 
@@ -73,6 +73,12 @@ const api = {
   cache: {
     clear: (): Promise<{ previewCleared: number; realmModsCleared: number }> =>
       ipcRenderer.invoke('cache:clear'),
+  },
+  news: {
+    fetch: (): Promise<NewsItem[]> => ipcRenderer.invoke('news:fetch'),
+  },
+  shell: {
+    openExternal: (url: string): Promise<void> => ipcRenderer.invoke('shell:open-external', url),
   },
   mods: {
     getWorkshopDir: (): Promise<string | null> =>

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, session } from 'electron'
+import { app, BrowserWindow, ipcMain, session, shell } from 'electron'
 import axios from 'axios'
 import { getSteamTicket, getLocalSteamId64 } from './steam'
 import { saveSession, loadSession, loadAllSessions, clearSession } from './session'
@@ -17,6 +17,7 @@ import { checkMods, downloadMods, activateMods, findWorkshopDir, listInstalledMo
 import { launchGame, monitorGame } from './game'
 import { loadPrefs, savePrefs, getBackendUrls } from './prefs'
 import { getAllRealmMods, getRealmMods, reportRealmMods, pullFromBackend, clearRealmMods } from './realm-mods'
+import { fetchNews } from './news'
 import type { LauncherPrefs, Realm, RealmSearchFilters } from '@drift/shared'
 import { PROD_BACKEND_URL } from '@drift/shared'
 
@@ -279,6 +280,20 @@ export function registerIpcHandlers(): void {
     const workshopDir = findWorkshopDir()
     if (!workshopDir) throw new Error('Last Oasis workshop directory not found')
     activateMods(payload.targetIds, workshopDir)
+  })
+
+  // ── Steam news ─────────────────────────────────────────────────────────────
+
+  ipcMain.handle('news:fetch', () => fetchNews())
+
+  // ── External links ────────────────────────────────────────────────────────
+  // Restricted to http/https so a renderer compromise can't shell-exec random
+  // schemes (file://, javascript:, etc.).
+  ipcMain.handle('shell:open-external', async (_event, url: string) => {
+    if (typeof url !== 'string') return
+    const lower = url.toLowerCase()
+    if (!lower.startsWith('http://') && !lower.startsWith('https://')) return
+    await shell.openExternal(url)
   })
 
   // ── Phase 6: Launch & log watcher ─────────────────────────────────────────

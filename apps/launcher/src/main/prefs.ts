@@ -6,6 +6,7 @@ const defaults: LauncherPrefs = {
   favorites: [],
   recent: [],
   selectedServerId: null,
+  readNewsIds: [],
   settings: {
     launchArgs: '',
     eacEnabled: true,
