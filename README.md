@@ -38,6 +38,26 @@ Steam must be running when you launch, and Last Oasis (App ID `903950`) must be 
 
 ---
 
+## Documentation
+
+Full documentation lives in the [`docs/`](./docs/README.md) folder.
+
+**For users:**
+- [Getting Started](./docs/getting-started.md) — Install, run, first launch, where data is stored.
+- [Realm Browser & Map](./docs/realms.md) — Browsing servers, the hex map view, walker sidebar.
+- [Mod Manager](./docs/mods.md) — Workshop integration, automatic activation, EAC notes.
+- [News](./docs/news.md) — Steam news feed and read tracking.
+- [Settings & Data Storage](./docs/settings.md) — Preferences, themes, backends, on-disk files.
+
+**For developers:**
+- [Architecture](./docs/architecture.md) — Project layout, processes, data flow.
+- [Authentication](./docs/authentication.md) — Steam ticket → Last Oasis session pipeline.
+- [Backends](./docs/backends.md) — Multi-backend support and the Drift mod-consensus service.
+- [IPC Reference](./docs/ipc-reference.md) — Every renderer↔main IPC channel.
+- [Build & Release](./docs/build-and-release.md) — Dev workflow and packaging Windows builds.
+
+---
+
 ## Project Structure
 
 ```
