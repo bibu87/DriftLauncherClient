@@ -123,6 +123,8 @@ async function getRoot(): Promise<protobuf.Root> {
     path.join(PROTO_DIR, 'BackendApiRealmCommon.proto'),
     path.join(PROTO_DIR, 'BackendApiRealmGetMap.proto'),
     path.join(PROTO_DIR, 'BackendApiMigrationGetWalkerPreferences.proto'),
+    path.join(PROTO_DIR, 'BackendApiMigrationSetWalkerPreference.proto'),
+    path.join(PROTO_DIR, 'BackendApiMigrationDeleteWalkerPreference.proto'),
   ])
   return _root
 }
@@ -435,6 +437,20 @@ export async function decodeWalkerPreferencesResponse(buf: ArrayBuffer): Promise
     hasClan: Boolean(msg.hasClan),
     canManageClanPreferences: Boolean(msg.canManageClanPreferences),
   }
+}
+
+export async function encodeSetWalkerPreferenceRequest(walkerId: number): Promise<Buffer> {
+  const root = await getRoot()
+  const ReqType = root.lookupType('MistProto.BackendApiMigrationSetWalkerPreferenceRequest')
+  const msg = ReqType.create({ walkerId })
+  return Buffer.from(ReqType.encode(msg).finish())
+}
+
+export async function encodeDeleteWalkerPreferenceRequest(walkerId: number): Promise<Buffer> {
+  const root = await getRoot()
+  const ReqType = root.lookupType('MistProto.BackendApiMigrationDeleteWalkerPreferenceRequest')
+  const msg = ReqType.create({ walkerId })
+  return Buffer.from(ReqType.encode(msg).finish())
 }
 
 // Base headers for all LO backend requests.

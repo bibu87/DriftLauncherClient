@@ -57,6 +57,10 @@ const api = {
       ipcRenderer.invoke('realms:get-map', realmId, characterId, backend),
     getWalkerPreferences: (realmId: number, characterId: number, backend: string): Promise<WalkerPreferences> =>
       ipcRenderer.invoke('realms:get-walker-preferences', realmId, characterId, backend),
+    setWalkerPreference: (realmId: number, characterId: number, backend: string, walkerId: number): Promise<void> =>
+      ipcRenderer.invoke('realms:set-walker-preference', realmId, characterId, backend, walkerId),
+    deleteWalkerPreference: (realmId: number, characterId: number, backend: string, walkerId: number): Promise<void> =>
+      ipcRenderer.invoke('realms:delete-walker-preference', realmId, characterId, backend, walkerId),
   },
   drift: {
     getAllRealmMods: (): Promise<RealmModRecord[]> =>

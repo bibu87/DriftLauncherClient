@@ -11,6 +11,8 @@ import {
   decodeRealmGetMapResponse,
   encodeWalkerPreferencesRequest,
   decodeWalkerPreferencesResponse,
+  encodeSetWalkerPreferenceRequest,
+  encodeDeleteWalkerPreferenceRequest,
   postLoProtobuf,
 } from './lo'
 import { checkMods, downloadMods, activateMods, findWorkshopDir, listInstalledMods, listAllMods, removeMod, toggleMod, subscribeMod, unsubscribeMod } from './mods'
@@ -179,6 +181,51 @@ export function registerIpcHandlers(): void {
     try {
       const resBuf = await postLoProtobuf(backend, '/Api/Migration/GetWalkerPreferences', body, { token: session.token, realmId, characterId })
       return await decodeWalkerPreferencesResponse(resBuf)
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const status = err.response?.status
+        if (status === 403) {
+          clearSession(backend)
+          throw new Error('SESSION_EXPIRED')
+        }
+        throw new Error(`LO backend error ${status}`)
+      }
+      throw err
+    }
+  })
+
+  // Toggle a walker's "preferred" flag. Both endpoints take {walkerId} only and
+  // return an empty body, so the response buffer is discarded. The renderer is
+  // responsible for refetching or applying an optimistic update.
+  ipcMain.handle('realms:set-walker-preference', async (_event, realmId: number, characterId: number, backend: string, walkerId: number) => {
+    if (!characterId || characterId <= 0) throw new Error('NO_CHARACTER')
+    if (!walkerId || walkerId <= 0) throw new Error('INVALID_WALKER')
+    const session = loadSession(backend)
+    if (!session) throw new Error('SESSION_EXPIRED')
+    const body = await encodeSetWalkerPreferenceRequest(walkerId)
+    try {
+      await postLoProtobuf(backend, '/Api/Migration/SetWalkerPreference', body, { token: session.token, realmId, characterId })
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const status = err.response?.status
+        if (status === 403) {
+          clearSession(backend)
+          throw new Error('SESSION_EXPIRED')
+        }
+        throw new Error(`LO backend error ${status}`)
+      }
+      throw err
+    }
+  })
+
+  ipcMain.handle('realms:delete-walker-preference', async (_event, realmId: number, characterId: number, backend: string, walkerId: number) => {
+    if (!characterId || characterId <= 0) throw new Error('NO_CHARACTER')
+    if (!walkerId || walkerId <= 0) throw new Error('INVALID_WALKER')
+    const session = loadSession(backend)
+    if (!session) throw new Error('SESSION_EXPIRED')
+    const body = await encodeDeleteWalkerPreferenceRequest(walkerId)
+    try {
+      await postLoProtobuf(backend, '/Api/Migration/DeleteWalkerPreference', body, { token: session.token, realmId, characterId })
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const status = err.response?.status

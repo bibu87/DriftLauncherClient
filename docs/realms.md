@@ -73,7 +73,7 @@ The left panel of the map modal lists every walker on the realm:
 - Species icon (parsed from the UE4 class path — Schmetterling, RaptorSky, Balang, etc.).
 - Owner name.
 - Tile location (clickable — scrolls and highlights).
-- A star icon if the walker is one of your in-game favourites.
+- A clickable star button — toggles the walker as one of your favourites (calls `Migration/SetWalkerPreference` or `Migration/DeleteWalkerPreference`).
 
 Filters at the top of the sidebar:
 
@@ -81,7 +81,7 @@ Filters at the top of the sidebar:
 - **Walker type** — filter by species.
 - **Favourites only** — show only your starred walkers.
 
-The favourite mark is read-only here. It comes from the LO backend's `GetWalkerPreferences` endpoint and reflects your in-game preferences exactly. Mark/unmark walkers from inside the game; the launcher will pick up the change next time you open the map.
+Favourite state comes from the LO backend's `GetWalkerPreferences` endpoint and reflects your in-game preferences exactly. Toggling the star calls the matching `SetWalkerPreference` / `DeleteWalkerPreference` endpoint with optimistic UI — the change appears immediately and reverts if the backend call fails. Changes show up in-game the next time the game queries the same endpoint.
 
 ### Map errors
 

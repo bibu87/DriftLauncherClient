@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { RealmMap, RealmMapTile, RealmMapWalker, WalkerPreferences } from '@drift/shared'
 
 import iconSleepingGiantsRoads from '../assets/maps/sleeping_giants_roads.png'
@@ -154,6 +154,7 @@ export default function RealmMapModal({ realmId, realmName, characterId, backend
   const [filterQuery, setFilterQuery] = useState('')
   const [filterSpecies, setFilterSpecies] = useState<string>('')
   const [filterFavOnly, setFilterFavOnly] = useState(false)
+  const [pendingFavorites, setPendingFavorites] = useState<Set<number>>(new Set())
   const overlayRef = useRef<HTMLDivElement>(null)
   const mapBodyRef = useRef<HTMLDivElement>(null)
   const tileRefs = useRef<Map<number, HTMLDivElement>>(new Map())
@@ -276,6 +277,50 @@ export default function RealmMapModal({ realmId, realmName, characterId, backend
     if (el) el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' })
   }
 
+  // Optimistic toggle: flip the prefs locally, fire Set/Delete, revert on
+  // failure. We snapshot the previous prefs so the revert is a single setState
+  // even if other refetches land in between.
+  const toggleFavorite = useCallback(async (w: SidebarWalker): Promise<void> => {
+    if (w.walkerId <= 0) return
+    if (pendingFavorites.has(w.walkerId)) return
+    if (!walkerPrefs) return
+
+    setPendingFavorites(prev => { const s = new Set(prev); s.add(w.walkerId); return s })
+
+    const previousPrefs = walkerPrefs
+    const wasFavorite = w.isFavorite
+    setWalkerPrefs(prev => {
+      if (!prev) return prev
+      if (wasFavorite) {
+        return { ...prev, walkers: prev.walkers.filter(p => p.walkerId !== w.walkerId) }
+      }
+      return {
+        ...prev,
+        walkers: [...prev.walkers, {
+          walkerId: w.walkerId,
+          realmTileId: w.tile.id,
+          classPath: w.classPath,
+          name: w.name,
+          isPersonal: true,
+          isPacked: false,
+        }],
+      }
+    })
+
+    try {
+      if (wasFavorite) {
+        await window.api.realms.deleteWalkerPreference(realmId, characterId, backend, w.walkerId)
+      } else {
+        await window.api.realms.setWalkerPreference(realmId, characterId, backend, w.walkerId)
+      }
+    } catch (err) {
+      setWalkerPrefs(previousPrefs)
+      console.warn('[walker-prefs] toggle failed:', err)
+    } finally {
+      setPendingFavorites(prev => { const s = new Set(prev); s.delete(w.walkerId); return s })
+    }
+  }, [realmId, characterId, backend, walkerPrefs, pendingFavorites])
+
   return (
     <div
       ref={overlayRef}
@@ -315,6 +360,8 @@ export default function RealmMapModal({ realmId, realmName, characterId, backend
               setFilterFavOnly={setFilterFavOnly}
               focusedTileId={focusedTileId}
               onFocus={focusTile}
+              onToggleFavorite={toggleFavorite}
+              pendingFavorites={pendingFavorites}
               totalCount={allWalkers.length}
             />
           )}
@@ -480,6 +527,8 @@ function WalkerSidebar({
   setFilterFavOnly,
   focusedTileId,
   onFocus,
+  onToggleFavorite,
+  pendingFavorites,
   totalCount,
 }: {
   walkers: SidebarWalker[]
@@ -492,6 +541,8 @@ function WalkerSidebar({
   setFilterFavOnly: (v: boolean) => void
   focusedTileId: number | null
   onFocus: (tileId: number) => void
+  onToggleFavorite: (w: SidebarWalker) => void
+  pendingFavorites: Set<number>
   totalCount: number
 }): React.JSX.Element {
   return (
@@ -537,42 +588,60 @@ function WalkerSidebar({
           </div>
         ) : (
           <ul className="divide-y divide-gray-800/60">
-            {walkers.map(w => (
-              <li key={`${w.tile.id}-${w.id}`}>
-                <button
-                  type="button"
-                  onClick={() => onFocus(w.tile.id)}
-                  className={`w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-gray-800/50 transition-colors ${
+            {walkers.map(w => {
+              const isPending = pendingFavorites.has(w.walkerId)
+              const canFavorite = w.walkerId > 0
+              return (
+                <li key={`${w.tile.id}-${w.id}`}>
+                  <div className={`flex items-center hover:bg-gray-800/50 transition-colors ${
                     focusedTileId === w.tile.id ? 'bg-amber-500/10' : ''
-                  }`}
-                >
-                  <div className="w-9 h-9 flex-shrink-0 bg-gray-950 border border-gray-800 rounded overflow-hidden flex items-center justify-center">
-                    {w.icon ? (
-                      <img src={w.icon} alt="" className="w-full h-full object-contain" draggable={false} />
-                    ) : (
-                      <span className="text-[9px] uppercase tracking-wide text-gray-500 font-semibold px-1 truncate">
-                        {w.species.slice(0, 3)}
-                      </span>
-                    )}
+                  }`}>
+                    <button
+                      type="button"
+                      onClick={() => onFocus(w.tile.id)}
+                      className="flex-1 min-w-0 flex items-center gap-2 px-3 py-2 text-left"
+                    >
+                      <div className="w-9 h-9 flex-shrink-0 bg-gray-950 border border-gray-800 rounded overflow-hidden flex items-center justify-center">
+                        {w.icon ? (
+                          <img src={w.icon} alt="" className="w-full h-full object-contain" draggable={false} />
+                        ) : (
+                          <span className="text-[9px] uppercase tracking-wide text-gray-500 font-semibold px-1 truncate">
+                            {w.species.slice(0, 3)}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-xs font-medium text-gray-200 truncate">
+                          {w.name || `${w.species} walker`}
+                        </div>
+                        <div className="text-[10px] text-gray-500 truncate">
+                          {w.species}
+                          {w.characterOwnerName ? ` · ${w.characterOwnerName}` : ''}
+                        </div>
+                        <div className="text-[10px] text-gray-600">
+                          Tile {w.tile.name || `${w.tile.x},${w.tile.y}`}
+                        </div>
+                      </div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onToggleFavorite(w)}
+                      disabled={!canFavorite || isPending}
+                      title={
+                        !canFavorite
+                          ? 'This walker has no walker_id and can\'t be favourited'
+                          : w.isFavorite ? 'Remove from favourites' : 'Mark as favourite'
+                      }
+                      className={`flex-shrink-0 px-3 py-2 transition-colors disabled:opacity-50 ${
+                        w.isFavorite ? 'text-amber-400 hover:text-amber-300' : 'text-gray-600 hover:text-gray-300'
+                      }`}
+                    >
+                      <FavoriteStar filled={w.isFavorite} className="w-4 h-4" />
+                    </button>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1">
-                      <span className="text-xs font-medium text-gray-200 truncate">
-                        {w.name || `${w.species} walker`}
-                      </span>
-                      {w.isFavorite && <FavoriteStar filled className="w-3 h-3 text-amber-400 flex-shrink-0" />}
-                    </div>
-                    <div className="text-[10px] text-gray-500 truncate">
-                      {w.species}
-                      {w.characterOwnerName ? ` · ${w.characterOwnerName}` : ''}
-                    </div>
-                    <div className="text-[10px] text-gray-600">
-                      Tile {w.tile.name || `${w.tile.x},${w.tile.y}`}
-                    </div>
-                  </div>
-                </button>
-              </li>
-            ))}
+                </li>
+              )
+            })}
           </ul>
         )}
       </div>

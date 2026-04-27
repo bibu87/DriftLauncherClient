@@ -36,6 +36,8 @@ interface API {
     search(filters: RealmSearchFilters): Promise<RealmSearchResult>
     getMap(realmId: number, characterId: number, backend: string): Promise<RealmMap>
     getWalkerPreferences(realmId: number, characterId: number, backend: string): Promise<WalkerPreferences>
+    setWalkerPreference(realmId: number, characterId: number, backend: string, walkerId: number): Promise<void>
+    deleteWalkerPreference(realmId: number, characterId: number, backend: string, walkerId: number): Promise<void>
   }
   drift: {
     getAllRealmMods(): Promise<RealmModRecord[]>
