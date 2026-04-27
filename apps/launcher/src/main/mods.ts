@@ -201,11 +201,18 @@ export function listAllMods(): ModStatus[] {
     } catch {}
   }
 
-  // Workshop download directory
+  // Workshop download directory — skip folders Steam no longer considers
+  // subscribed. Steam leaves the directory in place after an unsubscribe until
+  // the next game launch, and we don't want those orphans in the listing.
   if (workshopDir) {
     try {
       for (const e of readdirSync(workshopDir)) {
-        if (/^\d+$/.test(e)) idSet.add(e)
+        if (!/^\d+$/.test(e)) continue
+        if (client) {
+          const state = client.workshop.state(BigInt(e))
+          if ((state & STATE_SUBSCRIBED) === 0) continue
+        }
+        idSet.add(e)
       }
     } catch {}
   }

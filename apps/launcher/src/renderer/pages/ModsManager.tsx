@@ -86,7 +86,8 @@ export default function ModsManager(): React.JSX.Element {
   // Installed = files present in the LO game folder (STATE_INSTALLED flag)
   // Subscribed = subscribed on Steam Workshop but not yet installed locally
   const installed = mods.filter(m => m.installed)
-  const subscribedOnly = mods.filter(m => !m.installed)
+  const subscribedOnly = mods.filter(m => !m.installed && m.subscribed)
+  const subscribedCount = mods.filter(m => m.subscribed).length
   const outdatedIds = installed.filter(m => !m.upToDate).map(m => m.workshopId)
 
   const handleUpdateAll = async () => {
@@ -107,7 +108,7 @@ export default function ModsManager(): React.JSX.Element {
         <div>
           <h1 className="text-lg font-semibold">Mods</h1>
           <p className="text-xs text-gray-500 mt-0.5">
-            {installed.length} installed · {subscribedOnly.length} subscribed
+            {installed.length} installed · {subscribedCount} subscribed
           </p>
         </div>
         <div className="flex items-center gap-2">

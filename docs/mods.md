@@ -27,7 +27,7 @@ DriftLauncher copies (or activates in place) from the Workshop cache into the ga
 | **Check** | Query the Steamworks SDK for each Workshop ID — is it subscribed, installed, up-to-date? Read `modinfo.json` for the active flag and title. |
 | **Download** | Subscribe (if not already) and download missing items via the Steamworks SDK, with progress events every 500ms. 10-minute hard timeout per batch. |
 | **List installed** | Enumerate folders in the Workshop content directory. |
-| **List all** | Combine Steam subscriptions + Workshop folders + game Mods folder, deduped by Workshop ID. |
+| **List all** | Combine Steam subscriptions + Workshop folders + game Mods folder, deduped by Workshop ID. Workshop folders that Steam no longer reports as subscribed are skipped — Steam leaves them on disk until the next game launch and they would otherwise surface as ghost entries. |
 | **Toggle active** | Rewrite `"active": true / false` in `modinfo.json` (in both the Workshop folder and the game folder if present). |
 | **Activate set** | For a target list of Workshop IDs: copy any missing mod folders from Workshop to the game folder, mark targets active, mark everything else inactive. |
 | **Subscribe / Unsubscribe** | Toggle Steam subscription state. |
@@ -48,7 +48,7 @@ The **Mods** page has two sections:
 
 ### Installed
 
-Mods physically present in your Workshop content folder.
+Mods physically present in the game's `Mist/Content/Mods` folder. The header also shows total subscriptions (counting installed ones), so an installed-and-subscribed mod contributes to both numbers.
 
 - Toggle active / inactive (in-place).
 - Update if Steam reports a pending update.
