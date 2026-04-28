@@ -8,8 +8,8 @@ interface Release {
 
 const RELEASES: Release[] = [
   {
-    version: '0.2.0',
-    date: 'Unreleased',
+    version: '0.0.2',
+    date: '2026-04-28',
     entries: [
       { type: 'added', text: 'Realm map walker sidebar — every walker stationed on the realm shown with species icon, owner, and tile location' },
       { type: 'added', text: 'Walker filters: search by name/owner/species, filter by walker type, and a favourites-only toggle' },
@@ -22,7 +22,7 @@ const RELEASES: Release[] = [
     ],
   },
   {
-    version: '0.1.0',
+    version: '0.0.1',
     date: '2026-04-24',
     entries: [
       { type: 'added', text: 'Server browser with Official, Vanilla, and Modded server classification' },
