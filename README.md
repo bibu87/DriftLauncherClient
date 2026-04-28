@@ -25,6 +25,22 @@ A custom launcher for **Last Oasis** built with Electron, React, and the Steamwo
 
 ---
 
+## Screenshots
+
+| Realms | Realm map + walker sidebar |
+|---|---|
+| ![Realms](./docs/screenshots/realms-favourites.png) | ![Realm map](./docs/screenshots/realm-map-walker-sidebar.png) |
+
+| Mods | News |
+|---|---|
+| ![Mods](./docs/screenshots/mods.png) | ![News](./docs/screenshots/news.png) |
+
+| Settings | Changelog |
+|---|---|
+| ![Settings](./docs/screenshots/settings.png) | ![Changelog](./docs/screenshots/changelog.png) |
+
+---
+
 ## Download
 
 Pre-built Windows binaries are published on the [GitHub Releases](https://github.com/bibu87/DriftLauncherClient/releases/latest) page. Two flavours are provided for each release:
