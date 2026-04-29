@@ -63,6 +63,8 @@ There is no `nodeIntegration` enabled in the renderer; this is the only path for
 | `search(filters)` | `realms:search` | invoke | Fans out to all configured backends. Returns `{ realms, failures }`. |
 | `getMap(realmId, characterId, backend)` | `realms:get-map` | invoke | Returns `RealmMap`. Throws `NO_CHARACTER` / `MAP_UNAVAILABLE` / `SESSION_EXPIRED`. |
 | `getWalkerPreferences(realmId, characterId, backend)` | `realms:get-walker-preferences` | invoke | Returns `WalkerPreferences`. Empty list = no prefs set. |
+| `setWalkerPreference(realmId, characterId, backend, walkerId)` | `realms:set-walker-preference` | invoke | Marks a walker as a favourite. Throws `NO_CHARACTER` / `INVALID_WALKER` / `SESSION_EXPIRED`. |
+| `deleteWalkerPreference(realmId, characterId, backend, walkerId)` | `realms:delete-walker-preference` | invoke | Removes a walker from favourites. Same error surface as the setter. |
 
 ## `api.drift` — Drift mod-consensus backend
 
@@ -82,7 +84,7 @@ There is no `nodeIntegration` enabled in the renderer; this is the only path for
 
 | Method | Channel | Type | Description |
 |---|---|---|---|
-| `workshopDir()` | `mods:workshop-dir` | invoke | Path to Steam Workshop content folder, or `null`. |
+| `getWorkshopDir()` | `mods:workshop-dir` | invoke | Path to Steam Workshop content folder, or `null`. |
 | `check(workshopIds)` | `mods:check` | invoke | Returns `ModStatus[]` (installed, subscribed, active, upToDate, size). |
 | `download(workshopIds)` | `mods:download` | invoke | Subscribes and downloads. Emits `mods:progress` events. |
 | `listInstalled()` | `mods:list-installed` | invoke | Workshop folders only. |

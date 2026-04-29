@@ -15,6 +15,8 @@ These speak the official protobuf API used by the game itself.
 | `POST /Api/JoinRealm/Search` | Search realms with filters. |
 | `POST /Api/Realm/GetMap` | Fetch the hex map for a realm (requires character). |
 | `POST /Api/Migration/GetWalkerPreferences` | Get the calling character's walker favourites. |
+| `POST /Api/Migration/SetWalkerPreference` | Mark a walker as one of the character's favourites. |
+| `POST /Api/Migration/DeleteWalkerPreference` | Clear a walker's favourite flag. |
 
 All payloads are protobuf — see `packages/lo-protos/Protos/`. Schemas are also documented in `packages/lo-protos/openapi.yaml`.
 

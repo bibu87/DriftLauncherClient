@@ -13,7 +13,7 @@ const RELEASES: Release[] = [
     entries: [
       { type: 'added', text: 'Realm map walker sidebar — every walker stationed on the realm shown with species icon, owner, and tile location' },
       { type: 'added', text: 'Walker filters: search by name/owner/species, filter by walker type, and a favourites-only toggle' },
-      { type: 'added', text: 'Favourite walker indicator pulled from the in-game walker preferences (read-only)' },
+      { type: 'added', text: 'Favourite walker star pulled from the in-game walker preferences — click to toggle, syncs back to the LO backend' },
       { type: 'added', text: 'Click a walker in the sidebar to scroll the map to its tile and highlight it with an amber ring' },
       { type: 'added', text: 'News section in the left sidebar — Last Oasis announcements pulled directly from Steam, refreshed on launch and every 15 minutes' },
       { type: 'added', text: 'Unread badge on the News nav entry; per-item checkboxes and "Mark all read" for bulk read tracking' },
