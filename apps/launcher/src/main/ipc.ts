@@ -86,9 +86,18 @@ export function registerIpcHandlers(): void {
   ipcMain.handle('session:clear', (_event, backend?: string) => { clearSession(backend) })
 
   // Dev-only mock: bypasses Steam + LO backend entirely. Writes against the
-  // prod URL so the renderer sees a normal primary session.
+  // prod URL so the renderer sees a normal primary session. Pass `{ banned: true }`
+  // to simulate a ban response (no session is saved in that case).
   if (!app.isPackaged) {
-    ipcMain.handle('dev:mock-login', () => {
+    ipcMain.handle('dev:mock-login', (_event, opts?: { banned?: boolean }) => {
+      if (opts?.banned) {
+        return {
+          ok: false as const,
+          banned: true as const,
+          banMessage: 'Simulated ban (dev mock)',
+          banEndDate: Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60,
+        }
+      }
       const fake = { token: 'dev-mock-token', playerName: 'DevPlayer', motd: '[dev] mock auth active' }
       saveSession(PROD_BACKEND_URL, fake.token, fake.playerName, fake.motd)
       return { ok: true as const, banned: false as const, ...fake }

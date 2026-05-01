@@ -31,6 +31,9 @@ function clanCapLabel(cap: number): string {
 
 export default function ServerBrowser(): React.JSX.Element {
   const { lo, clearAll } = useAuthStore()
+  const sessions = useAuthStore(s => s.sessions)
+  const banWarnings = useAuthStore(s => s.banWarnings)
+  const dismissBanWarning = useAuthStore(s => s.dismissBanWarning)
   const navigate = useNavigate()
   const { favorites, recent, quickPlayServer, setQuickPlayServer, addFavorite, removeFavorite, isFavorite, gameStatus, playState, play, settings } = useLauncherStore()
 
@@ -97,7 +100,9 @@ export default function ServerBrowser(): React.JSX.Element {
     regionFilters.size
 
   const fetchRealms = useCallback(async () => {
-    if (!lo) return
+    // Allow loading if any backend has a session — even if the prod (primary)
+    // session is missing because the user is banned there.
+    if (Object.keys(sessions).length === 0) return
     setLoading(true)
     setError(null)
     try {
@@ -161,7 +166,7 @@ export default function ServerBrowser(): React.JSX.Element {
     } finally {
       setLoading(false)
     }
-  }, [lo, clearAll, navigate])
+  }, [sessions, clearAll, navigate])
 
   useEffect(() => { fetchRealms() }, [fetchRealms])
 
@@ -231,8 +236,38 @@ export default function ServerBrowser(): React.JSX.Element {
     await play(realm)
   }, [busy, play])
 
+  const banToasts = banWarnings.filter(w => w.ban)
+
   return (
     <div className="flex flex-col h-full bg-gray-950 overflow-hidden">
+      {/* Ban toasts — surfaces backends where the user is banned but other
+          backends still work, so the user can play with the partial set. */}
+      {banToasts.length > 0 && (
+        <div className="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm">
+          {banToasts.map(w => (
+            <div key={w.backend} className="bg-red-950/95 border border-red-800 rounded-lg shadow-lg p-3 text-sm">
+              <div className="flex items-start justify-between gap-2 mb-1">
+                <span className="font-semibold text-red-300">Banned</span>
+                <button
+                  onClick={() => dismissBanWarning(w.backend)}
+                  className="text-red-400 hover:text-red-200 leading-none"
+                  aria-label="Dismiss"
+                >
+                  ×
+                </button>
+              </div>
+              <div className="text-gray-500 text-xs font-mono truncate mb-1">{w.backend}</div>
+              <div className="text-gray-200">{w.ban!.banMessage || 'No message provided.'}</div>
+              <div className="text-gray-400 text-xs mt-1">
+                {w.ban!.banEndDate > 0
+                  ? `Expires ${new Date(w.ban!.banEndDate * 1000).toLocaleString()}`
+                  : 'Permanent'}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Tab bar */}
       <div className="flex-shrink-0 flex border-b border-gray-800/70 px-5">
         {(['favorites', 'recent', 'realms'] as Tab[]).map(t => (

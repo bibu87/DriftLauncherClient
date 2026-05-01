@@ -48,7 +48,8 @@ const api = {
     clear: (backend?: string): Promise<void> => ipcRenderer.invoke('session:clear', backend)
   },
   dev: {
-    mockLogin: (): Promise<LOLoginResult> => ipcRenderer.invoke('dev:mock-login')
+    mockLogin: (opts?: { banned?: boolean }): Promise<LOLoginResult> =>
+      ipcRenderer.invoke('dev:mock-login', opts)
   },
   realms: {
     search: (filters: RealmSearchFilters): Promise<RealmSearchResult> =>

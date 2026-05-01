@@ -3,7 +3,7 @@ import type { Realm, RealmMap, RealmSearchFilters, RealmModRecord, ModStatus, Do
 
 interface API {
   dev: {
-    mockLogin(): Promise<LOLoginResult>
+    mockLogin(opts?: { banned?: boolean }): Promise<LOLoginResult>
   }
   steam: {
     getTicket(): Promise<{ ticket: string; steamId: string; name: string }>
