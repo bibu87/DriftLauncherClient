@@ -65,10 +65,10 @@ const api = {
   drift: {
     getAllRealmMods: (): Promise<RealmModRecord[]> =>
       ipcRenderer.invoke('drift:all-realm-mods'),
-    getRealmMods: (realmId: number): Promise<RealmModRecord | null> =>
-      ipcRenderer.invoke('drift:realm-mods', realmId),
-    reportRealmMods: (realmId: number, workshopIds: string[], reportedBy: string): Promise<void> =>
-      ipcRenderer.invoke('drift:report-realm-mods', realmId, workshopIds, reportedBy),
+    getRealmMods: (backend: string, realmId: number): Promise<RealmModRecord | null> =>
+      ipcRenderer.invoke('drift:realm-mods', backend, realmId),
+    reportRealmMods: (backend: string, realmId: number, workshopIds: string[], reportedBy: string): Promise<void> =>
+      ipcRenderer.invoke('drift:report-realm-mods', backend, realmId, workshopIds, reportedBy),
   },
   prefs: {
     load: (): Promise<LauncherPrefs> => ipcRenderer.invoke('prefs:load'),

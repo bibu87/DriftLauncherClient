@@ -71,8 +71,8 @@ There is no `nodeIntegration` enabled in the renderer; this is the only path for
 | Method | Channel | Type | Description |
 |---|---|---|---|
 | `getAllRealmMods()` | `drift:all-realm-mods` | invoke | Forces a `GET /realms` pull and returns all cached records. |
-| `getRealmMods(realmId)` | `drift:realm-mods` | invoke | Returns one realm's record or `null`. |
-| `reportRealmMods(realmId, workshopIds, reportedBy)` | `drift:report-realm-mods` | invoke | Saves locally and POSTs to `/realms/{realmId}/mods`. |
+| `getRealmMods(backend, realmId)` | `drift:realm-mods` | invoke | Returns the record for one realm at one LO backend, or `null`. |
+| `reportRealmMods(backend, realmId, workshopIds, reportedBy)` | `drift:report-realm-mods` | invoke | Saves locally and POSTs to `/realms/{realmId}/mods` with the originating LO `backend` in the body. |
 
 ## `api.workshop` — Steam Workshop metadata
 

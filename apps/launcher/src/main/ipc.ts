@@ -248,10 +248,12 @@ export function registerIpcHandlers(): void {
     return getAllRealmMods()
   })
 
-  ipcMain.handle('drift:realm-mods', (_event, realmId: number) => getRealmMods(realmId))
+  ipcMain.handle('drift:realm-mods', (_event, backend: string, realmId: number) =>
+    getRealmMods(backend, realmId)
+  )
 
-  ipcMain.handle('drift:report-realm-mods', (_event, realmId: number, workshopIds: string[], reportedBy: string) => {
-    reportRealmMods(realmId, workshopIds, reportedBy)
+  ipcMain.handle('drift:report-realm-mods', (_event, backend: string, realmId: number, workshopIds: string[], reportedBy: string) => {
+    reportRealmMods(backend, realmId, workshopIds, reportedBy)
   })
 
   // ── Workshop item metadata ─────────────────────────────────────────────────
@@ -352,9 +354,11 @@ export function registerIpcHandlers(): void {
       eacEnabled: settings.eacEnabled,
       launchArgs: settings.launchArgs,
     })
-    // Fire-and-forget — monitor runs async and posts events back via sender
+    // Fire-and-forget — monitor runs async and posts events back via sender.
+    // Capture `backend` in the closure so the report carries the LO backend
+    // the realm came from (realmId alone collides across backends).
     monitorGame(event.sender, realmId, (id, workshopIds) => {
-      reportRealmMods(id, workshopIds, 'log-watcher')
+      reportRealmMods(backend, id, workshopIds, 'log-watcher')
     }).catch(err => console.error('[game] monitor error:', err))
   })
 }

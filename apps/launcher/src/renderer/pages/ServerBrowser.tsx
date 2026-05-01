@@ -118,13 +118,18 @@ export default function ServerBrowser(): React.JSX.Element {
         return
       }
       const allModRecords = await window.api.drift.getAllRealmMods()
-      const modMap = new Map(allModRecords.map(r => [r.realmId, r.workshopIds]))
-      const overlaid: Realm[] = raw.map((r: Realm) => ({
-        ...r,
-        // Official servers never use player mods — ignore any stored entries
-        mods: r.isOfficial ? undefined : modMap.get(r.id),
-        isModded: !r.isOfficial && modMap.has(r.id) && (modMap.get(r.id)?.length ?? 0) > 0,
-      }))
+      // Key by (backend, realmId) — realm IDs collide across LO backends.
+      const modKey = (backend: string, realmId: number): string => `${backend} ${realmId}`
+      const modMap = new Map(allModRecords.map(r => [modKey(r.backend, r.realmId), r.workshopIds]))
+      const overlaid: Realm[] = raw.map((r: Realm) => {
+        const k = modKey(r.backend, r.id)
+        return {
+          ...r,
+          // Official servers never use player mods — ignore any stored entries
+          mods: r.isOfficial ? undefined : modMap.get(k),
+          isModded: !r.isOfficial && modMap.has(k) && (modMap.get(k)?.length ?? 0) > 0,
+        }
+      })
       setRealms(overlaid)
 
       // Restore or refresh the quick-play realm from the fresh list.

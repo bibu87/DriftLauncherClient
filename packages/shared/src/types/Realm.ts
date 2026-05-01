@@ -25,6 +25,8 @@ export interface Realm {
 }
 
 export interface RealmModRecord {
+  // Origin LO backend URL — realmId alone is not unique across LO backends.
+  backend: string
   realmId: number
   workshopIds: string[]
   reportedAt: string

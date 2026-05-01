@@ -10,12 +10,19 @@ const store = new Store<{ records: RealmModRecord[] }>({
 
 const DRIFT_BACKEND_URL = process.env.DRIFT_BACKEND_URL ?? 'https://drift.nexteam.net'
 
+// Realm IDs are only unique within a single LO backend, so the cache and the
+// wire format both key on (backend, realmId).
+function sameRealm(a: { backend: string; realmId: number }, b: { backend: string; realmId: number }): boolean {
+  return a.realmId === b.realmId && a.backend === b.backend
+}
+
 async function syncToBackend(record: RealmModRecord): Promise<void> {
   try {
     const ticket = await getSteamTicket()
     await axios.post(
       `${DRIFT_BACKEND_URL}/realms/${record.realmId}/mods`,
       {
+        backend: record.backend,
         workshopIds: record.workshopIds,
         reportedAt: record.reportedAt,
       },
@@ -29,12 +36,12 @@ async function syncToBackend(record: RealmModRecord): Promise<void> {
       const status = err.response?.status ?? 'network'
       const detail = err.response?.data
       console.warn(
-        `[realm-mods] backend sync failed for realm ${record.realmId}: ${status}`,
+        `[realm-mods] backend sync failed for ${record.backend}#${record.realmId}: ${status}`,
         typeof detail === 'object' ? JSON.stringify(detail) : detail ?? err.message
       )
     } else {
       console.warn(
-        `[realm-mods] backend sync failed for realm ${record.realmId}:`,
+        `[realm-mods] backend sync failed for ${record.backend}#${record.realmId}:`,
         (err as Error).message
       )
     }
@@ -51,8 +58,8 @@ export function clearRealmMods(): number {
   return count
 }
 
-export function getRealmMods(realmId: number): RealmModRecord | null {
-  return store.get('records').find(r => r.realmId === realmId) ?? null
+export function getRealmMods(backend: string, realmId: number): RealmModRecord | null {
+  return store.get('records').find(r => sameRealm(r, { backend, realmId })) ?? null
 }
 
 // Pull the backend's derived realm-mod state into the local cache. Called at
@@ -65,8 +72,10 @@ export async function pullFromBackend(): Promise<void> {
       timeout: 10_000,
     })
     const incoming = Array.isArray(res.data) ? res.data : []
-    store.set('records', incoming)
-    console.log(`[realm-mods] startup pull: cached ${incoming.length} record(s) from backend`)
+    // Drop legacy records missing the backend field — they'd collide ambiguously.
+    const valid = incoming.filter(r => typeof r.backend === 'string' && r.backend.length > 0)
+    store.set('records', valid)
+    console.log(`[realm-mods] startup pull: cached ${valid.length} record(s) from backend`)
   } catch (err) {
     if (axios.isAxiosError(err)) {
       console.warn(
@@ -80,19 +89,21 @@ export async function pullFromBackend(): Promise<void> {
 }
 
 export function reportRealmMods(
+  backend: string,
   realmId: number,
   workshopIds: string[],
   reportedBy: string
 ): void {
   const record: RealmModRecord = {
+    backend,
     realmId,
     workshopIds,
     reportedAt: new Date().toISOString(),
     reportedBy,
   }
-  const records = store.get('records').filter(r => r.realmId !== realmId)
+  const records = store.get('records').filter(r => !sameRealm(r, record))
   records.push(record)
   store.set('records', records)
-  console.log(`[realm-mods] saved ${workshopIds.length} mods for realm ${realmId}`)
+  console.log(`[realm-mods] saved ${workshopIds.length} mods for ${backend}#${realmId}`)
   syncToBackend(record).catch(() => {})
 }

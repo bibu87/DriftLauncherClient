@@ -6,12 +6,16 @@ import { useAuthStore } from '../store/auth'
 type Provider = NonNullable<RealmSearchFilters['provider']>
 type ModPanelState = 'idle' | 'checking' | 'checked' | 'downloading' | 'ready' | 'activating' | 'error'
 
+// Realm IDs collide across LO backends, so keys combine both.
+const realmKey = (backend: string, realmId: number): string => `${backend} ${realmId}`
+
 export default function RealmBrowser(): React.JSX.Element {
   const { lo, clearAll } = useAuthStore()
   const navigate = useNavigate()
 
   const [realms, setRealms] = useState<Realm[]>([])
-  const [modMap, setModMap] = useState<Map<number, string[]>>(new Map())
+  // Keyed by `${backend} ${realmId}` — realmId alone isn't unique across LO backends.
+  const [modMap, setModMap] = useState<Map<string, string[]>>(new Map())
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [nameInput, setNameInput] = useState('')
@@ -28,9 +32,9 @@ export default function RealmBrowser(): React.JSX.Element {
   const loadDriftOverlay = useCallback(async () => {
     try {
       const records = await window.api.drift.getAllRealmMods()
-      const map = new Map<number, string[]>()
+      const map = new Map<string, string[]>()
       for (const r of records) {
-        if (r.workshopIds.length > 0) map.set(r.realmId, r.workshopIds)
+        if (r.workshopIds.length > 0) map.set(realmKey(r.backend, r.realmId), r.workshopIds)
       }
       setModMap(map)
     } catch {
@@ -89,7 +93,7 @@ export default function RealmBrowser(): React.JSX.Element {
 
   const handleCheckMods = useCallback(async () => {
     if (!selectedRealm) return
-    const ids = modMap.get(selectedRealm.id) ?? []
+    const ids = modMap.get(realmKey(selectedRealm.backend, selectedRealm.id)) ?? []
     setModPanelState('checking')
     setModError(null)
     try {
@@ -110,7 +114,7 @@ export default function RealmBrowser(): React.JSX.Element {
     setProgress(new Map())
     try {
       await window.api.mods.download(missing)
-      const ids = modMap.get(selectedRealm!.id) ?? []
+      const ids = modMap.get(realmKey(selectedRealm!.backend, selectedRealm!.id)) ?? []
       const statuses = await window.api.mods.check(ids)
       setModStatuses(statuses)
       setModPanelState('ready')
@@ -122,7 +126,7 @@ export default function RealmBrowser(): React.JSX.Element {
 
   const handleActivate = useCallback(async () => {
     if (!selectedRealm) return
-    const targetIds = modMap.get(selectedRealm.id) ?? []
+    const targetIds = modMap.get(realmKey(selectedRealm.backend, selectedRealm.id)) ?? []
     setModPanelState('activating')
     setModError(null)
     try {
@@ -153,8 +157,8 @@ export default function RealmBrowser(): React.JSX.Element {
     navigate('/login')
   }, [clearAll, navigate])
 
-  const moddedCount = realms.filter(r => modMap.has(r.id)).length
-  const selectedMods = selectedRealm ? (modMap.get(selectedRealm.id) ?? []) : []
+  const moddedCount = realms.filter(r => modMap.has(realmKey(r.backend, r.id))).length
+  const selectedMods = selectedRealm ? (modMap.get(realmKey(selectedRealm.backend, selectedRealm.id)) ?? []) : []
 
   return (
     <div className="min-h-screen bg-gray-950 text-white flex flex-col">
@@ -229,7 +233,7 @@ export default function RealmBrowser(): React.JSX.Element {
               <RealmCard
                 key={realm.id}
                 realm={realm}
-                mods={modMap.get(realm.id)}
+                mods={modMap.get(realmKey(realm.backend, realm.id))}
                 selected={selectedRealm?.id === realm.id}
                 onClick={() => handleSelectRealm(realm)}
               />

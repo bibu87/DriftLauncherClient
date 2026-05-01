@@ -58,7 +58,7 @@ The **Drift backend** (`drift.nexteam.net` by default) is a small JSON HTTP serv
 | Endpoint | Direction | Purpose |
 |---|---|---|
 | `GET /realms` | Client → backend | Pull all realm-mod records. Called once at launcher start. |
-| `POST /realms/{realmId}/mods` | Client → backend | Report the mods detected for a realm during a play session. |
+| `POST /realms/{realmId}/mods` | Client → backend | Report the mods detected for a realm during a play session. The body carries the originating LO `backend` URL so records are keyed by `(backend, realmId)`. |
 
 Authentication is via `x-steam-ticket` header — the same Steam session ticket used for LO login. Requests have a 10-second timeout.
 
@@ -66,12 +66,15 @@ Authentication is via `x-steam-ticket` header — the same Steam session ticket 
 
 ```ts
 {
-  realmId: string
+  backend: string     // origin LO backend URL — realmId is only unique within a backend
+  realmId: number
   workshopIds: string[]
   reportedAt: string  // ISO 8601
   reportedBy: string  // e.g. 'log-watcher', 'dev'
 }
 ```
+
+Records are keyed by `(backend, realmId)`, not `realmId` alone. Multiple LO backends can hand out the same numeric realm ID for unrelated realms, so the Drift store and overlay both disambiguate by the originating backend URL.
 
 ### Local cache
 
@@ -86,7 +89,7 @@ This means the modded-realm overlay works even when offline — the cache is wha
 
 While the game runs, DriftLauncher tails `Mist.log` looking for lines that match `/mod|workshop|ugc/i`. Any 9–11 digit numeric token in those lines is collected as a Workshop ID. When the game closes, the collected set (deduped) is reported alongside the realm ID the player was joined to.
 
-The launcher only reports IDs from realms it knows the player joined (extracted from `SendInitialJoin` log lines). If the realm isn't identifiable, no report is sent.
+The launcher only reports IDs from realms it knows the player joined (extracted from `SendInitialJoin` log lines). If the realm isn't identifiable, no report is sent. The originating LO backend URL is captured at launch time and reported alongside the realm ID.
 
 ### Privacy
 

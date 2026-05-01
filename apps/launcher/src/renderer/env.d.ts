@@ -41,8 +41,8 @@ interface API {
   }
   drift: {
     getAllRealmMods(): Promise<RealmModRecord[]>
-    getRealmMods(realmId: number): Promise<RealmModRecord | null>
-    reportRealmMods(realmId: number, workshopIds: string[], reportedBy: string): Promise<void>
+    getRealmMods(backend: string, realmId: number): Promise<RealmModRecord | null>
+    reportRealmMods(backend: string, realmId: number, workshopIds: string[], reportedBy: string): Promise<void>
   }
   mods: {
     getWorkshopDir(): Promise<string | null>
