@@ -19,9 +19,14 @@ export interface Realm {
   // Origin backend URL (e.g. "https://backend-production.last-oasis.com").
   // Set at search time; realm-scoped calls (GetMap, etc.) must target this backend.
   backend: string
-  // Overlaid from Drift backend
+  // Overlaid from Drift backend (observed via log-watcher, heuristic).
   mods?: string[]
   isModded?: boolean
+  // Community-backend declared (authoritative, see CommunityRealmExtensions
+  // in BackendApiJoinRealmSearch.proto). Prod never sets these.
+  requiredMods?: string[]
+  optionalMods?: string[]
+  enforceRequiredMods?: boolean
 }
 
 export interface RealmModRecord {

@@ -128,11 +128,16 @@ export default function ServerBrowser(): React.JSX.Element {
       const modMap = new Map(allModRecords.map(r => [modKey(r.backend, r.realmId), r.workshopIds]))
       const overlaid: Realm[] = raw.map((r: Realm) => {
         const k = modKey(r.backend, r.id)
+        // A realm counts as modded if either source has data: operator-declared
+        // requiredMods (authoritative) or Drift overlay (heuristic). Either
+        // way the user needs to know it's not vanilla.
+        const driftCount = modMap.get(k)?.length ?? 0
+        const declaredCount = r.requiredMods?.length ?? 0
         return {
           ...r,
           // Official servers never use player mods — ignore any stored entries
           mods: r.isOfficial ? undefined : modMap.get(k),
-          isModded: !r.isOfficial && modMap.has(k) && (modMap.get(k)?.length ?? 0) > 0,
+          isModded: !r.isOfficial && (driftCount > 0 || declaredCount > 0),
         }
       })
       setRealms(overlaid)
@@ -512,6 +517,14 @@ function RealmCard({ realm, expanded, quickPlay, favorite, busy, gameStatus, pla
             {realm.isOfficial && <Badge variant="blue">Official</Badge>}
             {realm.isModded && <Badge variant="amber">Modded</Badge>}
             {!realm.isOfficial && !realm.isModded && <Badge variant="gray">Vanilla</Badge>}
+            {realm.requiredMods && realm.requiredMods.length > 0 && (
+              <Badge
+                variant="amber"
+                title={`Operator declares ${realm.requiredMods.length} required mod${realm.requiredMods.length === 1 ? '' : 's'}${realm.enforceRequiredMods ? ' (enforced by server)' : ''}`}
+              >
+                Required: {realm.requiredMods.length}
+              </Badge>
+            )}
             {realm.backend !== PROD_BACKEND_URL && (
               <Badge variant="teal" title={realm.backend}>Community</Badge>
             )}

@@ -45,35 +45,63 @@ message BackendApiJoinRealmSearchRequest
 	Character character = 7;
 }
 
+// Community-only protocol additions. Field numbers chosen far above the
+// canonical LO range to minimise wire-format collision risk if LO ever adds
+// fields of their own. The official prod backend never sets these — proto3
+// defaults (empty strings, empty repeated, false) decode as "not provided".
+message CommunityRealmMods
+{
+	// Workshop IDs the realm operator declares as required for joining.
+	// The launcher pre-stages these on Play and uses them as the canonical
+	// mod list, ignoring whatever the Drift overlay observed.
+	repeated string required_workshop_ids = 1;
+	// Cosmetic / opt-in workshop IDs the operator suggests but doesn't enforce.
+	repeated string optional_workshop_ids = 2;
+	// If true, the server rejects clients missing required mods. The launcher
+	// should treat this as authoritative and refuse to launch without them.
+	bool enforce_required = 3;
+}
+
+message CommunityRealmExtensions
+{
+	// Reserved for future community-extension fields (motd, discord_url, tags, …).
+	// Only `mods` is wired up in the launcher today; absence on prod is benign.
+	CommunityRealmMods mods = 4;
+}
+
 message BackendApiJoinRealmSearchResponse
 {
 	message RealmData
 	{
 		int64 id = 1;
 		string name = 2;
-		
+
 		bool is_official = 3;
 		string region_key = 4;
 		BackendApiGamePlatform platform = 5;
-		
+
 		bool is_online = 6;
 		string message = 7;
-		
+
 		int64 character_id = 8;
-		
+
 		int32 size = 9;
 		int32 clan_cap = 10;
 		reserved 11;
 		int64 start_date = 12;
 		int64 end_date = 13;
-		
+
 		int32 players = 14;
 		int32 max_players = 15;
-		
+
 		bool has_password = 16;
 		bool has_allowlist = 17;
 
 		string description = 18;
+
+		// Community-backend extensions. Prod never sets this; community
+		// backends populate it from their realm config. See message defs above.
+		CommunityRealmExtensions community = 50000;
 	}
 
 	repeated RealmData items = 1;

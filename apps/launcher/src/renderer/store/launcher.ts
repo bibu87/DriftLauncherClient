@@ -131,8 +131,13 @@ export const useLauncherStore = create<LauncherStore>((set, get) => ({
   setGameStatus: (gameStatus) => set({ gameStatus }),
 
   play: async (server) => {
-    // Official servers never use mods — always deactivate everything for them
-    const mods = server.isOfficial ? [] : (server.mods ?? [])
+    // Official servers never use mods — always deactivate everything for them.
+    // For community realms, prefer the operator-declared `requiredMods` list
+    // (authoritative). Otherwise fall back to the Drift overlay (`mods`),
+    // which is heuristic — observed in past sessions, may be stale.
+    const mods = server.isOfficial
+      ? []
+      : (server.requiredMods ?? server.mods ?? [])
     try {
       if (mods.length > 0) {
         set({ playState: { phase: 'checking' } })

@@ -222,26 +222,37 @@ export async function decodeRealmSearchResponse(buf: ArrayBuffer, backend: strin
     items?: Array<Record<string, unknown>>
   }
   logProto('decode JoinRealmSearchResponse', { count: msg.items?.length ?? 0, items: msg.items })
-  return (msg.items ?? []).map(r => ({
-    id: Number(r.id ?? 0),
-    name: String(r.name ?? ''),
-    isOfficial: Boolean(r.isOfficial),
-    regionKey: String(r.regionKey ?? ''),
-    platform: (r.platform as Realm['platform']) ?? 'PC',
-    isOnline: Boolean(r.isOnline),
-    message: String(r.message ?? ''),
-    characterId: Number(r.characterId ?? 0),
-    size: Number(r.size ?? 0),
-    clanCap: Number(r.clanCap ?? 0),
-    startDate: Number(r.startDate ?? 0),
-    endDate: Number(r.endDate ?? 0),
-    players: Number(r.players ?? 0),
-    maxPlayers: Number(r.maxPlayers ?? 0),
-    hasPassword: Boolean(r.hasPassword),
-    hasAllowlist: Boolean(r.hasAllowlist),
-    description: String(r.description ?? ''),
-    backend,
-  }))
+  return (msg.items ?? []).map(r => {
+    // Community-backend extensions — prod leaves these unset (proto3 defaults),
+    // so we only surface them when actually populated.
+    const community = r.community as { mods?: { requiredWorkshopIds?: string[]; optionalWorkshopIds?: string[]; enforceRequired?: boolean } } | undefined
+    const cMods = community?.mods
+    return {
+      id: Number(r.id ?? 0),
+      name: String(r.name ?? ''),
+      isOfficial: Boolean(r.isOfficial),
+      regionKey: String(r.regionKey ?? ''),
+      platform: (r.platform as Realm['platform']) ?? 'PC',
+      isOnline: Boolean(r.isOnline),
+      message: String(r.message ?? ''),
+      characterId: Number(r.characterId ?? 0),
+      size: Number(r.size ?? 0),
+      clanCap: Number(r.clanCap ?? 0),
+      startDate: Number(r.startDate ?? 0),
+      endDate: Number(r.endDate ?? 0),
+      players: Number(r.players ?? 0),
+      maxPlayers: Number(r.maxPlayers ?? 0),
+      hasPassword: Boolean(r.hasPassword),
+      hasAllowlist: Boolean(r.hasAllowlist),
+      description: String(r.description ?? ''),
+      backend,
+      requiredMods: cMods?.requiredWorkshopIds && cMods.requiredWorkshopIds.length > 0
+        ? cMods.requiredWorkshopIds : undefined,
+      optionalMods: cMods?.optionalWorkshopIds && cMods.optionalWorkshopIds.length > 0
+        ? cMods.optionalWorkshopIds : undefined,
+      enforceRequiredMods: cMods?.enforceRequired || undefined,
+    }
+  })
 }
 
 export async function encodeRealmGetMapRequest(realmId: number): Promise<Buffer> {
