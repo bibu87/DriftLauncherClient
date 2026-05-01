@@ -55,13 +55,20 @@ export interface LaunchOptions {
   // Free-form args from Settings → Launch arguments. Whitespace-separated;
   // forwarded after the backend override and any EAC-required args.
   launchArgs?: string
+  // When set, the game opens directly into this realm via -LoginRealmID=<id>.
+  // The arg is silently dropped on the steam:// fallback, which can't forward
+  // launch args.
+  realmId?: number
 }
 
 export function launchGame(opts: LaunchOptions = {}): Promise<void> {
-  const { backend, eacEnabled = true, launchArgs = '' } = opts
+  const { backend, eacEnabled = true, launchArgs = '', realmId } = opts
   const extraArgs: string[] = []
   const override = backendOverrideArg(backend)
   if (override) extraArgs.push(override)
+  if (realmId !== undefined && realmId > 0) {
+    extraArgs.push(`-LoginRealmID=${realmId}`)
+  }
   // Free-form user args (eg. "-dx11 -log"). Empty / whitespace-only is a no-op.
   for (const tok of launchArgs.split(/\s+/)) {
     if (tok) extraArgs.push(tok)
@@ -120,11 +127,11 @@ export function launchGame(opts: LaunchOptions = {}): Promise<void> {
   }
 
   // Last-resort fallback. The steam:// protocol doesn't cleanly forward
-  // arbitrary launch args, so community-backend overrides silently won't
-  // apply here — the user will end up joining on prod. We still try, so the
+  // arbitrary launch args, so community-backend overrides and the
+  // -LoginRealmID hint silently won't apply here. We still try, so the
   // game at least starts.
-  if (override) {
-    console.warn('[game] steam:// fallback cannot forward backend override; launch will hit prod')
+  if (override || (realmId !== undefined && realmId > 0)) {
+    console.warn('[game] steam:// fallback cannot forward launch args; backend/realm hints will be ignored')
   }
   console.log('[game] launching via URL fallback')
   return shell.openExternal(`steam://rungameid/${LO_APP_ID}`)

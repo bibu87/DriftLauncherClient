@@ -360,6 +360,7 @@ export function registerIpcHandlers(): void {
     const { settings } = loadPrefs()
     await launchGame({
       backend,
+      realmId,
       eacEnabled: settings.eacEnabled,
       launchArgs: settings.launchArgs,
     })
