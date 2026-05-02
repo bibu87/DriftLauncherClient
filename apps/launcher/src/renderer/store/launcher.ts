@@ -137,14 +137,14 @@ export const useLauncherStore = create<LauncherStore>((set, get) => ({
       if (mods.length > 0) {
         set({ playState: { phase: 'checking' } })
         const statuses = await window.api.mods.check(mods)
-        const missing = statuses.filter(s => !s.installed).map(s => s.workshopId)
+        const stale = statuses.filter(s => !s.installed || !s.upToDate).map(s => s.workshopId)
 
-        if (missing.length > 0) {
-          set({ playState: { phase: 'downloading', pct: 0, workshopId: missing[0] } })
+        if (stale.length > 0) {
+          set({ playState: { phase: 'downloading', pct: 0, workshopId: stale[0] } })
           const offProgress = window.api.mods.onProgress((p: DownloadProgress) => {
             set({ playState: { phase: 'downloading', pct: p.pct, workshopId: p.workshopId } })
           })
-          await window.api.mods.download(missing)
+          await window.api.mods.download(stale)
           offProgress()
         }
       }
