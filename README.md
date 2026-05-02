@@ -52,6 +52,18 @@ Steam must be running when you launch, and Last Oasis (App ID `903950`) must be 
 
 > Builds are currently unsigned, so Windows SmartScreen may warn the first time you run the exe. Click *More info → Run anyway* if you trust the source.
 
+### Troubleshooting
+
+**"A JavaScript error occurred in the main process"** with a message like:
+
+```
+Uncaught Exception:
+Error: The specified module could not be found.
+\\?\C:\Users\...\AppData\Local\Temp\<random>\...\steamworksjs.win32-x64-msvc.node
+```
+
+The launcher's Steam native module depends on the **Microsoft Visual C++ Redistributable for Visual Studio 2015–2022 (x64)**. It's almost always already present on machines that have Steam or any modern game installed, but a fresh Windows install (or VM) won't have it. Install [`vc_redist.x64.exe`](https://aka.ms/vs/17/release/vc_redist.x64.exe) from Microsoft and re-launch.
+
 ---
 
 ## Documentation
