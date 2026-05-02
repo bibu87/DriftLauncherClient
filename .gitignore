@@ -6,5 +6,3 @@ out/
 .env.local
 drift.db
 .claude/
-LastOasis_Launcher_Architecture*.md
-LogParser_Specification.md
