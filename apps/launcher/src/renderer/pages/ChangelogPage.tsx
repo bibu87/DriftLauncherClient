@@ -8,6 +8,17 @@ interface Release {
 
 const RELEASES: Release[] = [
   {
+    version: '0.0.3',
+    date: '2026-05-08',
+    entries: [
+      { type: 'added', text: 'Joining a realm now boots the game directly into that realm via -LoginRealmID instead of dropping you on the in-game realm picker' },
+      { type: 'changed', text: 'A ban on a single backend now surfaces as a dismissible toast on the realm browser; the launcher only blocks at the ban screen when every configured backend rejects the login' },
+      { type: 'changed', text: 'The full-ban screen now has a "Manage backends" shortcut that jumps straight to Settings → Backends so you can add a community backend without reinstalling' },
+      { type: 'fixed', text: 'Workshop mods reported by Steam as needing an update are now re-downloaded before launch — previously a stale mod could slip through and cause desyncs or kicks on strict modded servers' },
+      { type: 'fixed', text: 'Realm-mod cache and IPC are now keyed by (backend, realmId) so realms with the same numeric ID on different LO backends no longer share or overwrite each other\'s mod lists' },
+    ],
+  },
+  {
     version: '0.0.2',
     date: '2026-04-28',
     entries: [
