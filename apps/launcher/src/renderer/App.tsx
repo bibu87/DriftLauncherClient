@@ -9,7 +9,7 @@ import SettingsPage from './pages/SettingsPage'
 import ChangelogPage from './pages/ChangelogPage'
 import NewsPage from './pages/NewsPage'
 import { useLauncherStore } from './store/launcher'
-import { PROD_BACKEND_URL } from '@drift/shared'
+import { PROD_BACKEND_URL } from '../shared'
 
 function AppRoutes(): React.JSX.Element {
   const { hydrate, prefsLoaded, settings, refreshNews } = useLauncherStore()

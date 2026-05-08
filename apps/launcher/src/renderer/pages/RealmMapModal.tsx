@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import type { RealmMap, RealmMapTile, RealmMapWalker, WalkerPreferences } from '@drift/shared'
+import type { RealmMap, RealmMapTile, RealmMapWalker, WalkerPreferences } from '../../shared'
 
 import iconSleepingGiantsRoads from '../assets/maps/sleeping_giants_roads.png'
 import iconSleepingGiants from '../assets/maps/sleeping_giants.png'

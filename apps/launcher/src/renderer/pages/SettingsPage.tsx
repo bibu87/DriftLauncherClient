@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useLauncherStore } from '../store/launcher'
 import { useAuthStore } from '../store/auth'
-import type { LauncherSettings } from '@drift/shared'
-import { PROD_BACKEND_URL } from '@drift/shared'
+import type { LauncherSettings } from '../../shared'
+import { PROD_BACKEND_URL } from '../../shared'
 
 export default function SettingsPage(): React.JSX.Element {
   const { settings, setSettings } = useLauncherStore()

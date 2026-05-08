@@ -20,8 +20,8 @@ import { launchGame, monitorGame } from './game'
 import { loadPrefs, savePrefs, getBackendUrls } from './prefs'
 import { getAllRealmMods, getRealmMods, reportRealmMods, pullFromBackend, clearRealmMods } from './realm-mods'
 import { fetchNews } from './news'
-import type { LauncherPrefs, Realm, RealmSearchFilters } from '@drift/shared'
-import { PROD_BACKEND_URL } from '@drift/shared'
+import type { LauncherPrefs, Realm, RealmSearchFilters } from '../shared'
+import { PROD_BACKEND_URL } from '../shared'
 
 export function registerIpcHandlers(): void {
   // ── Custom window controls (frame: false titlebar) ─────────────────────────

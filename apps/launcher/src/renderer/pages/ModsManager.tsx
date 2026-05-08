@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import type { ModStatus } from '@drift/shared'
+import type { ModStatus } from '../../shared'
 
 export default function ModsManager(): React.JSX.Element {
   const [mods, setMods] = useState<ModStatus[]>([])

@@ -1,6 +1,6 @@
 import { safeStorage } from 'electron'
 import Store from 'electron-store'
-import { PROD_BACKEND_URL } from '@drift/shared'
+import { PROD_BACKEND_URL } from '../shared'
 
 // Per-backend session. `token` is encrypted at rest via electron's safeStorage;
 // playerName / motd are plaintext so they can be restored even when encryption

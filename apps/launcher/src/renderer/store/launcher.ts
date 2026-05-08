@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import type { Realm, LauncherSettings, LauncherPrefs, DownloadProgress, NewsItem } from '@drift/shared'
-import { PROD_BACKEND_URL } from '@drift/shared'
+import type { Realm, LauncherSettings, LauncherPrefs, DownloadProgress, NewsItem } from '../../shared'
+import { PROD_BACKEND_URL } from '../../shared'
 
 export type GameStatus = 'idle' | 'launching' | 'running' | 'stopped'
 

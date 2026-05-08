@@ -1,6 +1,6 @@
 import Store from 'electron-store'
-import type { LauncherPrefs } from '@drift/shared'
-import { PROD_BACKEND_URL } from '@drift/shared'
+import type { LauncherPrefs } from '../shared'
+import { PROD_BACKEND_URL } from '../shared'
 
 const defaults: LauncherPrefs = {
   favorites: [],

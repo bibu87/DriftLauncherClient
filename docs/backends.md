@@ -18,7 +18,7 @@ These speak the official protobuf API used by the game itself.
 | `POST /Api/Migration/SetWalkerPreference` | Mark a walker as one of the character's favourites. |
 | `POST /Api/Migration/DeleteWalkerPreference` | Clear a walker's favourite flag. |
 
-All payloads are protobuf — see `packages/lo-protos/Protos/`. Schemas are also documented in `packages/lo-protos/openapi.yaml`.
+All payloads are protobuf — see `apps/launcher/lo-protos/`. Schemas are also documented in `apps/launcher/lo-protos/openapi.yaml`.
 
 ### Multi-backend support
 

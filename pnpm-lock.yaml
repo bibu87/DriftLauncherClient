@@ -10,9 +10,6 @@ importers:
 
   apps/launcher:
     dependencies:
-      '@drift/shared':
-        specifier: workspace:*
-        version: link:../../packages/shared
       '@electron-toolkit/preload':
         specifier: ^3.0.0
         version: 3.0.2(electron@30.5.1)
@@ -83,10 +80,6 @@ importers:
       typescript:
         specifier: ^5.4.0
         version: 5.9.3
-
-  packages/lo-protos: {}
-
-  packages/shared: {}
 
 packages:
 

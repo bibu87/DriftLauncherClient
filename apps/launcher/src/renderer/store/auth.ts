@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { SteamSession, LOSession } from '@drift/shared'
+import type { SteamSession, LOSession } from '../../shared'
 
 // Per-backend LO sessions. `primaryBackend` names the "identity source" —
 // usually the prod URL — whose playerName / motd populate the header. `lo` is

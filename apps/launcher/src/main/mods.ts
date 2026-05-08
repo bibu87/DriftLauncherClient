@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, writeFileSync, readdirSync, rmSync, cpSync, mkdirSync } from 'fs'
 import { join } from 'path'
 import { getClient } from './steam'
-import type { ModStatus } from '@drift/shared'
+import type { ModStatus } from '../shared'
 
 const LO_APP_ID = 903950
 

@@ -12,8 +12,6 @@ const BUNDLED_DEPS = [
   'electron-store',
   'protobufjs',
   'zustand',
-  '@drift/shared',
-  '@drift/lo-protos',
   '@electron-toolkit/utils',
   '@electron-toolkit/preload',
 ]

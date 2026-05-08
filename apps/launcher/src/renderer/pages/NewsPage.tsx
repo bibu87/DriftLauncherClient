@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { useLauncherStore } from '../store/launcher'
-import type { NewsItem } from '@drift/shared'
+import type { NewsItem } from '../../shared'
 
 export default function NewsPage(): React.JSX.Element {
   const { news, newsLoading, readNewsIds, refreshNews, markNewsRead, markAllNewsRead } = useLauncherStore()

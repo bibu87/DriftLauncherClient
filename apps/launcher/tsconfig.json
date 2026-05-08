@@ -5,6 +5,5 @@
       "@renderer/*": ["./src/renderer/*"]
     }
   },
-  "include": ["src/renderer/**/*"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src/renderer/**/*", "src/shared/**/*"]
 }

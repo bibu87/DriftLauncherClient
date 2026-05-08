@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import type { Realm, RealmSearchFilters, ModStatus, DownloadProgress } from '@drift/shared'
+import type { Realm, RealmSearchFilters, ModStatus, DownloadProgress } from '../../shared'
 import { useAuthStore } from '../store/auth'
 
 type Provider = NonNullable<RealmSearchFilters['provider']>

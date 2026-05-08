@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import { useAuthStore } from '../store/auth'
-import { PROD_BACKEND_URL } from '@drift/shared'
+import { PROD_BACKEND_URL } from '../../shared'
 
 // Dev sticky-ban: localStorage('drift:dev-force-ban') drives a mock ban.
 //   'all'           → every backend returns banned

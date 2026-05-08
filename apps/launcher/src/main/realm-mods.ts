@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Store from 'electron-store'
 import { getSteamTicket } from './steam'
-import type { RealmModRecord } from '@drift/shared'
+import type { RealmModRecord } from '../shared'
 
 const store = new Store<{ records: RealmModRecord[] }>({
   name: 'realm-mods',

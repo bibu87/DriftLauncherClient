@@ -134,7 +134,7 @@ There is no `nodeIntegration` enabled in the renderer; this is the only path for
 
 1. Add the handler in [`apps/launcher/src/main/ipc.ts`](../apps/launcher/src/main/ipc.ts) (or a module it pulls from).
 2. Expose it in [`apps/launcher/src/preload/index.ts`](../apps/launcher/src/preload/index.ts) under the matching `api.*` namespace.
-3. Add types to [`packages/shared/src/types/`](../packages/shared/src/types/) if it crosses the IPC boundary.
+3. Add types to [`apps/launcher/src/shared/types/`](../apps/launcher/src/shared/types/) if it crosses the IPC boundary.
 4. Use it from the renderer via `window.api.namespace.method(...)`.
 
-The shared package is a TypeScript workspace — there's no codegen step. Type changes are picked up by `tsc --noEmit` (`pnpm --filter launcher typecheck`).
+There's no codegen step — type changes are picked up directly by `tsc --noEmit` (`pnpm --filter launcher typecheck`).

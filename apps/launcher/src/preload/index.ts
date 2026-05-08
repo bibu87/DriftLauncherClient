@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import type { Realm, RealmMap, RealmSearchFilters, RealmModRecord, ModStatus, DownloadProgress, LauncherPrefs, WalkerPreferences, NewsItem } from '@drift/shared'
+import type { Realm, RealmMap, RealmSearchFilters, RealmModRecord, ModStatus, DownloadProgress, LauncherPrefs, WalkerPreferences, NewsItem } from '../shared'
 
 export type { LauncherPrefs }
 

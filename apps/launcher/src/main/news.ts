@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { NewsItem } from '@drift/shared'
+import type { NewsItem } from '../shared'
 
 // Last Oasis on Steam — public Steam Web API, no key required.
 const LO_APPID = 903950

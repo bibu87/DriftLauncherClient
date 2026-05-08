@@ -2,7 +2,7 @@ import protobuf from 'protobufjs'
 import axios from 'axios'
 import path from 'path'
 import { app } from 'electron'
-import type { Realm, RealmMap, RealmMapTile, RealmMapWalker, WalkerPreferences } from '@drift/shared'
+import type { Realm, RealmMap, RealmMapTile, RealmMapWalker, WalkerPreferences } from '../shared'
 
 // Log verbosity. At 'info' (default) each LO call logs a single line with
 // method, endpoint, status and timing. At 'debug' the decoded request and
@@ -104,12 +104,12 @@ export async function postLoProtobuf(
 }
 
 // Dev: resolves relative to the bundled main output at apps/launcher/out/main/,
-// so four levels up lands at the repo root → packages/lo-protos/Protos.
+// so two levels up lands at apps/launcher → lo-protos.
 // Packaged: electron-builder copies the protos into the app's resources dir
 // (via extraResources in package.json), exposed as process.resourcesPath.
 const PROTO_DIR = app.isPackaged
-  ? path.join(process.resourcesPath, 'Protos')
-  : path.join(__dirname, '../../../../packages/lo-protos/Protos')
+  ? path.join(process.resourcesPath, 'lo-protos')
+  : path.join(__dirname, '../../lo-protos')
 
 let _root: protobuf.Root | null = null
 

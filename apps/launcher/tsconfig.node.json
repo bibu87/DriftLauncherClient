@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "composite": true,
     "module": "CommonJS",
     "moduleResolution": "node",
     "outDir": "./out"
@@ -9,6 +8,7 @@
   "include": [
     "electron.vite.config.ts",
     "src/main/**/*",
-    "src/preload/**/*"
+    "src/preload/**/*",
+    "src/shared/**/*"
   ]
 }

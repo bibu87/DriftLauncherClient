@@ -4,7 +4,7 @@ import { existsSync, openSync, readSync, statSync, closeSync } from 'fs'
 import { join } from 'path'
 import type { WebContents } from 'electron'
 import { findGameDir, findSteamRoot } from './mods'
-import { PROD_BACKEND_URL } from '@drift/shared'
+import { PROD_BACKEND_URL } from '../shared'
 
 export type GameStatus = 'idle' | 'launching' | 'running' | 'stopped'
 

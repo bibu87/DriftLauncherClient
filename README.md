@@ -90,14 +90,13 @@ Full documentation lives in the [`docs/`](./docs/README.md) folder.
 
 ```
 DriftLauncherClient/
-├── apps/
-│   └── launcher/          # Electron app (main + renderer)
-│       ├── src/main/      # Main process: game launch, mods, Steam IPC handlers
-│       ├── src/preload/   # Context bridge / IPC surface
-│       └── src/renderer/  # React UI (pages, store, layouts)
-└── packages/
-    ├── shared/            # Shared TypeScript types
-    └── lo-protos/         # Last Oasis protobuf schemas
+└── apps/
+    └── launcher/           # Electron app (main + renderer)
+        ├── lo-protos/      # Last Oasis protobuf schemas + openapi.yaml
+        ├── src/main/       # Main process: game launch, mods, Steam IPC handlers
+        ├── src/preload/    # Context bridge / IPC surface
+        ├── src/renderer/   # React UI (pages, store, layouts)
+        └── src/shared/     # TypeScript types crossing the IPC boundary
 ```
 
 The **Drift backend** (realm-mod consensus service at `drift.nexteam.net`) is a separate proprietary service; its source is not included in this repository. The launcher talks to it over a small HTTP API (`GET /realms`, `POST /realms/:id/mods`), so third parties can run their own compatible backend by pointing `DRIFT_BACKEND_URL` at their service.

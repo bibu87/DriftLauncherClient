@@ -15,7 +15,7 @@ DriftLauncher is built with `electron-vite` and packaged with `electron-builder`
 pnpm install
 ```
 
-This installs both `apps/launcher` and the workspace packages (`packages/shared`, `packages/lo-protos`).
+This installs `apps/launcher` and its dependencies.
 
 ## Development
 
@@ -79,7 +79,7 @@ The `dist` step bundles:
 - `resources/icon.ico`
 - `package.json` (for app metadata)
 - `steam_api64.dll` and `steam_appid.txt` (extra files at app root)
-- `packages/lo-protos/Protos/` (extra resource at `Protos/`)
+- `apps/launcher/lo-protos/` (extra resource at `lo-protos/`)
 - `node_modules/steamworks.js/` (asar-unpacked so the native module loads)
 
 Builds are **unsigned**. Windows SmartScreen will warn on first run.
@@ -100,6 +100,7 @@ To cut a release:
 ```
 apps/launcher/
 ├── electron.vite.config.ts   # main / preload / renderer bundle config
+├── lo-protos/                # Last Oasis .proto files + openapi.yaml
 ├── postcss.config.js         # Tailwind / autoprefixer
 ├── tailwind.config.js
 ├── tsconfig.json             # renderer + preload
@@ -111,15 +112,8 @@ apps/launcher/
 └── src/
     ├── main/                 # Node (privileged)
     ├── preload/              # contextBridge surface
-    └── renderer/             # React UI
-```
-
-Workspace packages:
-
-```
-packages/
-├── shared/        # TypeScript types crossing the IPC boundary
-└── lo-protos/     # Last Oasis .proto files + openapi.yaml
+    ├── renderer/             # React UI
+    └── shared/               # TypeScript types crossing the IPC boundary
 ```
 
 See [Architecture](./architecture.md) for the full breakdown.

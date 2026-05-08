@@ -1,5 +1,5 @@
 import type { LOLoginResult, StoredSession, RealmSearchResult, LauncherPrefs } from '../preload/index'
-import type { Realm, RealmMap, RealmSearchFilters, RealmModRecord, ModStatus, DownloadProgress, WalkerPreferences, NewsItem } from '@drift/shared'
+import type { Realm, RealmMap, RealmSearchFilters, RealmModRecord, ModStatus, DownloadProgress, WalkerPreferences, NewsItem } from '../shared'
 
 interface API {
   dev: {

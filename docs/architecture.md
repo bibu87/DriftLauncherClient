@@ -1,25 +1,24 @@
 # Architecture
 
-DriftLauncher is an **Electron** application split across three processes (main / preload / renderer) and a `pnpm` workspace with shared TypeScript packages.
+DriftLauncher is an **Electron** application split across three processes (main / preload / renderer).
 
 ## Repository layout
 
 ```
 DriftLauncherClient/
-├── apps/
-│   └── launcher/                     # Electron app
-│       ├── electron.vite.config.ts   # electron-vite build config
-│       ├── resources/                # Window icon
-│       ├── scripts/                  # Helper scripts (icon generation)
-│       ├── src/
-│       │   ├── main/                 # Main (Node) process
-│       │   ├── preload/              # Context-isolated bridge
-│       │   └── renderer/             # React UI
-│       ├── steam_api64.dll           # Steamworks runtime
-│       └── steam_appid.txt           # Contains "903950"
-└── packages/
-    ├── shared/                       # Shared TypeScript types
-    └── lo-protos/                    # Last Oasis protobuf schemas + OpenAPI
+└── apps/
+    └── launcher/                     # Electron app
+        ├── electron.vite.config.ts   # electron-vite build config
+        ├── lo-protos/                # Last Oasis protobuf schemas + openapi.yaml
+        ├── resources/                # Window icon
+        ├── scripts/                  # Helper scripts (icon generation, probes)
+        ├── src/
+        │   ├── main/                 # Main (Node) process
+        │   ├── preload/              # Context-isolated bridge
+        │   ├── renderer/             # React UI
+        │   └── shared/               # TypeScript types crossing the IPC boundary
+        ├── steam_api64.dll           # Steamworks runtime
+        └── steam_appid.txt           # Contains "903950"
 ```
 
 The **Drift backend** (mod-consensus service at `drift.nexteam.net`) is a separate proprietary service whose source is not in this repo. The launcher talks to it over a small HTTP API — see [Backends](./backends.md).
@@ -101,7 +100,7 @@ Untrusted UI built with **React 18**, **React Router**, **Tailwind CSS**, and **
 | Wire format | Protobuf (protobufjs) for LO API; JSON for Drift API and Steam APIs |
 | Steam integration | steamworks.js (Greenworks-style native bindings) |
 | Language | TypeScript end-to-end |
-| Package manager | pnpm 9 workspaces |
+| Package manager | pnpm 9 |
 
 ## Data flow: starting the game
 
@@ -146,7 +145,7 @@ Three independent bundles produced by `electron-vite`:
 | Preload | `src/preload/` | `out/preload/index.js` |
 | Renderer | `src/renderer/` | `out/renderer/` |
 
-`electron-builder` then packages those plus `steam_api64.dll`, `steam_appid.txt`, the `Protos/` folder, and `resources/icon.ico` into:
+`electron-builder` then packages those plus `steam_api64.dll`, `steam_appid.txt`, the `lo-protos/` folder, and `resources/icon.ico` into:
 
 - `DriftLauncher-<version>-win-x64.exe` — portable, single file
 - `DriftLauncher-<version>-win-x64.zip` — unpacked archive
