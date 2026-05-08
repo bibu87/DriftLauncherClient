@@ -40,10 +40,21 @@
     "win": {
       "icon": "resources/icon.ico",
       "target": [
+        { "target": "nsis", "arch": ["x64"] },
         { "target": "portable", "arch": ["x64"] },
         { "target": "zip", "arch": ["x64"] }
       ],
       "artifactName": "DriftLauncher-${version}-${os}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Drift Launcher",
+      "artifactName": "DriftLauncher-${version}-${os}-${arch}-Setup.${ext}"
     }
   },
   "dependencies": {
