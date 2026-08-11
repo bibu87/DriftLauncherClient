@@ -1,6 +1,6 @@
 import Store from 'electron-store'
 import type { LauncherPrefs } from '../shared'
-import { PROD_BACKEND_URL } from '../shared'
+import { PINNED_BACKEND_URLS, isPinnedBackend } from '../shared'
 
 const defaults: LauncherPrefs = {
   favorites: [],
@@ -13,7 +13,7 @@ const defaults: LauncherPrefs = {
     theme: 'dark',
     launchOnStartup: false,
     defaultRealmTab: 'realms',
-    backendUrls: [PROD_BACKEND_URL],
+    backendUrls: [...PINNED_BACKEND_URLS],
   },
 }
 
@@ -21,11 +21,13 @@ const store = new Store<LauncherPrefs>({ defaults })
 
 export function loadPrefs(): LauncherPrefs {
   const prefs = store.store as LauncherPrefs
-  // Migrate older stores that pre-date the backendUrls setting, and self-heal
-  // if the prod URL has been dropped (we enforce it as index 0 elsewhere but
-  // guard here too so no caller ever sees an empty list).
+  // Force the pinned backends to the front, in order, and drop any duplicates
+  // among the user-added tail. This both migrates stores that pre-date the
+  // backendUrls setting and rolls new pinned backends out to existing installs
+  // — the Settings UI refuses to remove them, so restoring one here can only
+  // undo an edit made outside the launcher.
   const urls = prefs.settings.backendUrls ?? []
-  const normalized = [PROD_BACKEND_URL, ...urls.filter(u => u !== PROD_BACKEND_URL)]
+  const normalized = [...PINNED_BACKEND_URLS, ...urls.filter(u => !isPinnedBackend(u))]
   if (urls.length !== normalized.length || urls.some((u, i) => u !== normalized[i])) {
     prefs.settings = { ...prefs.settings, backendUrls: normalized }
     store.set('settings', prefs.settings)

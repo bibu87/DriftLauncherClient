@@ -1,4 +1,15 @@
 export const PROD_BACKEND_URL = 'https://backend-production.last-oasis.com'
+export const REALMDRIFT_BACKEND_URL = 'https://realmdrift.com'
+
+// Backends shipped with the launcher. They lead the backend list in this
+// order, can't be removed in Settings, and are re-added on load if a store
+// is missing one — so adding an entry here rolls out to existing installs.
+// Prod is additionally the primary (identity / MOTD source).
+export const PINNED_BACKEND_URLS = [PROD_BACKEND_URL, REALMDRIFT_BACKEND_URL]
+
+export function isPinnedBackend(url: string): boolean {
+  return PINNED_BACKEND_URLS.includes(url)
+}
 
 export interface LauncherSettings {
   launchArgs: string
@@ -6,8 +17,8 @@ export interface LauncherSettings {
   theme: 'light' | 'dark' | 'bronze'
   launchOnStartup: boolean
   defaultRealmTab: 'realms' | 'favorites' | 'recent'
-  // List of LO backend URLs to fan-out queries across. The prod URL is always
-  // pinned at index 0 and treated as the "primary" (identity / MOTD source).
+  // List of LO backend URLs to fan-out queries across. PINNED_BACKEND_URLS
+  // always lead the list, in order, followed by user-added community URLs.
   backendUrls: string[]
 }
 

@@ -22,9 +22,18 @@ All payloads are protobuf — see `apps/launcher/lo-protos/`. Schemas are also d
 
 ### Multi-backend support
 
-The launcher keeps a list of backend URLs. The first entry is always the prod URL (`https://backend-production.last-oasis.com`) and is non-removable — it's pinned because it's the source of truth for your Steam-Last-Oasis identity.
+The launcher keeps a list of backend URLs, led by the **built-in** backends — the ones shipped with the launcher, listed in `PINNED_BACKEND_URLS`:
 
-Add or remove additional backends in **Settings → Backends**. Adding a backend probes it with your Steam ticket; if login succeeds the backend is added and a session for it is stored.
+| Backend | Why it's pinned |
+|---|---|
+| `https://backend-production.last-oasis.com` | Official prod, and the source of truth for your Steam-Last-Oasis identity (the "primary") |
+| `https://realmdrift.com` | Community backend shipped by default |
+
+Built-in backends always lead the list, in that order, and have no **Remove** button. `loadPrefs()` re-inserts a missing one on every load, which is how a newly shipped built-in backend reaches installs that already have a config file.
+
+Add or remove your own backends in **Settings → Backends**. Adding a backend probes it with your Steam ticket; if login succeeds the backend is added and a session for it is stored.
+
+A backend that appears since the last run — one you added, or one pinned by a launcher update — is logged into automatically during session restore, so it participates in realm search immediately rather than reporting `NO_SESSION` until reconnected by hand.
 
 #### Realm search fan-out
 

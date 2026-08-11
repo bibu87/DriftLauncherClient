@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import type { Realm, LauncherSettings, LauncherPrefs, DownloadProgress, NewsItem } from '../../shared'
-import { PROD_BACKEND_URL } from '../../shared'
+import { PINNED_BACKEND_URLS } from '../../shared'
 
 export type GameStatus = 'idle' | 'launching' | 'running' | 'stopped'
 
@@ -44,7 +44,7 @@ const defaultSettings: LauncherSettings = {
   theme: 'dark',
   launchOnStartup: false,
   defaultRealmTab: 'realms',
-  backendUrls: [PROD_BACKEND_URL],
+  backendUrls: [...PINNED_BACKEND_URLS],
 }
 
 export const useLauncherStore = create<LauncherStore>((set, get) => ({

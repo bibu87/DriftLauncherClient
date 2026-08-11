@@ -9,7 +9,7 @@ import SettingsPage from './pages/SettingsPage'
 import ChangelogPage from './pages/ChangelogPage'
 import NewsPage from './pages/NewsPage'
 import { useLauncherStore } from './store/launcher'
-import { PROD_BACKEND_URL } from '../shared'
+import { PINNED_BACKEND_URLS } from '../shared'
 
 function AppRoutes(): React.JSX.Element {
   const { hydrate, prefsLoaded, settings, refreshNews } = useLauncherStore()
@@ -26,7 +26,7 @@ function AppRoutes(): React.JSX.Element {
         theme: 'dark',
         launchOnStartup: false,
         defaultRealmTab: 'realms',
-        backendUrls: [PROD_BACKEND_URL],
+        backendUrls: [...PINNED_BACKEND_URLS],
       },
     }))
   }, []) // eslint-disable-line react-hooks/exhaustive-deps

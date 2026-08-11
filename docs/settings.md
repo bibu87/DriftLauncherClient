@@ -28,10 +28,10 @@ These files are managed by `electron-store`. There's no global "wipe" command; *
 
 ### Backends
 
-A list of Last Oasis backends. The official prod URL (`https://backend-production.last-oasis.com`) is always first and non-removable.
+A list of Last Oasis backends. The built-in ones lead the list and are non-removable: the official prod URL (`https://backend-production.last-oasis.com`, badged **Primary**) followed by `https://realmdrift.com` (badged **Built-in**).
 
 - **Add backend** — Type a URL and submit. The launcher probes it by attempting a Steam login; only backends that authenticate successfully are saved.
-- **Remove backend** — Available on every entry except prod.
+- **Remove backend** — Available on every entry except the built-in ones.
 
 See [Backends](./backends.md) for how the list is used (parallel fan-out for realm search and login).
 
@@ -61,14 +61,15 @@ See [Backends](./backends.md) for how the list is used (parallel fan-out for rea
     "launchOnStartup": false,
     "defaultRealmTab": "realms",
     "backendUrls": [
-      "https://backend-production.last-oasis.com"
+      "https://backend-production.last-oasis.com",
+      "https://realmdrift.com"
     ]
   },
   "readNewsIds": ["newsGid1", "newsGid2"]
 }
 ```
 
-The store auto-migrates older configs that are missing `backendUrls` and always normalizes the prod URL into index 0.
+The store auto-migrates older configs that are missing `backendUrls`, and always normalizes the built-in backends to the front of the list in order — so a config written before a built-in backend was added picks it up on the next load.
 
 ## What's in `drift-session.json`
 

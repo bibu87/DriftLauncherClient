@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLauncherStore } from '../store/launcher'
 import { useAuthStore } from '../store/auth'
 import type { LauncherSettings } from '../../shared'
-import { PROD_BACKEND_URL } from '../../shared'
+import { PROD_BACKEND_URL, isPinnedBackend } from '../../shared'
 
 export default function SettingsPage(): React.JSX.Element {
   const { settings, setSettings } = useLauncherStore()
@@ -206,7 +206,7 @@ function BackendList(): React.JSX.Element {
   }
 
   const handleRemove = async (url: string) => {
-    if (url === PROD_BACKEND_URL) return
+    if (isPinnedBackend(url)) return
     setSettings({ backendUrls: settings.backendUrls.filter(u => u !== url) })
     removeSession(url)
     try { await window.api.session.clear(url) } catch { /* best-effort */ }
@@ -215,7 +215,7 @@ function BackendList(): React.JSX.Element {
   return (
     <div className="flex flex-col gap-3">
       <p className="text-xs text-gray-500">
-        Realm search queries every backend in parallel. The prod URL (identity source) is always present.
+        Realm search queries every backend in parallel. The built-in backends are always present; the prod URL is the identity source.
       </p>
 
       <div className="flex flex-col gap-1.5">
@@ -224,8 +224,12 @@ function BackendList(): React.JSX.Element {
           return (
             <div key={url} className="flex items-center gap-2 bg-gray-800 border border-gray-700 rounded px-3 py-2">
               <span className="text-sm text-gray-200 truncate flex-1" title={url}>{url}</span>
-              {isPrimary
-                ? <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-800/50">Primary</span>
+              {isPinnedBackend(url)
+                ? (
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-800/50">
+                    {isPrimary ? 'Primary' : 'Built-in'}
+                  </span>
+                )
                 : (
                   <button
                     onClick={() => handleRemove(url)}

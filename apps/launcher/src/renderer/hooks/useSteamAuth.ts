@@ -145,6 +145,52 @@ export function useSteamAuth(): SteamAuthState {
     }
   }, [setSteam, setSession, setPrimaryBackend, setBanWarnings])
 
+  // Log into every configured backend that isn't in `haveSessions`, one fresh
+  // Steam ticket each (they're single-use). Best-effort: failures become
+  // warnings rather than blocking startup, since the caller has already
+  // established the primary session.
+  const loginMissingBackends = useCallback(async (haveSessions: string[]) => {
+    const prefs = await window.api.prefs.load()
+    const missing = prefs.settings.backendUrls.filter((b: string) => !haveSessions.includes(b))
+    if (missing.length === 0) return
+
+    const collected: BackendWarning[] = []
+    for (const backend of missing) {
+      try {
+        const payload = await window.api.steam.getTicket()
+        const result = await window.api.lo.login(backend, {
+          ticket: payload.ticket,
+          steamId: payload.steamId,
+          name: payload.name,
+        })
+        if (result.banned) {
+          collected.push({
+            backend,
+            message: 'Banned on this backend',
+            ban: { banMessage: result.banMessage, banEndDate: result.banEndDate },
+          })
+          continue
+        }
+        setSession(backend, {
+          token: result.token,
+          playerName: result.playerName,
+          motd: result.motd,
+          encryptionToken: '',
+          platform: 'PC',
+        })
+      } catch (err) {
+        collected.push({
+          backend,
+          message: err instanceof Error ? err.message : 'Login failed',
+        })
+      }
+    }
+    if (collected.length > 0) {
+      setWarnings(prev => [...prev, ...collected])
+      setBanWarnings(collected)
+    }
+  }, [setSession, setBanWarnings])
+
   // Restore any sessions persisted from a previous run. If the primary session
   // is present we treat the user as logged in; otherwise we fall through to a
   // fresh authenticate(). Missing secondary sessions don't force a re-login —
@@ -172,6 +218,11 @@ export function useSteamAuth(): SteamAuthState {
             platform: 'PC',
           })
         }
+        // Backends configured since the last run (a user-added URL, or one
+        // pinned by a launcher update) have no stored session yet, so log
+        // into those now — otherwise realm search reports NO_SESSION for
+        // them until the user reconnects by hand in Settings.
+        await loginMissingBackends(Object.keys(stored))
         setStatus('done')
         return true
       }
@@ -180,7 +231,7 @@ export function useSteamAuth(): SteamAuthState {
     }
     await authenticate()
     return false
-  }, [authenticate, setSession, setPrimaryBackend])
+  }, [authenticate, loginMissingBackends, setSession, setPrimaryBackend])
 
   const mockAuthenticate = useCallback(async (opts?: { banned?: boolean }) => {
     setStatus('lo')
