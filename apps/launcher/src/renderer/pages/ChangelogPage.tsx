@@ -8,6 +8,15 @@ interface Release {
 
 const RELEASES: Release[] = [
   {
+    version: '0.0.4',
+    date: '2026-08-11',
+    entries: [
+      { type: 'added', text: 'realmdrift.com ships as a second built-in backend — realm search fans out to it alongside the official backend with no setup, and it is added automatically on update' },
+      { type: 'changed', text: 'Built-in backends lead the list in Settings → Backends and can no longer be removed; the official backend is badged Primary and the rest Built-in' },
+      { type: 'fixed', text: 'Backends without a stored session are now logged in during startup — previously a newly added backend reported "no session" in realm search until you reconnected it by hand in Settings' },
+    ],
+  },
+  {
     version: '0.0.3',
     date: '2026-05-08',
     entries: [
