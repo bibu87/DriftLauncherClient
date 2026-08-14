@@ -195,13 +195,49 @@ function tailLog(logPath: string, onLines: (lines: string[]) => void): () => voi
   return () => clearInterval(id)
 }
 
-// Workshop IDs are 9–11 digit numbers. We look for them only in lines that
-// mention mod/workshop/ugc keywords so we don't flood the set with unrelated numbers.
+// LogModLoader writes three different kinds of mod ID to the log, all in the
+// same `Mod <id>` shape: the realm's required mods, the client's own mods left
+// active from the previous session, and the realm's *ban* list. Scraping every
+// number off any line mentioning "mod" conflated all three, so a realm needing
+// one mod got reported with every mod the player happened to have installed —
+// including the ones the realm explicitly rejected.
+//
+// Match only phrases that positively identify a mod as the realm's. Lines we
+// don't recognise contribute nothing rather than being guessed at.
+const REQUIRED_MOD_PATTERNS = [
+  // Server asked for a mod the client doesn't have loaded yet.
+  /LogModLoader: Error: Missing mod (\d+)/i,
+  // Emitted during "Installing Mods", which walks the server's list.
+  /LogModLoader: Mod (\d+) already downloaded/i,
+  /LogModLoader: Mod (\d+) is ready/i,
+  // Only mods that survived the not-allowed pass get version-checked and armed.
+  /LogModLoader: Checking if mod (\d+) is up-to-date/i,
+  /LogModLoader: Mod (\d+) is up-to-date/i,
+  /LogModLoader: Mod (\d+) will be autoloaded on next startup/i,
+]
+
+// Lines naming a mod the realm did not ask for. Checked first, per line, so a
+// mod that is both locally active and realm-required still registers via its
+// required lines.
+const EXCLUDED_MOD_PATTERNS = [
+  // "Looking for mods that were active in the previous session..." — client-side.
+  /LogModLoader: Found active mod (\d+)/i,
+  // The realm's ban list.
+  /LogModLoader: Warning: Disabling not allowed Mod (\d+)/i,
+  /LogModLoader: Mod (\d+) will not be autoloaded on next startup/i,
+]
+
 function extractWorkshopIds(lines: string[]): string[] {
   const ids = new Set<string>()
   for (const line of lines) {
-    if (!/mod|workshop|ugc/i.test(line)) continue
-    for (const m of line.matchAll(/\b(\d{9,11})\b/g)) ids.add(m[1])
+    if (EXCLUDED_MOD_PATTERNS.some(re => re.test(line))) continue
+    for (const re of REQUIRED_MOD_PATTERNS) {
+      const m = line.match(re)
+      if (m) {
+        ids.add(m[1])
+        break
+      }
+    }
   }
   return [...ids]
 }
