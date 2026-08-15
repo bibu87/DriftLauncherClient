@@ -22,6 +22,15 @@ export interface LauncherSettings {
   backendUrls: string[]
 }
 
+// Last successfully resolved Steam avatar. Persisted because the only source
+// (the steamcommunity profile XML) rate-limits aggressively — see avatar.ts.
+export interface AvatarCache {
+  steamId: string
+  url: string
+  // Unix milliseconds.
+  fetchedAt: number
+}
+
 export interface LauncherPrefs {
   favorites: number[]
   recent: number[]
@@ -29,6 +38,7 @@ export interface LauncherPrefs {
   settings: LauncherSettings
   // gid (Steam news item id) of news the user has marked as read.
   readNewsIds: string[]
+  avatarCache: AvatarCache | null
 }
 
 // One announcement from Steam's GetNewsForApp endpoint, normalised for the UI.

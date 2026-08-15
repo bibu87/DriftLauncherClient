@@ -20,6 +20,7 @@ function AppRoutes(): React.JSX.Element {
       recent: [],
       selectedServerId: null,
       readNewsIds: [],
+      avatarCache: null,
       settings: {
         launchArgs: '',
         eacEnabled: true,

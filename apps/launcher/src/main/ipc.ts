@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain, session, shell } from 'electron'
 import axios from 'axios'
-import { getSteamTicket, getLocalSteamId64 } from './steam'
+import { getSteamTicket } from './steam'
+import { getAvatarUrl } from './avatar'
 import { saveSession, loadSession, loadAllSessions, clearSession } from './session'
 import {
   encodeLoginRequest,
@@ -41,20 +42,7 @@ export function registerIpcHandlers(): void {
     return getSteamTicket()
   })
 
-  ipcMain.handle('steam:avatar-url', async () => {
-    const steamId = getLocalSteamId64()
-    if (!steamId) return null
-    try {
-      const res = await axios.get<string>(
-        `https://steamcommunity.com/profiles/${steamId}/?xml=1`,
-        { headers: { Accept: 'text/xml' }, timeout: 5000 }
-      )
-      const m = res.data.match(/<avatarMedium><!\[CDATA\[(.+?)\]\]><\/avatarMedium>/)
-      return m ? m[1] : null
-    } catch {
-      return null
-    }
-  })
+  ipcMain.handle('steam:avatar-url', () => getAvatarUrl())
 
   ipcMain.handle(
     'lo:login',

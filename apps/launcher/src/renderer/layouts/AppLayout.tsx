@@ -18,7 +18,10 @@ export default function AppLayout(): React.JSX.Element {
 
   useEffect(() => {
     if (!avatarUrl) {
-      window.api.steam.getAvatarUrl().then(url => { if (url) setAvatarUrl(url) }).catch(() => {})
+      window.api.steam
+        .getAvatarUrl()
+        .then(url => { if (url) setAvatarUrl(url) })
+        .catch(err => console.warn('[avatar] lookup failed:', err))
     }
   }, [avatarUrl, setAvatarUrl])
 
