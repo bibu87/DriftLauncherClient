@@ -8,6 +8,14 @@ interface Release {
 
 const RELEASES: Release[] = [
   {
+    version: '0.0.5',
+    date: '2026-08-15',
+    entries: [
+      { type: 'fixed', text: 'Your Steam profile picture now shows up reliably — Steam rate-limits the profile lookup, and a single throttled request used to leave the placeholder initial in place for the whole session. The avatar is now cached between launches, retried with backoff, and shared across duplicate lookups' },
+      { type: 'fixed', text: 'Realm mod detection no longer reports your own client-side mods as required by the realm — mods the realm had explicitly rejected were being scraped from the game log alongside the genuinely required ones' },
+    ],
+  },
+  {
     version: '0.0.4',
     date: '2026-08-11',
     entries: [
