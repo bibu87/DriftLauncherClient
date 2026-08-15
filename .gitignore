@@ -6,3 +6,8 @@ out/
 .env.local
 drift.db
 .claude/
+
+# One-off debugging probes. Local-only: several decrypt the stored LO auth
+# token via safeStorage to talk to the backend as you, so they should never
+# be committed or shipped.
+apps/launcher/scripts/probe-*.js
